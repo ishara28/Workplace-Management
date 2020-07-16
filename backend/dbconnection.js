@@ -5,7 +5,7 @@ var mysqlConnection = mysql.createConnection({
   user: "root",
   password: "",
   database: "database",
-  multipleStatements: true,
+  multipleStatements: true, 
 });
 
 mysqlConnection.connect(function (err) {

@@ -13,6 +13,18 @@ router.get("/", (req, res) => {
   });
 });
 
+//Get all the blocked customers
+router.get("/blocked", (req, res) => {
+  let sql = "SELECT * FROM blocked_customers";
+  let query = mysqlConnection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    res.send(result);
+    // res.json(result);
+  });
+});
+
+
 // Get a single customer
 router.get("/:c_id", (req, res) => {
   let sql = "SELECT * FROM `customers` WHERE c_id = ? ";
@@ -103,5 +115,6 @@ router.post("/block/:c_id", (req, res) => {
     }
   );
 });
+
 
 module.exports = router;
