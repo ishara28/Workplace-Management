@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import '../stylesheets/Home.css'
 
-function Home() {
+function Home(props) {
     return (
         <>
             <div className="d-flex flex-row justify-content-around mb-5 mt-5">

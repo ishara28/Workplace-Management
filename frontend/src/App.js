@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Welcome from './components/Welcome';
-import Main from './components/Main';
+//import Main from './components/Main';
 import {BrowserRouter} from 'react-router-dom';
 
 function App() {
