@@ -1,35 +1,59 @@
-import React,{useState} from 'react'
+import React,{Component} from 'react'
 import '../stylesheets/Welcome.css'
-import Register from './Register'
-import Login from './Login'
 
-function Welcome() {
-    const [registertab,set_registertab] = useState(true);
+class Welcome extends Component {
+    constructor(props) {
+        super(props)
     
-    return (
-        <div className="mainContainer bg-dark">
-            <div className="container-fluid bg-primary">
-                <div className="text-center text-white font-weight-bold topBarText">
-                    Workplace Management System
-                </div>
-            </div>
-            <div class="row">
+        this.state = {
+             username:'',
+             password:''
+        }
 
-                <div class="col">
-                    <div className="container bg-light tabBtnPane">
-                        <button type="button" class="btn btn-success tabBtn" disabled={registertab} onClick={()=>set_registertab(true)}>Register</button><br/>
-                        <button type="button" class="btn btn-primary tabBtn" disabled={!registertab} onClick={()=>set_registertab(false)}>Login</button>
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInputChange(event){
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]:value
+        })
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+    }
+
+    render(){
+        return (
+            <div className="mainContainer bg-dark">
+                <div className="container-fluid bg-primary">
+                    <div className="text-center text-white font-weight-bold">
+                        <h1 className="p-4">Workplace Management System</h1>
                     </div>
                 </div>
+                <div className="row">
+                <div className="container bg-light formbox">
+                    <h2 className="text-center"><b>Login</b></h2>
+                    <hr className="bg-success horizontal_line"/>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="username" className="form-control mb-3" id="username" name="username" value={this.username} onChange={this.handleInputChange} placeholder="username" required/> 
+                        <input type="password" className="form-control mb-3" id="password" name="password" value={this.password} onChange={this.handleInputChange} placeholder="password" required/>
+                        <center>
+                            <button type="submit" class="btn btn-success btn_login_register">Login</button>
+                        </center>
 
-                <div class="col-8">
-                    {registertab && <Register/>}
-                    {!registertab && <Login/>}
+                    </form>
                 </div>
-                
-            </div>            
-        </div>
-    )
+                    
+                </div>            
+            </div>
+        )
+    }
 }
 
 export default Welcome

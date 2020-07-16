@@ -1,24 +1,10 @@
 .mainContainer{
+    background-image: url("../images/background.jpg");
     position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
     background-size: cover;
-}
-
-.topBarText{
-    font-size: 40px;
-}
-
-.tabBtnPane{
-    margin-top: 30%;
-    width:140px;
-    border-radius: 7px;
-}
-
-.tabBtn{
-    margin:10px;
-    width: 90px;
 }
 
 .btn_login_register{
@@ -28,9 +14,10 @@
 
 .formbox{
     border-radius: 8px;
-    margin-top: 10%;
-    width: 50%;
+    margin-top: 5%;
+    width: 400px;
     padding: 10px;
+    border-width: 5px;
 }
 
 .horizontal_line{
