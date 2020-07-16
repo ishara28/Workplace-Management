@@ -3,16 +3,14 @@ var cors = require("cors");
 
 const app = express();
 
-app.use(cors())
+//Middleware
+app.use(cors());
+app.use(express.json());
+
+//Getting routes
+const CustomerRoute = require("./routes/customer");
+app.use("/customers", CustomerRoute);
 
 const PORT = 5000 || process.env.PORT;
-
-app.get("/members", (req, res) => {
-  const members = [
-    { id: 1, name: "Ishara" },
-    { id: 2, name: "Sasindu" },
-  ];
-  res.send(members);
-});
 
 app.listen(PORT, () => console.log("Server is running on PORT ", PORT));
