@@ -6,7 +6,7 @@ function Agreement() {
     return (
         <>
             <Breadcrumb>
-                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                 <BreadcrumbItem active>Agreements</BreadcrumbItem>
             </Breadcrumb>
 

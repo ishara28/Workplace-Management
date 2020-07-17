@@ -6,7 +6,7 @@ function Project() {
     return (
         <>
             <Breadcrumb>
-                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                 <BreadcrumbItem active>Projects</BreadcrumbItem>
             </Breadcrumb>
 

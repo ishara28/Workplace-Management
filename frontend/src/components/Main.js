@@ -1,29 +1,108 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home';
+import Login from './Login'
 import Customer from './Customer';
 import Machinery from './Machinery';
 import Workhouse from './Workhouse';
 import Organization from './Organization';
 import Agreement from './Agreement';
 import Project from './Project';
+import { connect } from 'react-redux'
 
-function Main(props) {
-    return (
-        <>
-            <Header/>
-            <Switch>
-                <Route path="/home" component={()=><Home/>}/>
-                <Route path="/customer" component={()=><Customer/>}/>
-                <Route path="/machinery" component={()=><Machinery/>}/>
-                <Route path="/workhouse" component={()=><Workhouse/>}/>
-                <Route path="/organization" component={()=><Organization/>}/>
-                <Route path="/agreement" component={()=><Agreement/>}/>
-                <Route path="/project" component={()=><Project/>}/>
-            </Switch>
-        </>
-    )
+const mapStateToProps = state => {
+    return{
+        username:state.username,
+        password:state.password
+    }
 }
 
-export default Main
+class Main extends Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render(){
+        const HomePage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Home/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const CustomerPage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Customer/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const MachineryPage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Machinery/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const WorkhousePage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Workhouse/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const OrganizationPage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Organization/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const AgreementPage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Agreement/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        const ProjectPage = ()=>{
+            if(this.props.username!=null && this.props.password!=null){
+                return(<Project/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        return (
+            <>
+                {this.props.username!=null && this.props.password!=null && <Header/>}
+                <Switch>
+                    <Route exact path="/" component={HomePage}/>
+                    <Route path="/customer" component={CustomerPage}/>
+                    <Route path="/machinery" component={MachineryPage}/>
+                    <Route path="/workhouse" component={WorkhousePage}/>
+                    <Route path="/organization" component={OrganizationPage}/>
+                    <Route path="/agreement" component={AgreementPage}/>
+                    <Route path="/project" component={ProjectPage}/>
+                    <Redirect to="/"/>
+                </Switch>
+            </>
+        )
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(Main))

@@ -26,6 +26,10 @@ class Login extends Component {
 
     handleSubmit(event){
         event.preventDefault();
+        
+        if(this.state.username === "AA" && this.state.password === "AA"){
+            console.log("AA")
+        }
     }
 
     render(){
@@ -44,7 +48,7 @@ class Login extends Component {
                             <input type="text" className="form-control mb-3" id="username" name="username" value={this.state.username} onChange={this.handleInputChange} placeholder="username" required/> 
                             <input type="password" className="form-control mb-3" id="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" required/>
                             <center>
-                                <button type="submit" class="btn btn-success btn_login_register">Login</button>
+                                <button className="btn btn-success btn_login_register">Login</button>
                             </center>
                         </form>
                     </div>
