@@ -4,7 +4,7 @@ const mySqlConnection = require("../dbconnection");
 // Get all customers
 router.get("/", (req, res) => {
   let sql = "SELECT * FROM customers";
-  let query = mysqlConnection.query(sql, (err, result) => {
+  let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
     res.send(result);
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 //Get all the blocked customers
 router.get("/blocked", (req, res) => {
   let sql = "SELECT * FROM blocked_customers";
-  let query = mysqlConnection.query(sql, (err, result) => {
+  let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
     res.send(result);
@@ -26,7 +26,7 @@ router.get("/blocked", (req, res) => {
 // Get a single customer
 router.get("/:c_id", (req, res) => {
   let sql = "SELECT * FROM `customers` WHERE c_id = ? ";
-  let query = mysqlConnection.query(sql, req.params.c_id, (err, result) => {
+  let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
     if (err) throw err;
     console.log(result);
     res.send(result);
@@ -60,7 +60,7 @@ router.post("/register", (req, res) => {
 
   let sql = "INSERT INTO customers SET ?";
 
-  let query = mysqlConnection.query(sql, customer, (err, result) => {
+  let query = mySqlConnection.query(sql, customer, (err, result) => {
     if (err) throw err;
     console.log(result);
     res.send("Customer added!");

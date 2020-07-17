@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   });
 });
 
-//Get all the blocked customers
+//Get all the blocked machineries
 router.get("/blocked", (req, res) => {
   let sql = "SELECT * FROM blocked_machinery";
   let query = mysqlConnection.query(sql, (err, result) => {
