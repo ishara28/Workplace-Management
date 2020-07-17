@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import '../stylesheets/Welcome.css'
 
-class Welcome extends Component {
+class Login extends Component {
     constructor(props) {
         super(props)
     
@@ -37,23 +37,21 @@ class Welcome extends Component {
                     </div>
                 </div>
                 <div className="row">
-                <div className="container bg-light formbox">
-                    <h2 className="text-center"><b>Login</b></h2>
-                    <hr className="bg-success horizontal_line"/>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="username" className="form-control mb-3" id="username" name="username" value={this.username} onChange={this.handleInputChange} placeholder="username" required/> 
-                        <input type="password" className="form-control mb-3" id="password" name="password" value={this.password} onChange={this.handleInputChange} placeholder="password" required/>
-                        <center>
-                            <button type="submit" class="btn btn-success btn_login_register">Login</button>
-                        </center>
-
-                    </form>
-                </div>
-                    
+                    <div className="container bg-light formbox">
+                        <h2 className="text-center"><b>Login</b></h2>
+                        <hr className="bg-success horizontal_line"/>
+                        <form onSubmit={this.handleSubmit}>
+                            <input type="text" className="form-control mb-3" id="username" name="username" value={this.state.username} onChange={this.handleInputChange} placeholder="username" required/> 
+                            <input type="password" className="form-control mb-3" id="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" required/>
+                            <center>
+                                <button type="submit" class="btn btn-success btn_login_register">Login</button>
+                            </center>
+                        </form>
+                    </div>
                 </div>            
             </div>
         )
     }
 }
 
-export default Welcome
+export default Login
