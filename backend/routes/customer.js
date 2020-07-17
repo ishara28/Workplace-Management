@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const mySqlConnection = require("../dbconnection");
-const mysqlConnection = require("../dbconnection");
 
 // Get all customers
 router.get("/", (req, res) => {
@@ -24,7 +23,6 @@ router.get("/blocked", (req, res) => {
   });
 });
 
-
 // Get a single customer
 router.get("/:c_id", (req, res) => {
   let sql = "SELECT * FROM `customers` WHERE c_id = ? ";
@@ -45,8 +43,8 @@ router.post("/remove/:c_id", (req, res) => {
   });
 });
 
-//Add a customer
-router.post("/add", (req, res) => {
+//Register a customer
+router.post("/register", (req, res) => {
   let customer = {
     c_id: req.body.c_id,
     index_no: req.body.index_no,
@@ -72,7 +70,6 @@ router.post("/add", (req, res) => {
 //Update a customer
 router.post("/update/:c_id", (req, res) => {
   let customer = {
-    c_id: req.body.c_id,
     index_no: req.body.index_no,
     name: req.body.name,
     nic_passport: req.body.nic_passport,
@@ -115,6 +112,5 @@ router.post("/block/:c_id", (req, res) => {
     }
   );
 });
-
 
 module.exports = router;
