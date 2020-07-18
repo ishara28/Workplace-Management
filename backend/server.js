@@ -11,10 +11,12 @@ app.use(express.json());
 const CustomerRoute = require("./routes/customer");
 const MachineryRoute = require("./routes/machinery");
 const WorkhouseRoute = require("./routes/workhouse");
+const OrganizationRoute = require("./routes/organization");
 
-app.use("/customers", CustomerRoute);
+app.use("/customer", CustomerRoute);
 app.use("/machinery", MachineryRoute);
 app.use("/workhouse", WorkhouseRoute);
+app.use("/organization", OrganizationRoute);
 
 const PORT = 5000 || process.env.PORT;
 
