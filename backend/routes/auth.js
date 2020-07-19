@@ -10,14 +10,14 @@ router.post("/", (req, res) => {
       [username, password],
       (error, results, fields) => {
         if (results.length > 0) {
-          req.session.loggedin = true;
+          req.session.isLogged = true;
           req.session.username = username;
-          //   res.redirect("/home");
           res.send({
             message: "Logged in successfully!",
             isLogged: true,
           });
         } else {
+          req.session.isLogged = false;
           res.send({
             message: "Incorrect Username and/or Password!",
             isLogged: false,
@@ -27,6 +27,7 @@ router.post("/", (req, res) => {
       }
     );
   } else {
+    req.session.isLogged = false;
     res.send({
       message: "Please enter Username and Password!",
       isLogged: false,

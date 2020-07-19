@@ -5,15 +5,14 @@ var session = require("express-session");
 
 const app = express();
 
+//Middleware
 app.use(
   session({
-    secret: "secret",
+    secret: "secret-key",
     resave: true,
     saveUninitialized: true,
   })
 );
-
-//Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
