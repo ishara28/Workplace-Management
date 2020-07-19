@@ -13,8 +13,7 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
     return{
-        username:state.username,
-        password:state.password
+        username:state.Auth.username
     }
 }
 
