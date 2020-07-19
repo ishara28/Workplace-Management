@@ -1,8 +1,17 @@
+import * as ActionTypes from './ActionTypes'
+import { updateUsername } from './ActionCreators';
+
 export const initialState = {
-    username:'AA',
-    password:'AA'
+    username:null
 }
 
 export const reducer = (state = initialState, action) => {
-    return state;
+    switch (action.type) {
+        case ActionTypes.UPDATE_USERNAME:
+            var newState ={username:action.payload.username}
+            return newState;
+    
+        default:
+            return state;
+    }  
 }

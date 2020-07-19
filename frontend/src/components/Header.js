@@ -1,6 +1,12 @@
 import React,{Component} from 'react';
 import {Navbar, NavbarBrand, Nav, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../stylesheets/Header.css';
+import { connect } from 'react-redux'
+import { updateUsername } from '../redux/ActionCreators'
+
+const mapDispatchToProps = (dispatch) => ({
+    updateUsername: username => dispatch(updateUsername(username))
+})
 
 class Header extends Component {
     constructor(props) {
@@ -27,6 +33,7 @@ class Header extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.changeUsername = this.changeUsername.bind(this);
         this.deleteAccount = this.deleteAccount.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     toggleDropdown(){
@@ -73,6 +80,10 @@ class Header extends Component {
 
     deleteAccount(values){
         this.toggleModalDelete();
+    }
+
+    logout(){
+        this.props.updateUsername(null);
     }
 
     render(){
@@ -134,7 +145,7 @@ class Header extends Component {
                             </DropdownMenu>
                         </Dropdown>           
                         <NavItem>
-                            <button className="btn btn-light header_button"><b>Log out</b></button>
+                            <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
                         </NavItem>
                     </Nav>
                 </Navbar>
@@ -143,4 +154,4 @@ class Header extends Component {
     }
 }
 
-export default Header
+export default connect(null,mapDispatchToProps)(Header)

@@ -25,7 +25,7 @@ class Main extends Component {
 
     render(){
         const HomePage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Home/>)
             }
             else{
@@ -34,7 +34,7 @@ class Main extends Component {
         }
 
         const CustomerPage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Customer/>)
             }
             else{
@@ -43,7 +43,7 @@ class Main extends Component {
         }
 
         const MachineryPage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Machinery/>)
             }
             else{
@@ -52,7 +52,7 @@ class Main extends Component {
         }
 
         const WorkhousePage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Workhouse/>)
             }
             else{
@@ -61,7 +61,7 @@ class Main extends Component {
         }
 
         const OrganizationPage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Organization/>)
             }
             else{
@@ -70,7 +70,7 @@ class Main extends Component {
         }
 
         const AgreementPage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Agreement/>)
             }
             else{
@@ -79,7 +79,7 @@ class Main extends Component {
         }
 
         const ProjectPage = ()=>{
-            if(this.props.username!=null && this.props.password!=null){
+            if(this.props.username!=null){
                 return(<Project/>)
             }
             else{
@@ -89,7 +89,7 @@ class Main extends Component {
 
         return (
             <>
-                {this.props.username!=null && this.props.password!=null && <Header/>}
+                {this.props.username!=null && <Header/>}
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/customer" component={CustomerPage}/>

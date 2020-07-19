@@ -1,5 +1,17 @@
 import React,{Component} from 'react'
 import '../stylesheets/Welcome.css'
+import { updateUsername } from '../redux/ActionCreators'
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => {
+    return{
+        username: state.username
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    updateUsername: username => dispatch(updateUsername(username))
+})
 
 class Login extends Component {
     constructor(props) {
@@ -27,9 +39,7 @@ class Login extends Component {
     handleSubmit(event){
         event.preventDefault();
         
-        if(this.state.username === "AA" && this.state.password === "AA"){
-            console.log("AA")
-        }
+        this.props.updateUsername(this.state.username);
     }
 
     render(){
@@ -58,4 +68,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
