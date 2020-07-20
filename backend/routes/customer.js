@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const mySqlConnection = require("../dbconnection");
 
-// Get all customers
+// Get all customer
 router.get("/", (req, res) => {
-  let sql = "SELECT * FROM customers";
+  let sql = "SELECT * FROM customer";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -12,9 +12,9 @@ router.get("/", (req, res) => {
   });
 });
 
-//Get all the blocked customers
+//Get all the blocked customer
 router.get("/blocked", (req, res) => {
-  let sql = "SELECT * FROM blocked_customers";
+  let sql = "SELECT * FROM blocked_customer";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -25,7 +25,7 @@ router.get("/blocked", (req, res) => {
 
 // Get a single customer
 router.get("/:c_id", (req, res) => {
-  let sql = "SELECT * FROM `customers` WHERE c_id = ? ";
+  let sql = "SELECT * FROM `customer` WHERE c_id = ? ";
   let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -35,7 +35,7 @@ router.get("/:c_id", (req, res) => {
 
 //Remove existing customer (Change status to REMOVED)
 router.post("/remove/:c_id", (req, res) => {
-  let sql = "UPDATE customers SET status = 'REMOVED' WHERE c_id = ?";
+  let sql = "UPDATE customer SET status = 'REMOVED' WHERE c_id = ?";
   let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
@@ -58,7 +58,7 @@ router.post("/register", (req, res) => {
     status: req.body.status,
   };
 
-  let sql = "INSERT INTO customers SET ?";
+  let sql = "INSERT INTO customer SET ?";
 
   let query = mySqlConnection.query(sql, customer, (err, result) => {
     if (err) throw err;
@@ -80,7 +80,7 @@ router.post("/update/:c_id", (req, res) => {
     reg_date: req.body.reg_date,
     status: req.body.status,
   };
-  let sql = "UPDATE customers SET ? WHERE c_id = ?";
+  let sql = "UPDATE customer SET ? WHERE c_id = ?";
   let query = mySqlConnection.query(
     sql,
     [customer, req.params.c_id],
@@ -100,7 +100,7 @@ router.post("/block/:c_id", (req, res) => {
   };
 
   let sql =
-    "UPDATE customers SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_customers SET ?";
+    "UPDATE customer SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_customer SET ?";
 
   let query = mySqlConnection.query(
     sql,
