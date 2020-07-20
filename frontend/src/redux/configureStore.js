@@ -1,11 +1,13 @@
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Auth } from './Auth'
 import {Agreements} from './Agreements'
 import {Customers} from './Customers'
 import {Machineries} from './Machineries'
 import {Organizations} from './Organizations'
 import {Projects} from './Projects'
-import {Workplaces} from './Workplaces'
+import {Workhouses} from './Workhouse'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -16,8 +18,9 @@ export const ConfigureStore = () => {
             Machineries:Machineries,
             Organizations:Organizations,
             Projects:Projects,
-            Workplaces:Workplaces
-        })
+            Workhouses:Workhouses
+        }),
+        composeWithDevTools(applyMiddleware(thunk))
     );
 
     return store;
