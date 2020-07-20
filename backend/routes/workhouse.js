@@ -1,18 +1,18 @@
 const router = require("express").Router();
 const mySqlConnection = require("../dbconnection");
 
-//Get all workhouses
+//Get all workhouse
 router.get("/", (req, res) => {
-  let sql = "SELECT * FROM workhouses";
+  let sql = "SELECT * FROM workhouse";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
   });
 });
 
-//Get all blocked workhouses
+//Get all blocked workhouse
 router.get("/blocked", (req, res) => {
-  let sql = "SELECT * FROM blocked_workhouses";
+  let sql = "SELECT * FROM blocked_workhouse";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -33,7 +33,7 @@ router.post("/register", (req, res) => {
     c_id: req.body.c_id,
   };
 
-  let sql = "INSERT INTO workhouses SET ? ";
+  let sql = "INSERT INTO workhouse SET ? ";
   let query = mySqlConnection.query(sql, workhouse, (err, result) => {
     if (err) throw err;
     res.send("Workhouse Inserted!");
@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
 
 //Get a single workhouse
 router.get("/:w_id", (req, res) => {
-  let sql = "SELECT * FROM workhouses  WHERE w_id = ?";
+  let sql = "SELECT * FROM workhouse  WHERE w_id = ?";
   let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -58,7 +58,7 @@ router.post("/update/:w_id", (req, res) => {
     description: req.body.description,
     c_id: req.body.c_id,
   };
-  let sql = "UPDATE workhouses SET ? WHERE w_id = ?";
+  let sql = "UPDATE workhouse SET ? WHERE w_id = ?";
   let query = mySqlConnection.query(
     sql,
     [workhouse, req.params.w_id],
@@ -71,7 +71,7 @@ router.post("/update/:w_id", (req, res) => {
 
 //Remove existing workhouse
 router.post("/remove/:w_id", (req, res) => {
-  let sql = "UPDATE workhouses SET status = 'REMOVED' WHERE w_id = ?";
+  let sql = "UPDATE workhouse SET status = 'REMOVED' WHERE w_id = ?";
   let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
     if (err) throw err;
     res.send("Removed");
@@ -87,7 +87,7 @@ router.post("/block/:w_id", (req, res) => {
   };
 
   let sql =
-    "UPDATE workhouses SET status = 'BLOCKED' WHERE w_id = ? ; INSERT INTO blocked_workhouses SET ?";
+    "UPDATE workhouse SET status = 'BLOCKED' WHERE w_id = ? ; INSERT INTO blocked_workhouse SET ?";
 
   let query = mySqlConnection.query(
     sql,
