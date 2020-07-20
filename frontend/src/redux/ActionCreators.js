@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../shared/baseUrl';
+import axios from 'axios'
 
 export const updateUsername = (username)=>({
     type:ActionTypes.UPDATE_USERNAME,
@@ -15,14 +16,10 @@ export const fetchWorkhouses = () => (dispatch) => {
     axios({
         method: 'get',
         url: baseUrl+'workhouse',
-        responseType: 'stream'
       })
-        .then(function (response) {
-          console.log(response);
-        });
-    /*setTimeout(() => {
-        dispatch(addWorkhouses(DISHES));
-    }, 2000);*/
+    .then(response=> {
+        dispatch(addWorkhouses(response.data));
+    })
 }
 
 export const WorkhousesLoading = () => ({
