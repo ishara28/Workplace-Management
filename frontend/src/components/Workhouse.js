@@ -3,6 +3,8 @@ import {Breadcrumb, BreadcrumbItem, Card, CardFooter, CardBody, CardHeader, Card
 import { connect } from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import {fetchWorkhouses} from '../redux/ActionCreators'
+import axios from 'axios'
+import {baseUrl} from '../shared/baseUrl'
 
 
 const mapStateToProps = (state) => ({
@@ -18,6 +20,7 @@ class RenderItem extends Component{
         super(props)
     
         this.state = {
+            w_id:this.props.workhouses.w_id,
             index_no:this.props.workhouses.index_no,
             reg_date:this.props.workhouses.reg_date,
             status:this.props.workhouses.status,
@@ -31,7 +34,6 @@ class RenderItem extends Component{
         }
 
         this.toggleModalUpdate = this.toggleModalUpdate.bind(this);
-        this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -54,17 +56,23 @@ class RenderItem extends Component{
         })
     }
 
-    update(item){
-        /*this.setState({
-            telephone:item.telephone
-        })*/
-        this.toggleModalUpdate();
-        
-    }
-
     handleSubmit(event){
         event.preventDefault();
-        this.update();
+        this.toggleModalUpdate();
+
+        return axios.post(baseUrl+'workhouse/update/'+this.state.w_id, {
+            address: this.state.address,
+            telephone: this.state.telephone,
+            email: this.state.email,
+            description: this.state.description,
+            c_id: this.state.c_id,
+        })
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+        
     }
 
     render(){
@@ -74,27 +82,27 @@ class RenderItem extends Component{
                     <ModalHeader toggle={this.toggleModalUpdate}>Update {this.state.index_no} Workhouse</ModalHeader>
                     <ModalBody>
                         <form onSubmit={this.handleSubmit}>
-                            <div class="form-group">
+                            <div classname="form-group">
                                 <label>Telephone number</label>
                                 <input type="text" className="form-control mb-3" id="telephone" name="telephone" value={this.state.telephone} onChange={this.handleInputChange}  required/>
                             </div>
                                 
-                            <div class="form-group">
+                            <div classname="form-group">
                                 <label>email</label>
                                 <input type="email" className="form-control mb-3" id="email" name="email" value={this.state.email} onChange={this.handleInputChange} required/>
                             </div>
 
-                            <div class="form-group">
+                            <div classname="form-group">
                                 <label>Address</label>
                                 <input type="text" className="form-control mb-3" id="address" name="address" value={this.state.address} onChange={this.handleInputChange} required/>
                             </div>
                                 
-                            <div class="form-group">
+                            <div classname="form-group">
                                 <label>Description</label>
                                 <textarea type="text" className="form-control mb-3" id="description" name="description" value={this.state.description} onChange={this.handleInputChange} required/>
                             </div>
                                 
-                            <div class="form-group">
+                            <div classname="form-group">
                                 <label>Customer</label>
                                 <select type="text" className="form-control mb-3" id="customer" name="customer" value={this.state.customer} onChange={this.handleInputChange} required>
                                     <option>{this.state.c_id}</option>
@@ -121,9 +129,9 @@ class RenderItem extends Component{
                                 <CardText>Customer id: {this.state.c_id}</CardText>
                             </CardBody>
                             <CardFooter>
-                                <button type="button" className="btn btn-success mr-2" onClick={(item)=>this.update(item)}>Update</button>
-                                {this.props.status!="BLOCKED" && <button type="button" className="btn btn-primary mr-2">Block</button>}
-                                {this.props.status!="REMOVED" && <button type="button" className="btn btn-danger">Remove</button>}                        
+                                <button type="button" className="btn btn-success mr-2" onClick={this.toggleModalUpdate}>Update</button>
+                                {this.props.status!=="BLOCKED" && <button type="button" className="btn btn-primary mr-2">Block</button>}
+                                {this.props.status!=="REMOVED" && <button type="button" className="btn btn-danger">Remove</button>}                        
                             </CardFooter>
                         </Card>
                     </div>

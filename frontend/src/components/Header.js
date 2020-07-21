@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Navbar, NavbarBrand, Nav, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Navbar, NavbarBrand, Nav, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../stylesheets/Header.css';
 import { connect } from 'react-redux'
 import { updateUsername } from '../redux/ActionCreators'
