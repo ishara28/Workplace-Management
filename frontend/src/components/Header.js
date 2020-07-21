@@ -130,9 +130,7 @@ class Header extends Component {
                 </Modal>
 
                 <Navbar dark color="primary" expand="md">
-                    <div className="container">
-                        <NavbarBrand className="mr-auto" href="/home"><h1><b>Workplace Management System</b></h1></NavbarBrand>
-                    </div>
+                    <NavbarBrand className="ml-3" href="/home"><h1><b>Workplace Management System</b></h1></NavbarBrand>
                     <Nav className="ml-auto" navbar>
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                             <DropdownToggle caret className="btn btn-light header_button">
@@ -144,9 +142,10 @@ class Header extends Component {
                                 <DropdownItem className="text-danger btn-danger" onClick={this.deleteAccount}>Delete account</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>           
-                        <NavItem>
-                            <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
-                        </NavItem>
+                        
+                    </Nav>
+                    <Nav>
+                        <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
                     </Nav>
                 </Navbar>
             </>

@@ -13,13 +13,27 @@ export const fetchWorkhouses = () => (dispatch) => {
 
     dispatch(WorkhousesLoading(true));
 
-    axios({
-        method: 'get',
-        url: baseUrl+'workhouse',
-      })
-    .then(response=> {
-        dispatch(addWorkhouses(response.data));
-    })
+    return fetch(baseUrl + "workhouse")
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(workhouses => dispatch(addWorkhouses(workhouses)))
+    .catch(error => dispatch(WorkhousesFailed(error.message)));
 }
 
 export const WorkhousesLoading = () => ({

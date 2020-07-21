@@ -88,7 +88,7 @@ class Main extends Component {
 
         return (
             <>
-                {this.props.username!=null && <Header/>}
+                {this.props.username==null && <Header/>}
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/customer" component={CustomerPage}/>
