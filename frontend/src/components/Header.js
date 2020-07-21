@@ -97,7 +97,7 @@ class Header extends Component {
                             <input type="password" className="form-control mb-3" id="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" required/>
                             <input type="text" className="form-control mb-3" id="newUsername" name="newUsername" value={this.state.newUsername} onChange={this.handleInputChange} placeholder="new username" required/>
                             <center>
-                                <button type="submit" class="btn btn-success">change</button>
+                                <button type="submit" className="btn btn-success">change</button>
                             </center>
                         </form>
                     </ModalBody>
@@ -112,7 +112,7 @@ class Header extends Component {
                             <input type="password" className="form-control mb-3" id="newPassword" name="newPassword" value={this.state.newPassword} onChange={this.handleInputChange} placeholder="new password" required/>
                             <input type="password" className="form-control mb-3" id="confNewPassword" name="confNewPassword" value={this.state.confNewPassword} onChange={this.handleInputChange} placeholder="confirm new password" required/>
                             <center>
-                                <button type="submit" class="btn btn-success">change</button>
+                                <button type="submit" className="btn btn-success">change</button>
                             </center>
                         </form>
                     </ModalBody>
