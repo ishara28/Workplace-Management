@@ -1,4 +1,5 @@
-import { ADD_WORKHOUSE, WORKHOUSE_LOADING, WORKHOUSE_FAILED } from './ActionTypes';
+import { ADD_WORKHOUSE, WORKHOUSE_LOADING, WORKHOUSE_FAILED, UPDATE_WORKHOUSE } from './ActionTypes';
+import { updateWorkhouse } from './ActionCreators';
 
 export const Workhouses = (state = { isLoading: true, errMess: null, workhouses:[]}, action) => {
     switch (action.type) {

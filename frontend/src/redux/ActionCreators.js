@@ -1,6 +1,5 @@
 import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../shared/baseUrl';
-import axios from 'axios'
 
 export const updateUsername = (username)=>({
     type:ActionTypes.UPDATE_USERNAME,
@@ -8,6 +7,7 @@ export const updateUsername = (username)=>({
         username:username
     }
 })
+
 
 export const fetchWorkhouses = () => (dispatch) => {
 

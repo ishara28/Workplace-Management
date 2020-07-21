@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import '../stylesheets/Welcome.css'
+import '../stylesheets/Login.css'
 import { updateUsername } from '../redux/ActionCreators'
 import { connect } from 'react-redux'
 
