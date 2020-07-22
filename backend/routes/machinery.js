@@ -33,14 +33,13 @@ router.get("/:m_id", (req, res) => {
 //Register a Machinery
 router.post("/register", (req, res) => {
   let machinery = {
-    m_id: req.body.m_id,
     index_no: req.body.index_no,
     reg_id: req.body.reg_id,
     reg_date: req.body.reg_date,
     status: req.body.status,
     category: req.body.category,
     description: req.body.description,
-    c_id: req.body.c_id,
+    owner_id: req.body.owner_id,
   };
   let sql = "INSERT INTO machinery SET ? ";
   let query = mysqlConnection.query(sql, machinery, (err, result) => {
