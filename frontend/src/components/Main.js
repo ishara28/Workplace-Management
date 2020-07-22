@@ -10,6 +10,7 @@ import Organization from './Organization';
 import Agreement from './Agreement';
 import Project from './Project';
 import { connect } from 'react-redux'
+import OneWorkhouse from './OneWorkhouse'
 
 const mapStateToProps = state => {
     return{
@@ -82,6 +83,15 @@ class Main extends Component {
             }
         }
 
+        const OneWorkhousePage = ({match})=>{
+            if(this.props.username==null){
+                return(<OneWorkhouse index_no={match.params.index_no}/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
         return (
             <>
                 {this.props.username==null && <Header/>}
@@ -89,7 +99,8 @@ class Main extends Component {
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/customer" component={CustomerPage}/>
                     <Route path="/machinery" component={MachineryPage}/>
-                    <Route path="/workhouse" component={WorkhousePage}/>
+                    <Route exact path="/workhouse" component={WorkhousePage}/>
+                    <Route path="/workhouse/:index_no" component={OneWorkhousePage}/>
                     <Route path="/organization" component={OrganizationPage}/>
                     <Route path="/agreement" component={AgreementPage}/>
                     <Route path="/project" component={ProjectPage}/>
