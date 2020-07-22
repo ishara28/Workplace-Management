@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import {Card, CardFooter, CardBody, CardHeader, CardText, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
+import { connect } from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import {updateWorkhouse} from '../redux/ActionCreators'
 
-export class RenderItem extends Component{
+const mapDispatchToProps = (dispatch) => ({
+    updateWorkhouse:(workhouse)=>dispatch(updateWorkhouse(workhouse))
+})
+
+class RenderItem extends Component{
     constructor(props) {
         super(props)
     
@@ -68,19 +75,19 @@ export class RenderItem extends Component{
     handleSubmit(event){
         event.preventDefault();
         this.toggleModalUpdate();
-
-        return axios.post(baseUrl+'workhouse/update/'+this.state.w_id, {
+        const updated = {
+            w_id:this.state.w_id,
+            index_no:this.state.index_no,
+            reg_date:this.state.reg_date,
+            status:this.state.status,
             address: this.state.address,
             telephone: this.state.telephone,
             email: this.state.email,
             description: this.state.description,
             c_id: this.state.c_id,
-        })
-        .then((response) => {
-            console.log(response);
-        })
-        .catch(err=>console.log(err));
-        
+        }
+
+        this.props.updateWorkhouse(updated); 
     }
 
     blockWorkhouse(){
@@ -153,7 +160,7 @@ export class RenderItem extends Component{
 
                             <center>
                                 <button type="submit" className="btn btn-success mr-2">Change</button>
-                                <button type="button" className="btn btn-primary">Cancel</button>
+                                <button type="button" className="btn btn-primary" onClick={this.toggleModalUpdate}>Cancel</button>
                             </center>
                         </form>
                     </ModalBody>
@@ -186,40 +193,21 @@ export class RenderItem extends Component{
                 </Modal>
                 
                 <tr>
-                    <th scope="row">{this.state.w_id}</th>
-                    <td>{this.state.index_no}</td>
-                    <td>{this.state.reg_date}</td>
-                    <td>{this.state.status}</td>
-                    <td>{this.state.telephone}</td>
-                    <td>{this.state.email}</td>
-                    <td>{this.state.address}</td>
-                    <td>{this.state.description}</td>
-                    <td>{this.state.c_id}</td>
+                    <th scope="row">{this.props.workhouses.w_id}</th>
+                    <td>{this.props.workhouses.index_no}</td>
+                    <td>{this.props.workhouses.reg_date}</td>
+                    <td>{this.props.workhouses.status}</td>
+                    <td>{this.props.workhouses.telephone}</td>
+                    <td>{this.props.workhouses.email}</td>
+                    <td>{this.props.workhouses.address}</td>
+                    <td>{this.props.workhouses.description}</td>
+                    <td>{this.props.workhouses.c_id}</td>
                     <td>
                         <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
                         {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success m-2">Active</button>}
                         {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger m-2" onClick={this.toggleModalBlock}>Block</button>}
                         {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark m-2" onClick={this.toggleModalRemove}>Remove</button>}
                     </td>
-
-                    {/*<Card>
-                        <CardHeader className="bg-dark text-white">index No: {this.state.index_no}</CardHeader>
-                        <CardBody>
-                            <CardText>Register Date: {this.state.reg_date}</CardText>
-                            <CardText>Status: {this.state.status}</CardText>
-                            <CardText>Telephone number: {this.state.telephone}</CardText>
-                            <CardText>email: {this.state.email}</CardText>
-                            <CardText>Address:<br/>{this.state.address}</CardText>
-                            <CardText>Description:<br/>{this.state.description}</CardText>
-                            <CardText>Customer id: {this.state.c_id}</CardText>
-                        </CardBody>
-                        <CardFooter className="bg-warning">
-                            <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
-                            {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success mr-2">Active</button>}
-                            {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger mr-2" onClick={this.toggleModalBlock}>Block</button>}
-                            {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark" onClick={this.toggleModalRemove}>Remove</button>}                     
-                        </CardFooter>
-                    </Card>*/}
                 </tr>
             </>
         );
@@ -227,3 +215,5 @@ export class RenderItem extends Component{
     }
     
 }
+
+export default withRouter(connect(null,mapDispatchToProps)(RenderItem));

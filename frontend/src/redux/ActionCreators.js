@@ -49,3 +49,8 @@ export const addWorkhouses = (workhouses) => ({
     type: ActionTypes.ADD_WORKHOUSE,
     payload: workhouses
 });
+
+export const updateWorkhouse = (workhouse) => ({
+    type: ActionTypes.UPDATE_WORKHOUSE,
+    payload: workhouse
+})

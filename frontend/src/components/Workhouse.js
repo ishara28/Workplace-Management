@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import {Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import { connect } from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {fetchWorkhouses} from '../redux/ActionCreators'
+import {fetchWorkhouses, updateWorkhouse} from '../redux/ActionCreators'
 import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
 import {Loading} from './LoadingComponent'
-import {RenderItem} from './WorkhouseRenderItem'
+import RenderItem from './WorkhouseRenderItem'
 import '../stylesheets/workhouse.css'
 
 const mapStateToProps = (state) => ({
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses()),
+    updateWorkhouse:(workhouse)=>dispatch(updateWorkhouse(workhouse))
 })
 
 class Workhouse extends Component {

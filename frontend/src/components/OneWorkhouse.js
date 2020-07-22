@@ -3,7 +3,7 @@ import {Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, ModalFooter, 
 import {Link, withRouter} from 'react-router-dom'
 import { baseUrl } from '../shared/baseUrl';
 import axios from 'axios'
-import {WorkhousesLoading} from '../redux/ActionCreators'
+import {WorkhousesLoading, updateWorkhouse} from '../redux/ActionCreators'
 import {connect} from 'react-redux'
 import {Loading} from './LoadingComponent'
 
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    WorkhousesLoading:(value)=>dispatch(WorkhousesLoading(value))
+    WorkhousesLoading:(value)=>dispatch(WorkhousesLoading(value)),
+    updateWorkhouse: (updated)=>dispatch(updateWorkhouse(updated))
 })
 
 export class OneWorkhouse extends Component {
@@ -30,6 +31,12 @@ export class OneWorkhouse extends Component {
             description:'',
             c_id:'',
             error:'',
+
+            telephone2:'',
+            email2:'',
+            address2:'',
+            description2:'',
+            c_id2:'',
 
             reason:'',
 
@@ -82,7 +89,12 @@ export class OneWorkhouse extends Component {
                     email:workhouses[0].email,
                     address:workhouses[0].address,
                     description:workhouses[0].description,
-                    c_id:workhouses[0].c_id
+                    c_id:workhouses[0].c_id,
+                    telephone2:workhouses[0].telephone,
+                    email2:workhouses[0].email,
+                    address2:workhouses[0].address,
+                    description2:workhouses[0].description,
+                    c_id2:workhouses[0].c_id,
                 })
             }else{
                 this.setState({
@@ -139,19 +151,27 @@ export class OneWorkhouse extends Component {
     handleSubmit(event){
         event.preventDefault();
         this.toggleModalUpdate();
+        this.setState({
+            address2: this.state.address,
+            telephone2: this.state.telephone,
+            email2: this.state.email,
+            description2: this.state.description,
+            c_id2: this.state.c_id,
+        });
 
-        return axios.post(baseUrl+'workhouse/update/'+this.state.w_id, {
+        const updated = {
+            w_id:this.state.w_id,
+            index_no:this.state.index_no,
+            reg_date:this.state.reg_date,
+            status:this.state.status,
             address: this.state.address,
             telephone: this.state.telephone,
             email: this.state.email,
             description: this.state.description,
             c_id: this.state.c_id,
-        })
-        .then((response) => {
-            console.log(response);
-        })
-        .catch(err=>console.log(err));
-        
+        };
+
+        this.props.updateWorkhouse(updated); 
     }
 
     removeWorkhouse(){
@@ -183,11 +203,12 @@ export class OneWorkhouse extends Component {
                         <BreadcrumbItem><Link to="/workhouse">Workhouse</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{this.props.index_no}</BreadcrumbItem>
                     </Breadcrumb>
+                    <Loading/>
                 </>
             )
         }
         else{
-            if(this.state.error!=''){
+            if(this.state.error!==''){
                 return(
                     <>
                         <Breadcrumb>
@@ -207,7 +228,7 @@ export class OneWorkhouse extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label>Telephone number</label>
-                                        <input type="text" className="form-control mb-3" id="telephone" name="telephone" value={this.state.telephone} onChange={this.handleInputChange}  required/>
+                                        <input type="text" className="form-control mb-3" id="telephone" name="telephone" value={this.state.telephone}  required/>
                                     </div>
                                         
                                     <div className="form-group">
@@ -225,16 +246,17 @@ export class OneWorkhouse extends Component {
                                         <textarea type="text" className="form-control mb-3" id="description" name="description" value={this.state.description} onChange={this.handleInputChange} required/>
                                     </div>
                                         
-                                    <div className="form-group">
+                                    {/*meka blanna*/} 
+                                    {/*<div className="form-group">
                                         <label>Customer</label>
-                                        <select type="text" className="form-control mb-3" id="customer" name="customer" value={this.state.customer} onChange={this.handleInputChange} required>
-                                            <option>{this.state.c_id}</option>
+                                        <select type="text" className="form-control mb-3" id="customer" name="customer" value={this.state.customer} onChange={this.handleInputChange} required> 
+                                            <option selected>{this.state.c_id}</option>
                                         </select>
-                                    </div>
+                                    </div>*/}
 
                                     <center>
                                         <button type="submit" className="btn btn-success mr-2">Change</button>
-                                        <button type="button" className="btn btn-primary">Cancel</button>
+                                        <button type="button" className="btn btn-primary" onClick={this.toggleModalUpdate}>Cancel</button>
                                     </center>
                                 </form>
                             </ModalBody>
@@ -277,11 +299,11 @@ export class OneWorkhouse extends Component {
                             <CardBody>
                                 <CardText>Register Date: {this.state.reg_date}</CardText>
                                 <CardText>Status: {this.state.status}</CardText>
-                                <CardText>Telephone number: {this.state.telephone}</CardText>
-                                <CardText>email: {this.state.email}</CardText>
-                                <CardText>Address:<br/>{this.state.address}</CardText>
-                                <CardText>Description:<br/>{this.state.description}</CardText>
-                                <CardText>Customer id: {this.state.c_id}</CardText>
+                                <CardText>Telephone number: {this.state.telephone2}</CardText>
+                                <CardText>email: {this.state.email2}</CardText>
+                                <CardText>Address:<br/>{this.state.address2}</CardText>
+                                <CardText>Description:<br/>{this.state.description2}</CardText>
+                                <CardText>Customer id: {this.state.c_id2}</CardText>
                             </CardBody>
                             <CardFooter className="bg-warning">
                                 <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
@@ -299,4 +321,4 @@ export class OneWorkhouse extends Component {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(OneWorkhouse)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(OneWorkhouse))
