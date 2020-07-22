@@ -99,9 +99,12 @@ export class RegisterModal extends Component {
           this.state.category &&
           this.state.owner_id
         ) {
-          Axios.post("machinery/register", newMachinery).then((res) =>
-            console.log(res.data)
-          );
+          Axios.post("machinery/register", newMachinery)
+            .then((res) => console.log(res.data))
+            .then(() => {
+              this.props.closeModal();
+              this.props.registrySuccessAlert();
+            });
         } else {
           this.setState({ isFieldsEmpty: true });
         }

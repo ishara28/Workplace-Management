@@ -7,6 +7,7 @@ import {
   CardBody,
   CardText,
   Button,
+  Alert,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
@@ -19,6 +20,7 @@ export class Machinery extends Component {
     this.state = {
       machinery: [],
       modal: true,
+      successAlertVisible: false,
     };
   }
 
@@ -39,6 +41,13 @@ export class Machinery extends Component {
 
   closeModal = () => {
     this.setState({ modal: false });
+  };
+
+  registrySuccessAlert = () => {
+    this.setState({ successAlertVisible: true });
+    setTimeout(() => {
+      this.setState({ successAlertVisible: false });
+    }, 5000);
   };
 
   render() {
@@ -73,8 +82,31 @@ export class Machinery extends Component {
         <RegisterModal
           showModal={this.state.modal}
           closeModal={this.closeModal}
+          registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Modal ended */}
+
+        {/* Success alert  */}
+        <div
+          style={{
+            width: 500,
+            textAlign: "center",
+            alignItems: "center",
+            margin: "auto",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Alert
+            color="info"
+            isOpen={this.state.successAlertVisible}
+            toggle={() => this.setState({ successAlertVisible: false })}
+          >
+            Machine Successfully Registered!
+          </Alert>
+        </div>
       </div>
     );
   }
