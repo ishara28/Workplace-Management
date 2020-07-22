@@ -8,10 +8,13 @@ import {
   CardText,
   Button,
   Alert,
+  Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
+import Onemachine from "./Onemachine";
+import EditModal from "./EditModal";
 
 export class Machinery extends Component {
   constructor(props) {
@@ -21,6 +24,7 @@ export class Machinery extends Component {
       machinery: [],
       modal: false,
       successAlertVisible: false,
+      editModal: false,
     };
   }
 
@@ -31,7 +35,7 @@ export class Machinery extends Component {
           machinery: res.data,
         })
       )
-      .then(() => console.log(this.state.machinery))
+      // .then(() => console.log(this.state.machinery))
       .catch((err) => console.log(err));
   }
 
@@ -43,11 +47,20 @@ export class Machinery extends Component {
     this.setState({ modal: false });
   };
 
+  showEditModal = () => {
+    this.setState({ editModal: true });
+  };
+
+  closeEditModal = () => {
+    this.setState({ editModal: false });
+  };
+
   registrySuccessAlert = () => {
     this.setState({ successAlertVisible: true });
     setTimeout(() => {
       this.setState({ successAlertVisible: false });
-    }, 5000);
+      window.location.reload(false);
+    }, 3000);
   };
 
   render() {
@@ -69,13 +82,35 @@ export class Machinery extends Component {
           />
         </div> */}
 
-        <div style={{ float: "right", marginRight: 5 }}>
+        <div style={{ float: "right", margin: 5 }}>
           <Button
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
           >
             Register a machinery
           </Button>
+        </div>
+
+        {/* Machines List  */}
+        <div>
+          <Table hover responsive dark={false}>
+            <thead>
+              <tr>
+                <th>Machine Id</th>
+                <th>Index No.</th>
+                <th>Reg Id</th>
+                <th>Registered date</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.machinery.map((machine) => {
+                return <Onemachine machine={machine} />;
+              })}
+            </tbody>
+          </Table>
         </div>
 
         {/* Modal for register */}

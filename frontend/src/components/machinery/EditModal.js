@@ -37,15 +37,12 @@ const currDate = date;
 //   "" +
 //   tempDate.getSeconds();
 
-export class RegisterModal extends Component {
+export class EditModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       customers: [],
-      index_no: "",
-      reg_date: currDate,
-      status: "ACTIVE",
       reg_id: "",
       category: "",
       owner_id: "",
@@ -55,68 +52,54 @@ export class RegisterModal extends Component {
   }
 
   componentDidMount() {
+    console.log("Machine", this.props.machine);
+    this.setState({
+      reg_id: this.props.machine.reg_id,
+      category: this.props.machine.category,
+      owner_id: this.props.machine.owner_id,
+      description: this.props.machine.description,
+    });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      //   .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
   }
 
   closeBtn = (
-    <button className="close" onClick={this.props.closeModal}>
+    <button className="close" onClick={this.props.closeEditModal}>
       &times;
     </button>
   );
 
-  submitData = () => {
-    var tempDate = new Date();
-    const index_no =
-      "M-" +
-      tempDate.getFullYear().toString().slice(2) +
-      (tempDate.getMonth() + 1).toString() +
-      tempDate.getDate().toString() +
-      "-" +
-      tempDate.getHours() +
-      tempDate.getMinutes() +
-      tempDate.getSeconds();
-
-    this.setState(
-      {
-        index_no: index_no,
-      },
-      () => {
-        const newMachinery = {
-          index_no: this.state.index_no,
-          reg_id: this.state.reg_id,
-          reg_date: this.state.reg_date,
-          status: this.state.status,
-          category: this.state.category,
-          description: this.state.description,
-          owner_id: this.state.owner_id,
-        };
-        if (
-          this.state.reg_id &&
-          this.state.description &&
-          this.state.category &&
-          this.state.owner_id
-        ) {
-          Axios.post("machinery/register", newMachinery)
-            .then((res) => console.log(res.data))
-            .then(() => {
-              this.props.closeModal();
-              this.props.registrySuccessAlert();
-            });
-        } else {
-          this.setState({ isFieldsEmpty: true });
-        }
-      }
-    );
+  updateData = () => {
+    const newMachinery = {
+      reg_id: this.state.reg_id,
+      category: this.state.category,
+      description: this.state.description,
+      owner_id: this.state.owner_id,
+    };
+    if (
+      this.state.reg_id &&
+      this.state.description &&
+      this.state.category &&
+      this.state.owner_id
+    ) {
+      Axios.post("machinery/update/" + this.props.machine.m_id, newMachinery)
+        .then((res) => console.log(res.data))
+        .then(() => {
+          this.props.closeEditModal();
+          this.props.registrySuccessAlert();
+        });
+    } else {
+      this.setState({ isFieldsEmpty: true });
+    }
   };
 
   render() {
     return (
       <div>
-        <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn}>Machinery Register</ModalHeader>
+        <Modal size="lg" isOpen={this.props.showEditModal}>
+          <ModalHeader close={this.closeBtn}>Edit Machinery</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -206,11 +189,11 @@ export class RegisterModal extends Component {
           <ModalFooter>
             <Button
               style={{ backgroundColor: "#23272B" }}
-              onClick={this.submitData}
+              onClick={this.updateData}
             >
-              Register Now
+              Update Now
             </Button>{" "}
-            <Button color="secondary" onClick={this.props.closeModal}>
+            <Button color="secondary" onClick={this.props.closeEditModal}>
               Cancel
             </Button>
           </ModalFooter>
@@ -220,4 +203,4 @@ export class RegisterModal extends Component {
   }
 }
 
-export default RegisterModal;
+export default EditModal;
