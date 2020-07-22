@@ -185,8 +185,24 @@ export class RenderItem extends Component{
                     </ModalBody>
                 </Modal>
                 
-                <div className="col-12 mt-3 mb-3">
-                    <Card>
+                <tr>
+                    <th scope="row">{this.state.w_id}</th>
+                    <td>{this.state.index_no}</td>
+                    <td>{this.state.reg_date}</td>
+                    <td>{this.state.status}</td>
+                    <td>{this.state.telephone}</td>
+                    <td>{this.state.email}</td>
+                    <td>{this.state.address}</td>
+                    <td>{this.state.description}</td>
+                    <td>{this.state.c_id}</td>
+                    <td>
+                        <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
+                        {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success m-2">Active</button>}
+                        {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger m-2" onClick={this.toggleModalBlock}>Block</button>}
+                        {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark m-2" onClick={this.toggleModalRemove}>Remove</button>}
+                    </td>
+
+                    {/*<Card>
                         <CardHeader className="bg-dark text-white">index No: {this.state.index_no}</CardHeader>
                         <CardBody>
                             <CardText>Register Date: {this.state.reg_date}</CardText>
@@ -203,8 +219,8 @@ export class RenderItem extends Component{
                             {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger mr-2" onClick={this.toggleModalBlock}>Block</button>}
                             {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark" onClick={this.toggleModalRemove}>Remove</button>}                     
                         </CardFooter>
-                    </Card>
-                </div>
+                    </Card>*/}
+                </tr>
             </>
         );
         

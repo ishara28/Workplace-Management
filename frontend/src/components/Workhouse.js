@@ -7,6 +7,7 @@ import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
 import {Loading} from './LoadingComponent'
 import {RenderItem} from './WorkhouseRenderItem'
+import '../stylesheets/workhouse.css'
 
 const mapStateToProps = (state) => ({
     Workhouses:state.Workhouses
@@ -68,18 +69,18 @@ class Workhouse extends Component {
         
             if(this.props.Workhouses.isLoading){
                 return(
-                    <>
+                    <div className="container-fluid">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>Workhouse</BreadcrumbItem>
                         </Breadcrumb>
                                    
                         <Loading />
-                    </>
+                    </div>
                 );
             }else if(this.props.Workhouses.errMess){
                 return(
-                    <>
+                    <div className="container-fluid">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>Workhouse</BreadcrumbItem>
@@ -87,17 +88,17 @@ class Workhouse extends Component {
                         
                         <h1>{this.props.Workhouses.errMess}</h1>
             
-                    </>
+                    </div>
                 );
             }else{
                 const items = this.props.Workhouses.workhouses.map((item) => {
                     return (
-                        <RenderItem workhouses={item} key={item.w_id}/>
+                        <RenderItem workhouses={item} key={item.w_id}/>        
                     );
                 });
 
                 return (
-                    <>
+                    <div className="container-fluid">
                         <Modal isOpen={this.state.modalRegister} toggle={this.toggleModalRegister}>
                             <ModalHeader toggle={this.toggleModalRegister}>Register Workhouse</ModalHeader>
                             <ModalBody>
@@ -159,12 +160,31 @@ class Workhouse extends Component {
                                     <button className="btn btn-success mr-3" onClick={this.toggleModalRegister}>Register</button>
                                 </div> 
                             </div>    
-                        </div>                  
-        
-                        <div className="col-12">
-                        {items}
                         </div>
-                    </>
+
+                        
+
+                        <div className="row">
+                            <table className="table mt-3 mb-3">
+                                <thead className="bg-info text-white">
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Index No</th>
+                                    <th scope="col">Register Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Telephone number</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Customer id</th>
+                                    <th scope="col">Actions</th>
+                                </thead>
+
+                                <tbody>
+                                    {items}
+                                </tbody>
+                            </table>                
+                        </div>   
+                    </div>
                 )
             }
         
