@@ -19,7 +19,7 @@ export class Machinery extends Component {
 
     this.state = {
       machinery: [],
-      modal: true,
+      modal: false,
       successAlertVisible: false,
     };
   }
@@ -100,7 +100,7 @@ export class Machinery extends Component {
           }}
         >
           <Alert
-            color="info"
+            style={{ backgroundColor: "#23272B", color: "white" }}
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >

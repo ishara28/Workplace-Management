@@ -156,6 +156,7 @@ export class RegisterModal extends Component {
                       this.setState({ category: e.target.value })
                     }
                   >
+                    <option>Choose Category</option>
                     <option>VEHICLE</option>
                     <option>TOOL</option>
                   </Input>
@@ -176,7 +177,7 @@ export class RegisterModal extends Component {
                       this.setState({ owner_id: e.target.value })
                     }
                   >
-                    <option>Choose owner</option>
+                    <option>Choose Owner</option>
                     {this.state.customers.map((customer) => {
                       return (
                         <option value={customer.c_id}>
