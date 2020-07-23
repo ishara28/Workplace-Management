@@ -133,7 +133,7 @@ export class Onemachine extends Component {
       <tr>
         <th scope="row">{this.props.machine.index_no}</th>
         <td>{this.props.machine.reg_id}</td>
-        <td>{this.props.machine.reg_date.slice(0,10)}</td>
+        <td>{this.props.machine.reg_date.slice(0, 10)}</td>
         <td>{this.props.machine.category}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
@@ -146,10 +146,27 @@ export class Onemachine extends Component {
             <DropdownToggle caret size="sm">
               Operation
             </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={this.showEditModal}>Edit</DropdownItem>
-              <DropdownItem onClick={this.removeDialog}>Remove</DropdownItem>
-              <DropdownItem onClick={this.toggleBlock}>Block</DropdownItem>
+            <DropdownMenu
+              style={{ backgroundColor: "#23272B", color: "white" }}
+            >
+              <DropdownItem
+                style={{ color: "white" }}
+                onClick={this.showEditModal}
+              >
+                Edit
+              </DropdownItem>
+              <DropdownItem
+                style={{ color: "white" }}
+                onClick={this.removeDialog}
+              >
+                Remove
+              </DropdownItem>
+              <DropdownItem
+                style={{ color: "white" }}
+                onClick={this.toggleBlock}
+              >
+                Block
+              </DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
         </td>

@@ -10,12 +10,16 @@ import {
   Alert,
   Table,
   Input,
+  InputGroupAddon,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import Onemachine from "./Onemachine";
 import EditModal from "./EditModal";
+import { FaSearch } from "react-icons/fa";
 
 export class Machinery extends Component {
   constructor(props) {
@@ -27,12 +31,7 @@ export class Machinery extends Component {
       modal: false,
       successAlertVisible: false,
       editModal: false,
-      searchIndex: "",
-      searchRegId: "",
-      searchRegDate: "",
-      searchCategory: "",
-      searchDescription: "",
-      searchStatus: "",
+      searchValue: "",
     };
   }
 
@@ -89,6 +88,20 @@ export class Machinery extends Component {
             placeholder="Search by Id"
           />
         </div> */}
+        <div style={{ float: "left", width: "300px", marginLeft: 10 }}>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>
+                <FaSearch style={{ color: "#23272B" }} />
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input
+              placeholder="Search"
+              value={this.state.searchValue}
+              onChange={(e) => this.setState({ searchValue: e.target.value })}
+            />
+          </InputGroup>
+        </div>
 
         <div style={{ float: "right", margin: 5 }}>
           <Button
@@ -102,72 +115,6 @@ export class Machinery extends Component {
         {/* Machines List  */}
         <div>
           <Table striped bordered hover responsive>
-            <thead style={{ backgroundColor: "#23272B" }}>
-              <tr>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder="Search Index"
-                    value={this.state.searchIndex}
-                    onChange={(e) =>
-                      this.setState({ searchIndex: e.target.value })
-                    }
-                  />
-                </th>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder="Search Reg Id"
-                    value={this.state.searchRegId}
-                    onChange={(e) =>
-                      this.setState({ searchRegId: e.target.value })
-                    }
-                  />
-                </th>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder="Search Reg. Date"
-                    value={this.state.searchRegDate}
-                    onChange={(e) =>
-                      this.setState({ searchRegDate: e.target.value })
-                    }
-                  />
-                </th>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder='Search Category'
-                    // value={this.state.searchCategory}
-                    onSelect={(e) =>
-                      this.setState({ searchCategory: e.target.value }, () =>
-                        console.log(this.state.searchCategory)
-                      )
-                    }
-                  ></Input>
-                </th>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder="Search"
-                    value={this.state.searchDescription}
-                    onChange={(e) =>
-                      this.setState({ searchDescription: e.target.value })
-                    }
-                  />
-                </th>
-                <th>
-                  <Input
-                    size="sm"
-                    placeholder="Search Status"
-                    value={this.state.searchStatus}
-                    onChange={(e) =>
-                      this.setState({ searchStatus: e.target.value })
-                    }
-                  />
-                </th>
-              </tr>
-            </thead>
             <thead style={{ backgroundColor: "#23272B", color: "white" }}>
               <tr>
                 <th>Index No.</th>
@@ -182,15 +129,15 @@ export class Machinery extends Component {
               {this.state.machinery
                 .filter((machine) => {
                   return (
-                    machine.index_no.includes(this.state.searchIndex) &&
-                    machine.reg_id.includes(this.state.searchRegId) &&
-                    machine.reg_date.includes(this.state.searchRegDate) &&
-                    machine.description.includes(
-                      this.state.searchDescription
-                    ) &&
-                    machine.index_no.includes(this.state.searchIndex) &&
+                    machine.index_no.includes(this.state.searchValue) ||
+                    machine.reg_id.includes(this.state.searchValue) ||
+                    machine.reg_date.includes(this.state.searchValue) ||
+                    machine.category.includes(
+                      this.state.searchValue.toUpperCase()
+                    ) ||
+                    machine.description.includes(this.state.searchValue) ||
                     machine.status.includes(
-                      this.state.searchStatus.toUpperCase()
+                      this.state.searchValue.toUpperCase()
                     )
                   );
                 })
