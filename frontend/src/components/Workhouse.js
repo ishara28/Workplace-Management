@@ -160,7 +160,7 @@ class Workhouse extends Component {
 
                         
 
-                        <div className="row">
+                        <div className="row mainTable">
                      
                             <table className="table table-responsive mt-3 mb-3">
                                 <thead className="bg-info text-white">

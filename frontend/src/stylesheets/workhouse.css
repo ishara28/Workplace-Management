@@ -25,6 +25,10 @@ body {
     border: 1px solid gray;
     text-align: center;
   }
+
+  .mainTable{
+    display: inline;
+  }
   
   @media screen and (max-width: 600px) {
     table {
