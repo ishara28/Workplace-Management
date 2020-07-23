@@ -93,7 +93,7 @@ export class Machinery extends Component {
 
         {/* Machines List  */}
         <div>
-          <Table hover responsive dark={false}>
+          <Table striped bordered hover responsive>
             <thead>
               <tr>
                 <th>Machine Id</th>

@@ -79,20 +79,23 @@ export class Onemachine extends Component {
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <h5>Are you sure to remove?</h5>
+            <h2>Are you sure to remove?</h2>
             {/* <p>You want to delete this file?</p> */}
-            <Button style={{ margin: 3 }} onClick={onClose}>
-              No
-            </Button>
-            <Button
-              style={{ margin: 3 }}
-              onClick={() => {
-                this.removeMachine();
-                onClose();
-              }}
-            >
-              Yes, Remove
-            </Button>
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.removeMachine();
+                  onClose();
+                }}
+              >
+                Yes, Remove
+              </Button>
+            </div>
           </div>
         );
       },
@@ -133,7 +136,11 @@ export class Onemachine extends Component {
         <td>{this.props.machine.reg_id}</td>
         <td>{this.props.machine.reg_date.slice(0, 10)}</td>
         <td>{this.props.machine.category}</td>
-        <td>{this.props.machine.description}</td>
+        <td>
+          <textarea name="" id="" cols="35" disabled>
+            {this.props.machine.description}
+          </textarea>
+        </td>
         <th>{this.props.machine.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
