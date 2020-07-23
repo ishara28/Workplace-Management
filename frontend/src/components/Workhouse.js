@@ -7,7 +7,6 @@ import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
 import {Loading} from './LoadingComponent'
 import RenderItem from './WorkhouseRenderItem'
-import '../stylesheets/Table.css'
 
 const mapStateToProps = (state) => ({
     Workhouses:state.Workhouses

@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
 import Customer from './Customer';
-import Machinery from './Machinery';
+import Machinery from "./machinery/Machinery";
 import Workhouse from './Workhouse';
 import Organization from './Organization';
 import Agreement from './Agreement';
@@ -20,14 +20,12 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchWorkhouses:()=>dispatch(fetchWorkhouses()),
-    fetchMachineries:()=>dispatch(fetchMachineries())
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
 })
 
 class Main extends Component {
     componentDidMount(){
-        this.props.fetchWorkhouses();
-        this.props.fetchMachineries();
+        this.props.fetchWorkhouses()
     }
 
     render(){
