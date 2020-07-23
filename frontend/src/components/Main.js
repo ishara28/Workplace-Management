@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import Header from "./Header";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-import Home from "./Home";
-import Login from "./Login";
-import Customer from "./Customer";
-// import Machinery from './Machinery';
-import Workhouse from "./Workhouse";
-import Organization from "./Organization";
-import Agreement from "./Agreement";
-import Project from "./Project";
-import { connect } from "react-redux";
-import Machinery from "./machinery/Machinery";
+import React, { Component } from 'react';
+import Header from './Header';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import Home from './Home';
+import Login from './Login'
+import Customer from './Customer';
+import Machinery from './Machinery';
+import Workhouse from './Workhouse';
+import Organization from './Organization';
+import Agreement from './Agreement';
+import Project from './Project';
+import { connect } from 'react-redux'
+import OneWorkhouse from './OneWorkhouse'
+import {fetchWorkhouses, fetchMachineries} from '../redux/ActionCreators'
 
 const mapStateToProps = (state) => {
   return {
@@ -18,10 +19,19 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses()),
+    fetchMachineries:()=>dispatch(fetchMachineries())
+})
+
 class Main extends Component {
   constructor(props) {
     super(props);
   }
+    componentDidMount(){
+        this.props.fetchWorkhouses();
+        this.props.fetchMachineries();
+    }
 
   render() {
     const HomePage = () => {
@@ -80,22 +90,32 @@ class Main extends Component {
       }
     };
 
-    return (
-      <>
-        {this.props.username != null && <Header />}
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/customer" component={CustomerPage} />
-          <Route path="/machinery" component={MachineryPage} />
-          <Route path="/workhouse" component={WorkhousePage} />
-          <Route path="/organization" component={OrganizationPage} />
-          <Route path="/agreement" component={AgreementPage} />
-          <Route path="/project" component={ProjectPage} />
-          <Redirect to="/" />
-        </Switch>
-      </>
-    );
-  }
+        const OneWorkhousePage = ({match})=>{
+            if(this.props.username==null){
+                return(<OneWorkhouse index_no={match.params.index_no}/>)
+            }
+            else{
+                return(<Login/>)
+            }
+        }
+
+        return (
+            <>
+                {this.props.username==null && <Header/>}
+                <Switch>
+                    <Route exact path="/" component={HomePage}/>
+                    <Route path="/customer" component={CustomerPage}/>
+                    <Route path="/machinery" component={MachineryPage}/>
+                    <Route exact path="/workhouse" component={WorkhousePage}/>
+                    <Route path="/workhouse/:index_no" component={OneWorkhousePage}/>
+                    <Route path="/organization" component={OrganizationPage}/>
+                    <Route path="/agreement" component={AgreementPage}/>
+                    <Route path="/project" component={ProjectPage}/>
+                    <Redirect to="/"/>
+                </Switch>
+            </>
+        )
+    }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main))

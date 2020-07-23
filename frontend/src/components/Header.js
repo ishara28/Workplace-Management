@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Navbar, NavbarBrand, Nav, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Navbar, NavbarBrand, Nav, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import '../stylesheets/Header.css';
 import { connect } from 'react-redux'
 import { updateUsername } from '../redux/ActionCreators'
@@ -97,7 +97,7 @@ class Header extends Component {
                             <input type="password" className="form-control mb-3" id="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" required/>
                             <input type="text" className="form-control mb-3" id="newUsername" name="newUsername" value={this.state.newUsername} onChange={this.handleInputChange} placeholder="new username" required/>
                             <center>
-                                <button type="submit" class="btn btn-success">change</button>
+                                <button type="submit" className="btn btn-success">change</button>
                             </center>
                         </form>
                     </ModalBody>
@@ -112,7 +112,7 @@ class Header extends Component {
                             <input type="password" className="form-control mb-3" id="newPassword" name="newPassword" value={this.state.newPassword} onChange={this.handleInputChange} placeholder="new password" required/>
                             <input type="password" className="form-control mb-3" id="confNewPassword" name="confNewPassword" value={this.state.confNewPassword} onChange={this.handleInputChange} placeholder="confirm new password" required/>
                             <center>
-                                <button type="submit" class="btn btn-success">change</button>
+                                <button type="submit" className="btn btn-success">change</button>
                             </center>
                         </form>
                     </ModalBody>
@@ -130,9 +130,7 @@ class Header extends Component {
                 </Modal>
 
                 <Navbar dark color="primary" expand="md">
-                    <div className="container">
-                        <NavbarBrand className="mr-auto" href="/home"><h1><b>Workplace Management System</b></h1></NavbarBrand>
-                    </div>
+                    <NavbarBrand className="ml-3" href="/home"><h1><b>Workplace Management System</b></h1></NavbarBrand>
                     <Nav className="ml-auto" navbar>
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                             <DropdownToggle caret className="btn btn-light header_button">
@@ -144,9 +142,10 @@ class Header extends Component {
                                 <DropdownItem className="text-danger btn-danger" onClick={this.deleteAccount}>Delete account</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>           
-                        <NavItem>
-                            <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
-                        </NavItem>
+                        
+                    </Nav>
+                    <Nav>
+                        <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
                     </Nav>
                 </Navbar>
             </>
