@@ -3,12 +3,15 @@ import {Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, ModalFooter, 
 import {Link, withRouter} from 'react-router-dom'
 import { baseUrl } from '../shared/baseUrl';
 import axios from 'axios'
-import {updateWorkhouse} from '../redux/ActionCreators'
+import {updateWorkhouse, activeWorkhouse, blockWorkhouse,removeWorkhouse} from '../redux/ActionCreators'
 import {connect} from 'react-redux'
 import {Loading} from './LoadingComponent'
 
 const mapDispatchToProps = (dispatch) => ({
-    updateWorkhouse: (updated)=>dispatch(updateWorkhouse(updated))
+    updateWorkhouse: (updated)=>dispatch(updateWorkhouse(updated)),
+    activeWorkhouse:(w_id)=>dispatch(activeWorkhouse(w_id)),
+    blockWorkhouse:(w_id,reason)=>dispatch(blockWorkhouse(w_id,reason)),
+    removeWorkhouse:(w_id)=>dispatch(removeWorkhouse(w_id))
 })
 
 export class OneWorkhouse extends Component {
@@ -43,9 +46,9 @@ export class OneWorkhouse extends Component {
         this.toggleModalUpdate = this.toggleModalUpdate.bind(this);
         this.toggleModalBlock = this.toggleModalBlock.bind(this);
         this.toggleModalRemove = this.toggleModalRemove.bind(this);
-        this.submitReason = this.submitReason.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.activeWorkhouse = this.activeWorkhouse.bind(this);
         this.blockWorkhouse = this.blockWorkhouse.bind(this);
         this.removeWorkhouse = this.removeWorkhouse.bind(this);
     }
@@ -130,21 +133,6 @@ export class OneWorkhouse extends Component {
         })
     }
 
-
-    blockWorkhouse(){
-        this.setState({
-            status:"BLOCKED"
-        })
-
-        return axios.post(baseUrl+'workhouse/block/'+this.state.w_id, {
-            reason:this.state.reason
-        })
-        .then((response) => {
-            console.log(response);
-        })
-        .catch(err=>this.setState({error:err}));
-    }
-
     handleSubmit(event){
         event.preventDefault();
         this.toggleModalUpdate();
@@ -171,6 +159,14 @@ export class OneWorkhouse extends Component {
         this.props.updateWorkhouse(updated); 
     }
 
+    activeWorkhouse(){
+        this.setState({
+            status:"ACTIVE"
+        })
+
+        this.props.activeWorkhouse(this.state.w_id);
+    }
+
     removeWorkhouse(){
         this.toggleModalRemove();
 
@@ -178,17 +174,18 @@ export class OneWorkhouse extends Component {
             status:"REMOVED"
         })
 
-        return axios.post(baseUrl+'workhouse/remove/'+this.state.w_id)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch(err=>console.log(err));
+        this.props.removeWorkhouse(this.state.w_id);
     }
 
-    submitReason(event){
+    blockWorkhouse(event){
         event.preventDefault();
         this.toggleModalBlock();
-        this.blockWorkhouse();
+
+        this.setState({
+            status:"BLOCKED"
+        })
+
+        this.props.blockWorkhouse(this.state.w_id,this.state.reason);
     }
 
     render() {
@@ -273,7 +270,7 @@ export class OneWorkhouse extends Component {
                         <Modal isOpen={this.state.modalBlock} toggle={this.toggleModalBlock}>
                             <ModalHeader toggle={this.toggleModalBlock} className="text-danger">Warning!</ModalHeader>
                             <ModalBody>
-                                <form onSubmit={this.submitReason}>
+                                <form onSubmit={this.blockWorkhouse}>
                                     <div className="form-group">
                                         <label>Do you want to block workhouse?</label>
                                         <textarea type="text" className="form-control mb-3" id="reason" name="reason" value={this.state.reason} onChange={this.handleInputChange} placeholder="Reason" required/>
@@ -304,7 +301,7 @@ export class OneWorkhouse extends Component {
                             </CardBody>
                             <CardFooter className="bg-warning">
                                 <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
-                                {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success mr-2">Active</button>}
+                                {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success mr-2" onClick={this.activeWorkhouse}>Active</button>}
                                 {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger mr-2" onClick={this.toggleModalBlock}>Block</button>}
                                 {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark" onClick={this.toggleModalRemove}>Remove</button>}                     
                             </CardFooter>
