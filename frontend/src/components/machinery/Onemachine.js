@@ -131,10 +131,9 @@ export class Onemachine extends Component {
   render() {
     return (
       <tr>
-        <th scope="row">{this.props.machine.m_id}</th>
-        <td>{this.props.machine.index_no}</td>
+        <th scope="row">{this.props.machine.index_no}</th>
         <td>{this.props.machine.reg_id}</td>
-        <td>{this.props.machine.reg_date.slice(0, 10)}</td>
+        <td>{this.props.machine.reg_date.slice(0,10)}</td>
         <td>{this.props.machine.category}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
@@ -145,7 +144,7 @@ export class Onemachine extends Component {
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm">
-              Select operation
+              Operation
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.showEditModal}>Edit</DropdownItem>
