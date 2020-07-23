@@ -193,7 +193,6 @@ class RenderItem extends Component{
                 </Modal>
                 
                 <tr>
-                    <th scope="row">{this.props.workhouses.w_id}</th>
                     <td>{this.props.workhouses.index_no}</td>
                     <td>{this.props.workhouses.reg_date}</td>
                     <td>{this.props.workhouses.status}</td>

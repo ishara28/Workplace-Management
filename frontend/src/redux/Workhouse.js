@@ -32,7 +32,7 @@ export const Workhouses = (state = { isLoading: true, errMess: null, workhouses:
             })
             .catch(err=>console.log(err));
 
-            return {...state}
+            return {...state,isLoding:false, errerrMess: null, workhouses:state.workhouses}
 
         default:
             return state;

@@ -31,11 +31,6 @@ class Workhouse extends Component {
         this.submitRegister = this.submitRegister.bind(this);
         this.changeSearchedItem = this.changeSearchedItem.bind(this);
     }
-    
-
-    componentDidMount(){
-        this.props.fetchWorkhouses();
-    }
 
     toggleModalRegister(){
         this.setState({
@@ -166,17 +161,17 @@ class Workhouse extends Component {
                         
 
                         <div className="row">
-                            <table className="table mt-3 mb-3">
+                     
+                            <table className="table table-responsive mt-3 mb-3">
                                 <thead className="bg-info text-white">
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Index No</th>
+                                    <th scope="col" id="index_no">Index No</th>
                                     <th scope="col">Register Date</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Telephone number</th>
                                     <th scope="col">email</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Customer id</th>
+                                    <th scope="col">Customer</th>
                                     <th scope="col">Actions</th>
                                 </thead>
 

@@ -3,16 +3,11 @@ import {Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, ModalFooter, 
 import {Link, withRouter} from 'react-router-dom'
 import { baseUrl } from '../shared/baseUrl';
 import axios from 'axios'
-import {WorkhousesLoading, updateWorkhouse} from '../redux/ActionCreators'
+import {updateWorkhouse} from '../redux/ActionCreators'
 import {connect} from 'react-redux'
 import {Loading} from './LoadingComponent'
 
-const mapStateToProps = (state) => ({
-    isLoading:state.isLoading
-})
-
 const mapDispatchToProps = (dispatch) => ({
-    WorkhousesLoading:(value)=>dispatch(WorkhousesLoading(value)),
     updateWorkhouse: (updated)=>dispatch(updateWorkhouse(updated))
 })
 
@@ -31,6 +26,7 @@ export class OneWorkhouse extends Component {
             description:'',
             c_id:'',
             error:'',
+            isLoading:false,
 
             telephone2:'',
             email2:'',
@@ -56,7 +52,7 @@ export class OneWorkhouse extends Component {
     
 
     componentDidMount(){
-        this.props.WorkhousesLoading(true);
+        this.setState({isLoading:true})
 
         return fetch(baseUrl + "workhouse/"+this.props.index_no)
         .then(
@@ -78,7 +74,6 @@ export class OneWorkhouse extends Component {
           )
         .then(response => response.json())
         .then(workhouses => {
-            this.props.WorkhousesLoading(false);
             if(workhouses.length===1){
                 this.setState({
                     w_id:workhouses[0].w_id,
@@ -95,14 +90,16 @@ export class OneWorkhouse extends Component {
                     address2:workhouses[0].address,
                     description2:workhouses[0].description,
                     c_id2:workhouses[0].c_id,
+                    isLoading:false
                 })
             }else{
                 this.setState({
-                    error:"No workhouse with this index!"
+                    error:"No workhouse with this index!",
+                    isLoading:false
                 });
             }           
         })
-        .catch(error => this.setState({error:error.message}));
+        .catch(error => this.setState({error:error.message, isLoading:false}));
     }
 
     handleInputChange(event){
@@ -195,7 +192,7 @@ export class OneWorkhouse extends Component {
     }
 
     render() {
-        if(this.props.isLoading){
+        if(this.state.isLoading){
             return(
                 <>
                     <Breadcrumb>
@@ -228,7 +225,7 @@ export class OneWorkhouse extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label>Telephone number</label>
-                                        <input type="text" className="form-control mb-3" id="telephone" name="telephone" value={this.state.telephone}  required/>
+                                        <input type="text" className="form-control mb-3" id="telephone" name="telephone" value={this.state.telephone} onChange={this.handleInputChange}  required/>
                                     </div>
                                         
                                     <div className="form-group">
@@ -321,4 +318,4 @@ export class OneWorkhouse extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(OneWorkhouse))
+export default withRouter(connect(null,mapDispatchToProps)(OneWorkhouse))

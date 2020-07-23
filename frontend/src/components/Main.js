@@ -11,6 +11,7 @@ import Agreement from './Agreement';
 import Project from './Project';
 import { connect } from 'react-redux'
 import OneWorkhouse from './OneWorkhouse'
+import {fetchWorkhouses} from '../redux/ActionCreators'
 
 const mapStateToProps = state => {
     return{
@@ -18,7 +19,15 @@ const mapStateToProps = state => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
+})
+
 class Main extends Component {
+    componentDidMount(){
+        this.props.fetchWorkhouses();
+    }
+
     render(){
         const HomePage = ()=>{
             if(this.props.username==null){
@@ -111,4 +120,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main))
