@@ -27,7 +27,6 @@ export class Machinery extends Component {
 
     this.state = {
       machinery: [],
-      machineryClone: [],
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -80,14 +79,8 @@ export class Machinery extends Component {
           <BreadcrumbItem active>Machinery</BreadcrumbItem>
         </Breadcrumb>
 
-        {/* <div className="container-fluid d-flex flex-row-reverse">
-          <button className="btn btn-success ml-2">Register</button>
-          <input
-            type="text"
-            className="form-control textbox"
-            placeholder="Search by Id"
-          />
-        </div> */}
+
+        {/* Search  */}
         <div style={{ float: "left", width: "300px", marginLeft: 10 }}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -103,7 +96,7 @@ export class Machinery extends Component {
           </InputGroup>
         </div>
 
-        <div style={{ float: "right", margin: 5 }}>
+        <div style={{ float: "right", marginRight: 5, marginBottom: 10 }}>
           <Button
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}

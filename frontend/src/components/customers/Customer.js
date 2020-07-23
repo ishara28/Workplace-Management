@@ -1,67 +1,130 @@
-import React, { Component } from 'react';
-import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
-import {Link} from 'react-router-dom';
-
-
-
+import React, { Component } from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+  Table,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import Axios from "axios";
+import RegisterModal from "./RegisterModal";
+import { FaSearch } from "react-icons/fa";
+import OneCustomer from "./OneCustomer";
 
 class Customer extends Component {
-    componentDidMount(){
+  constructor(props) {
+    super(props);
 
-    }
+    this.state = {
+      customers: [],
+      searchValue: "",
+    };
+  }
 
-    render(){
-        return (
-            <>
-                <Breadcrumb>
-                    <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>Customer</BreadcrumbItem>
-                </Breadcrumb>
+  componentDidMount() {
+    Axios.get("/customer/")
+      .then((res) => this.setState({ customers: res.data }))
+      .then(() => console.log(this.state.customers))
+      .catch((err) => console.log(err));
+  }
 
-                <div className="container-fluid d-flex flex-row-reverse">
-                    <button className="btn btn-success ml-2">Register</button>
-                    <input type="text" className="form-control textbox" placeholder="Search by Id"/>
-                </div>
+  render() {
+    return (
+      <>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/">Home</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>Customer</BreadcrumbItem>
+        </Breadcrumb>
 
-                <div className="container-fluid">
+        {/* Register Modal  */}
+        <RegisterModal />
 
-                    <div className="row">
-                        <div className="col-6">
-                            <Link to="/customer">
-                                <button className="btn btn-primary custom_card">
-                                    <h2>Register Customers</h2>
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="col-6">
-                        <Link to="/machinery">
-                                <button className="btn btn-success custom_card">
-                                    <h2>Update Customers</h2>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
+        {/* Customer Table  */}
 
-                    <div className="row">
-                        <div className="col-6">
-                            <Link to="/customer">
-                                <button className="btn btn-danger custom_card">
-                                    <h2>Remove Customers</h2>
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="col-6">
-                        <Link to="/machinery">
-                                <button className="btn btn-dark custom_card">
-                                    <h2>Block agents</h2>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
-    }
+        <div
+          style={{
+            float: "left",
+            width: "300px",
+            marginLeft: 10,
+            marginBottom: 10,
+          }}
+        >
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>
+                <FaSearch style={{ color: "#0069D9" }} />
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input
+              placeholder="Search"
+              value={this.state.searchValue}
+              onChange={(e) => this.setState({ searchValue: e.target.value })}
+            />
+          </InputGroup>
+        </div>
+
+        <div>
+          <Table striped bordered hover responsive size="sm">
+            <thead style={{ backgroundColor: "#0069D9", color: "white" }}>
+              <tr>
+                <th>Index No.</th>
+                <th>Name</th>
+                <th>Reg. date</th>
+                <th>NIC / Passport</th>
+                <th>Address</th>
+                <th>Telephone No.</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.customers
+                .filter((customer) => {
+                  return (
+                    customer.index_no
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.reg_date
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.name
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.nic_passport
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.address
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.telephone
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.description
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.reg_date
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.status
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase())
+                  );
+                })
+                .map((customer) => {
+                  return <OneCustomer customer={customer} />;
+                })}
+            </tbody>
+          </Table>
+        </div>
+      </>
+    );
+  }
 }
 
-export default Customer
+export default Customer;

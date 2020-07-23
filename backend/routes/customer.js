@@ -46,7 +46,6 @@ router.post("/remove/:c_id", (req, res) => {
 //Register a customer
 router.post("/register", (req, res) => {
   let customer = {
-    c_id: req.body.c_id,
     index_no: req.body.index_no,
     name: req.body.name,
     nic_passport: req.body.nic_passport,
