@@ -54,3 +54,21 @@ export const updateWorkhouse = (workhouse) => ({
     type: ActionTypes.UPDATE_WORKHOUSE,
     payload: workhouse
 })
+
+export const activeWorkhouse = (w_id) => ({
+  type: ActionTypes.ACTIVE_WORKHOUSE,
+  payload: w_id
+})
+
+export const blockWorkhouse = (w_id, reason) => ({
+    type: ActionTypes.BLOCK_WORKHOUSE,
+    payload:{
+      w_id:w_id,
+      reason:reason
+    }
+})
+
+export const removeWorkhouse = (w_id) => ({
+    type: ActionTypes.REMOVED_WORKHOUSE,
+    payload: w_id
+})

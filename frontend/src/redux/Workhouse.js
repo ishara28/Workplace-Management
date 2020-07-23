@@ -1,4 +1,4 @@
-import { ADD_WORKHOUSE, WORKHOUSE_LOADING, WORKHOUSE_FAILED, UPDATE_WORKHOUSE } from './ActionTypes';
+import { ADD_WORKHOUSE, WORKHOUSE_LOADING, WORKHOUSE_FAILED, UPDATE_WORKHOUSE, ACTIVE_WORKHOUSE, BLOCK_WORKHOUSE, REMOVED_WORKHOUSE } from './ActionTypes';
 import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
 
@@ -34,6 +34,53 @@ export const Workhouses = (state = { isLoading: true, errMess: null, workhouses:
 
             return {...state,isLoding:false, errerrMess: null, workhouses:state.workhouses}
 
+        case ACTIVE_WORKHOUSE:
+            for (i=0;i<state.workhouses.length;i++){
+                if(state.workhouses[i].w_id===action.payload){
+                    state.workhouses[i].status="ACTIVE";
+                }
+            }
+    
+            axios.post(baseUrl+'workhouse/active/'+action.payload)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(err=>console.log(err));
+    
+            return {...state,isLoding:false, errerrMess: null, workhouses:state.workhouses}
+
+        case BLOCK_WORKHOUSE:
+            for (i=0;i<state.workhouses.length;i++){
+                if(state.workhouses[i].w_id===action.payload.w_id){
+                    state.workhouses[i].status="BLOCKED";
+                }
+            }
+
+            axios.post(baseUrl+'workhouse/block/'+action.payload.w_id, {
+                reason:action.payload.reason
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(err=>console.log(err));
+
+            return {...state,isLoding:false, errerrMess: null, workhouses:state.workhouses}
+
+        case REMOVED_WORKHOUSE:
+            for (i=0;i<state.workhouses.length;i++){
+                if(state.workhouses[i].w_id===action.payload){
+                    state.workhouses[i].status="REMOVED";
+                }
+            }
+
+            axios.post(baseUrl+'workhouse/remove/'+action.payload)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(err=>console.log(err));
+
+            return {...state,isLoding:false, errerrMess: null, workhouses:state.workhouses}
+        
         default:
             return state;
     }
