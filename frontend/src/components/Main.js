@@ -11,7 +11,7 @@ import Agreement from './Agreement';
 import Project from './Project';
 import { connect } from 'react-redux'
 import OneWorkhouse from './OneWorkhouse'
-import {fetchWorkhouses} from '../redux/ActionCreators'
+import {fetchWorkhouses, fetchMachineries} from '../redux/ActionCreators'
 
 const mapStateToProps = state => {
     return{
@@ -20,12 +20,14 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses()),
+    fetchMachineries:()=>dispatch(fetchMachineries())
 })
 
 class Main extends Component {
     componentDidMount(){
         this.props.fetchWorkhouses();
+        this.props.fetchMachineries();
     }
 
     render(){

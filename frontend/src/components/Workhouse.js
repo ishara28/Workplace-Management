@@ -7,7 +7,7 @@ import axios from 'axios'
 import {baseUrl} from '../shared/baseUrl'
 import {Loading} from './LoadingComponent'
 import RenderItem from './WorkhouseRenderItem'
-import '../stylesheets/workhouse.css'
+import '../stylesheets/Table.css'
 
 const mapStateToProps = (state) => ({
     Workhouses:state.Workhouses
@@ -164,7 +164,7 @@ class Workhouse extends Component {
                      
                             <table className="table table-responsive mt-3 mb-3">
                                 <thead className="bg-info text-white">
-                                    <th scope="col" id="index_no">Index No</th>
+                                    <th scope="col">Index No</th>
                                     <th scope="col">Register Date</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Telephone number</th>

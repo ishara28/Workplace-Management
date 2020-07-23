@@ -191,31 +191,31 @@ export class OneWorkhouse extends Component {
     render() {
         if(this.state.isLoading){
             return(
-                <>
+                <div className="container-fluid">
                     <Breadcrumb>
                         <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                         <BreadcrumbItem><Link to="/workhouse">Workhouse</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{this.props.index_no}</BreadcrumbItem>
                     </Breadcrumb>
                     <Loading/>
-                </>
+                </div>
             )
         }
         else{
             if(this.state.error!==''){
                 return(
-                    <>
+                    <div className="container-fluid">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                             <BreadcrumbItem><Link to="/workhouse">Workhouse</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{this.props.index_no}</BreadcrumbItem>
                         </Breadcrumb>
                         <h1>{this.state.error}</h1>
-                    </>
+                    </div>
                 )
             }else{
                 return (
-                    <>
+                    <div className="container-fluid">
                         <Modal isOpen={this.state.modalUpdate} toggle={this.toggleModalUpdate}>
                             <ModalHeader toggle={this.toggleModalUpdate}>Update {this.state.index_no} Workhouse</ModalHeader>
                             <ModalBody>
@@ -287,27 +287,27 @@ export class OneWorkhouse extends Component {
                             <BreadcrumbItem><Link to="/workhouse">Workhouse</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{this.props.index_no}</BreadcrumbItem>
                         </Breadcrumb>
-                        <div className="col-12 mt-3 mb-3">
-                        <Card>
-                            <CardHeader className="bg-dark text-white">index No: {this.state.index_no}</CardHeader>
-                            <CardBody>
-                                <CardText>Register Date: {this.state.reg_date}</CardText>
-                                <CardText>Status: {this.state.status}</CardText>
-                                <CardText>Telephone number: {this.state.telephone2}</CardText>
-                                <CardText>email: {this.state.email2}</CardText>
-                                <CardText>Address:<br/>{this.state.address2}</CardText>
-                                <CardText>Description:<br/>{this.state.description2}</CardText>
-                                <CardText>Customer id: {this.state.c_id2}</CardText>
-                            </CardBody>
-                            <CardFooter className="bg-warning">
-                                <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
-                                {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success mr-2" onClick={this.activeWorkhouse}>Active</button>}
-                                {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger mr-2" onClick={this.toggleModalBlock}>Block</button>}
-                                {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark" onClick={this.toggleModalRemove}>Remove</button>}                     
-                            </CardFooter>
-                        </Card>
+                        <div className="col-12">
+                            <Card>
+                                <CardHeader className="bg-dark text-white">index No: {this.state.index_no}</CardHeader>
+                                <CardBody>
+                                    <CardText>Register Date: {this.state.reg_date}</CardText>
+                                    <CardText>Status: {this.state.status}</CardText>
+                                    <CardText>Telephone number: {this.state.telephone2}</CardText>
+                                    <CardText>email: {this.state.email2}</CardText>
+                                    <CardText>Address:<br/>{this.state.address2}</CardText>
+                                    <CardText>Description:<br/>{this.state.description2}</CardText>
+                                    <CardText>Customer id: {this.state.c_id2}</CardText>
+                                </CardBody>
+                                <CardFooter className="bg-warning">
+                                    <button type="button" className="btn btn-primary mr-2" onClick={this.toggleModalUpdate}>Update</button>
+                                    {this.state.status!=="ACTIVE" && <button type="button" className="btn btn-success mr-2" onClick={this.activeWorkhouse}>Active</button>}
+                                    {this.state.status!=="BLOCKED" && <button type="button" className="btn btn-danger mr-2" onClick={this.toggleModalBlock}>Block</button>}
+                                    {this.state.status!=="REMOVED" && <button type="button" className="btn btn-dark" onClick={this.toggleModalRemove}>Remove</button>}                     
+                                </CardFooter>
+                            </Card>
+                        </div>
                     </div>
-                    </>
                 )
             }
         }
