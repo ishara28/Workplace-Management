@@ -5,11 +5,11 @@ import Home from "./Home";
 import Login from "./Login";
 import Workhouse from "./Workhouse";
 import Organization from "./Organization";
-import Agreement from "./Agreement";
 import Project from "./Project";
 import { connect } from "react-redux";
 import Machinery from "./machinery/Machinery";
 import Customer from "./customers/Customer";
+import Agreement from "../agreements/Agreement";
 
 const mapStateToProps = (state) => {
   return {
