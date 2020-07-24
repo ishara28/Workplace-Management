@@ -157,7 +157,7 @@ export class RegisterModal extends Component {
 
               <FormGroup row>
                 <Label for="address" sm={2}>
-                  Telephone
+                  Address
                 </Label>
                 <Col sm={10}>
                   <Input

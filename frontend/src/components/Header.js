@@ -1,8 +1,12 @@
 import React,{Component} from 'react';
-import {Navbar, NavbarBrand, Nav, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import '../stylesheets/Header.css';
+import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { connect } from 'react-redux'
 import { updateUsername } from '../redux/ActionCreators'
+import {Link} from 'react-router-dom'
+
+const mapStateToProps = (state) => ({
+    username: state.Auth.username
+})
 
 const mapDispatchToProps = (dispatch) => ({
     updateUsername: username => dispatch(updateUsername(username))
@@ -90,7 +94,7 @@ class Header extends Component {
         return (
             <>
                 <Modal isOpen={this.state.modalUsername} toggle={this.toggleModalUsername}>
-                    <ModalHeader toggle={this.toggleModalUsername}>Change username</ModalHeader>
+                    <ModalHeader>Change username</ModalHeader>
                     <ModalBody>
                         <form onSubmit={values=>this.changeUsername(values)}>
                             <input type="text" className="form-control mb-3" id="username" name="username" value={this.state.username} onChange={this.handleInputChange} placeholder="username" required/>
@@ -104,7 +108,7 @@ class Header extends Component {
                 </Modal>
 
                 <Modal isOpen={this.state.modalPassword} toggle={this.toggleModalPassword}>
-                    <ModalHeader toggle={this.toggleModalPassword}>Change password</ModalHeader>
+                    <ModalHeader>Change password</ModalHeader>
                     <ModalBody>
                         <form onSubmit={values=>this.changePassword(values)}>
                             <input type="text" className="form-control mb-3" id="username" name="username" value={this.state.username} onChange={this.handleInputChange} placeholder="username" required/>
@@ -119,7 +123,7 @@ class Header extends Component {
                 </Modal>
 
                 <Modal isOpen={this.state.modalDelete} toggle={this.toggleModalDelete}>
-                    <ModalHeader toggle={this.toggleModalDelete} className="text-danger">Warning!</ModalHeader>
+                    <ModalHeader className="text-danger">Warning!</ModalHeader>
                     <ModalBody>
                         Do you want to delete account?
                     </ModalBody>
@@ -130,27 +134,27 @@ class Header extends Component {
                 </Modal>
 
                 <Navbar dark color="primary" expand="md">
-                    <NavbarBrand className="ml-3" href="/home"><h1><b>Workplace Management System</b></h1></NavbarBrand>
+                    <Nav>
+                        <NavItem><NavLink href='/home' className="text-white h1">Workplace Management System</NavLink></NavItem>
+                    </Nav>
                     <Nav className="ml-auto" navbar>
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                            <DropdownToggle caret className="btn btn-light header_button">
-                                <b>User</b>
+                            <DropdownToggle caret className="btn btn-light">
+                                <b>{this.props.username}</b>
                             </DropdownToggle>
-                            <DropdownMenu>
+                            <DropdownMenu right>
                                 <DropdownItem onClick={this.toggleModalUsername}>Change username</DropdownItem>
                                 <DropdownItem onClick={this.toggleModalPassword}>Change password</DropdownItem>
                                 <DropdownItem className="text-danger btn-danger" onClick={this.deleteAccount}>Delete account</DropdownItem>
+                                <DropdownItem onClick={this.logout}>Log out</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>           
-                        
                     </Nav>
-                    <Nav>
-                        <button className="btn btn-light header_button" onClick={this.logout}><b>Log out</b></button>
-                    </Nav>
+                   
                 </Navbar>
             </>
         )
     }
 }
 
-export default connect(null,mapDispatchToProps)(Header)
+export default connect(mapStateToProps,mapDispatchToProps)(Header)

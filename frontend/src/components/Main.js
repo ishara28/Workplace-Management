@@ -3,15 +3,15 @@ import Header from './Header';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
-import Customer from './Customer';
+//import Customer from './Customer';
 import Machinery from "./machinery/Machinery";
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
-import Agreement from './Agreement';
+//import Agreement from './Agreement';
 import Project from './project/Project';
 import { connect } from 'react-redux'
 import OneWorkhouse from './OneWorkhouse'
-import {fetchWorkhouses, fetchMachineries} from '../redux/ActionCreators'
+import {fetchWorkhouses} from '../redux/ActionCreators'
 
 const mapStateToProps = state => {
     return{
@@ -38,14 +38,14 @@ class Main extends Component {
             }
         }
 
-        const CustomerPage = ()=>{
+        /*const CustomerPage = ()=>{
             if(this.props.username==null){
                 return(<Customer/>)
             }
             else{
                 return(<Login/>)
             }
-        }
+        }*/
 
         const MachineryPage = ()=>{
             if(this.props.username==null){
@@ -74,14 +74,14 @@ class Main extends Component {
             }
         }
 
-        const AgreementPage = ()=>{
+        /*const AgreementPage = ()=>{
             if(this.props.username==null){
                 return(<Agreement/>)
             }
             else{
                 return(<Login/>)
             }
-        }
+        }*/
 
         const ProjectPage = ()=>{
             if(this.props.username==null){
@@ -106,12 +106,12 @@ class Main extends Component {
                 {this.props.username==null && <Header/>}
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
-                    <Route path="/customer" component={CustomerPage}/>
+                    {/*<Route path="/customer" component={CustomerPage}/>*/}
                     <Route path="/machinery" component={MachineryPage}/>
                     <Route exact path="/workhouse" component={WorkhousePage}/>
                     <Route path="/workhouse/:index_no" component={OneWorkhousePage}/>
                     <Route path="/organization" component={OrganizationPage}/>
-                    <Route path="/agreement" component={AgreementPage}/>
+                    {/*<Route path="/agreement" component={AgreementPage}/>*/}
                     <Route path="/project" component={ProjectPage}/>
                     <Redirect to="/"/>
                 </Switch>
