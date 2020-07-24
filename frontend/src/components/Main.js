@@ -8,7 +8,7 @@ import Machinery from "./machinery/Machinery";
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
 import Agreement from './Agreement';
-import Project from './Project';
+import Project from './project/Project';
 import { connect } from 'react-redux'
 import OneWorkhouse from './OneWorkhouse'
 import {fetchWorkhouses, fetchMachineries} from '../redux/ActionCreators'
