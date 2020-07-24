@@ -9,7 +9,7 @@ import Project from "./Project";
 import { connect } from "react-redux";
 import Machinery from "./machinery/Machinery";
 import Customer from "./customers/Customer";
-import Agreement from "../agreements/Agreement";
+import Agreement from "./agreements/Agreement";
 
 const mapStateToProps = (state) => {
   return {
