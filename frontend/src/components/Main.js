@@ -5,7 +5,7 @@ import Home from './Home';
 import Login from './Login'
 import Customer from './Customer';
 import Machinery from "./machinery/Machinery";
-import Workhouse from './Workhouse';
+import Workhouse from "./workhouse/Workhouse";
 import Organization from './Organization';
 import Agreement from './Agreement';
 import Project from './Project';
