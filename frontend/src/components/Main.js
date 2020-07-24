@@ -6,7 +6,7 @@ import Login from './Login'
 import Customer from './Customer';
 import Machinery from "./machinery/Machinery";
 import Workhouse from "./workhouse/Workhouse";
-import Organization from './Organization';
+import Organization from './organization/Organization';
 import Agreement from './Agreement';
 import Project from './Project';
 import { connect } from 'react-redux'
