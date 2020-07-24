@@ -46,22 +46,23 @@ export class EditModal extends Component {
       name: "",
       nic_passport: "",
       address: "",
+      telephone: "",
+      email: "",
+      description: "",
       isFieldsEmpty: false,
     };
   }
 
   componentDidMount() {
-    console.log("Machine", this.props.machine);
+    console.log(this.props.customer);
     this.setState({
-      reg_id: this.props.machine.reg_id,
-      category: this.props.machine.category,
-      owner_id: this.props.machine.owner_id,
-      description: this.props.machine.description,
+      name: this.props.customer.name,
+      nic_passport: this.props.customer.nic_passport,
+      address: this.props.customer.address,
+      telephone: this.props.customer.telephone,
+      email: this.props.customer.email,
+      description: this.props.customer.description,
     });
-    Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
-      //   .then(() => console.log(this.state.customers))
-      .catch((err) => console.log(err));
   }
 
   closeBtn = (
@@ -71,19 +72,23 @@ export class EditModal extends Component {
   );
 
   updateData = () => {
-    const newMachinery = {
-      reg_id: this.state.reg_id,
-      category: this.state.category,
+    const newCustomer = {
+      name: this.state.name,
+      nic_passport: this.state.nic_passport,
+      address: this.state.address,
+      telephone: this.state.telephone,
+      email: this.state.email,
       description: this.state.description,
-      owner_id: this.state.owner_id,
     };
     if (
-      this.state.reg_id &&
-      this.state.description &&
-      this.state.category &&
-      this.state.owner_id
+      this.state.name &&
+      this.state.nic_passport &&
+      this.state.address &&
+      this.state.telephone &&
+      this.state.email &&
+      this.state.description
     ) {
-      Axios.post("machinery/update/" + this.props.machine.m_id, newMachinery)
+      Axios.post("customer/update/" + this.props.customer.c_id, newCustomer)
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();
@@ -98,80 +103,87 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Machinery</ModalHeader>
+          <ModalHeader close={this.closeBtn}>Edit Customer</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
-                <Label for="exampleEmail" sm={2}>
+                <Label for="exampleEmail" sm={3}>
                   Name
                 </Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Input
-                    name="index_no"
-                    id="exampleEmail"
-                    placeholder="Reg id here..."
-                    value={this.props.name}
-                    onChange={(e) => this.setState({ reg_id: e.target.value })}
+                    placeholder="Name here..."
+                    value={this.state.name}
+                    onChange={(e) => this.setState({ name: e.target.value })}
                   />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
-                  Category
+                <Label for="exampleEmail" sm={3}>
+                  NIC / Passport
                 </Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.category}
+                    placeholder="Name here..."
+                    value={this.state.nic_passport}
                     onChange={(e) =>
-                      this.setState({ category: e.target.value })
+                      this.setState({ nic_passport: e.target.value })
                     }
-                  >
-                    <option>Choose Category</option>
-                    <option>VEHICLE</option>
-                    <option>TOOL</option>
-                  </Input>
+                  />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
-                  Owner
+                <Label for="exampleEmail" sm={3}>
+                  Address
                 </Label>
-                <Col sm={10}>
-                  <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.owner}
-                    onChange={(e) =>
-                      this.setState({ owner_id: e.target.value })
-                    }
-                  >
-                    <option>Choose Owner</option>
-                    {this.state.customers.map((customer) => {
-                      return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
-                        </option>
-                      );
-                    })}
-                  </Input>
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="exampleText" sm={2}>
-                  Description
-                </Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Input
                     type="textarea"
-                    name="text"
-                    id="exampleText"
+                    placeholder="Address here..."
+                    value={this.state.address}
+                    onChange={(e) => this.setState({ address: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Telephone No.
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    placeholder="Telephone no. here..."
+                    value={this.state.telephone}
+                    onChange={(e) =>
+                      this.setState({ telephone: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Email
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    placeholder="Email here..."
+                    value={this.state.email}
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Description
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="textarea"
+                    placeholder="Description  here..."
                     value={this.state.description}
                     onChange={(e) =>
                       this.setState({ description: e.target.value })
@@ -187,11 +199,11 @@ export class EditModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#23272B" }}
+              style={{ backgroundColor: "#0069D9" }}
               onClick={this.updateData}
             >
               Update Now
-            </Button>{" "}
+            </Button>
             <Button color="secondary" onClick={this.props.closeEditModal}>
               Cancel
             </Button>

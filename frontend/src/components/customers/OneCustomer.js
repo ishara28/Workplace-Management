@@ -69,7 +69,7 @@ export class OneCustomer extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/machinery/remove/" + this.props.machine.m_id)
+    Axios.post("/customer/remove/" + this.props.customer.c_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -113,12 +113,12 @@ export class OneCustomer extends Component {
 
     const currDate = date;
 
-    var blockedMachine = {
+    var blockedCustomer = {
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("machinery/block/" + this.props.machine.m_id, blockedMachine)
+      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -130,16 +130,17 @@ export class OneCustomer extends Component {
 
   render() {
     return (
-      <tr style={{ fontSize: 15}}>
+      <tr style={{ fontSize: 15 }}>
         <th scope="row">{this.props.customer.index_no}</th>
         <td>{this.props.customer.name}</td>
-        <td>{this.props.customer.reg_date}</td>
+        <td>{this.props.customer.reg_date.slice(0, 10)}</td>
         <td>{this.props.customer.nic_passport}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
             {this.props.customer.address}
           </textarea>
         </td>
+        <td>{this.props.customer.email}</td>
         <td>{this.props.customer.telephone}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
@@ -201,7 +202,7 @@ export class OneCustomer extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          machine={this.props.customer}
+          customer={this.props.customer}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended 

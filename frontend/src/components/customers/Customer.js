@@ -78,6 +78,7 @@ class Customer extends Component {
                 <th>Reg. date</th>
                 <th>NIC / Passport</th>
                 <th>Address</th>
+                <th>Email</th>
                 <th>Telephone No.</th>
                 <th>Description</th>
                 <th>Status</th>
@@ -109,6 +110,9 @@ class Customer extends Component {
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
                     customer.reg_date
+                      .toLowerCase()
+                      .includes(this.state.searchValue.toLowerCase()) ||
+                    customer.email
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
                     customer.status

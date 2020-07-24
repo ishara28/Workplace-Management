@@ -69,15 +69,12 @@ router.post("/register", (req, res) => {
 //Update a customer
 router.post("/update/:c_id", (req, res) => {
   let customer = {
-    index_no: req.body.index_no,
     name: req.body.name,
     nic_passport: req.body.nic_passport,
     address: req.body.address,
     telephone: req.body.telephone,
     email: req.body.email,
     description: req.body.description,
-    reg_date: req.body.reg_date,
-    status: req.body.status,
   };
   let sql = "UPDATE customer SET ? WHERE c_id = ?";
   let query = mySqlConnection.query(

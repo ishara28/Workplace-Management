@@ -92,6 +92,7 @@ export class RegisterModal extends Component {
             .then(() => {
               alert("Customer Successfully Registered!");
               this.setState({ modal: false });
+              window.location.reload(false);
             });
         } else {
           this.setState({ isEmptyAlertVisible: true });
