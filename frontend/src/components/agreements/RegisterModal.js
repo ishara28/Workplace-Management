@@ -100,7 +100,7 @@ export class RegisterModal extends Component {
       <div>
         <div style={{ float: "right", marginRight: 10 }}>
           <Button style={{ backgroundColor: "#7a1d63" }} onClick={this.toggle}>
-            Register Customer
+            Register Machinery
           </Button>
         </div>
         <Modal isOpen={this.state.modal} toggle={this.state.modal} size="lg">
@@ -108,7 +108,7 @@ export class RegisterModal extends Component {
             style={{ backgroundColor: "#7a1d63", color: "white" }}
             toggle={this.toggle}
           >
-            Register Customer
+            Register Machinery
           </ModalHeader>
           <ModalBody>
             <FormGroup row>
@@ -132,6 +132,7 @@ export class RegisterModal extends Component {
               </Label>
               <Col sm={9}>
                 <Input
+                  type="textarea"
                   name="index_no"
                   id="exampleEmail"
                   placeholder="Description here..."
