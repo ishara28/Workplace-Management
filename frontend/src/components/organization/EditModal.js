@@ -92,7 +92,8 @@ export class EditModal extends Component {
       this.state.reg_id &&
       this.state.c_id
     ) {
-      Axios.post("organization/update/" + this.props.organization.m_id, newOrganization)
+      console.log("AA"+this.props.organization.o_id);
+      Axios.post("organization/update/" + this.props.organization.o_id, newOrganization)
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();

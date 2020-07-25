@@ -69,7 +69,7 @@ export class OneWorkhouse extends Component {
   };
 
   removeWorkhouse = () => {
-    Axios.post("/workhouse/remove/" + this.props.workhouse.m_id)
+    Axios.post("/workhouse/remove/" + this.props.workhouse.index_no)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -118,7 +118,7 @@ export class OneWorkhouse extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("workhouse/block/" + this.props.workhouse.w_id, blockedWorkhouse)
+      Axios.post("workhouse/block/" + this.props.workhouse.index_no, blockedWorkhouse)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -126,6 +126,8 @@ export class OneWorkhouse extends Component {
         })
         .catch((err) => console.log(err));
     }
+
+
   };
 
   render() {

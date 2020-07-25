@@ -15,7 +15,6 @@ import {
   Alert,
 } from "reactstrap";
 import Axios from "axios";
-import {baseUrl} from '../../shared/baseUrl'
 
 var tempDate = new Date();
 var date =
@@ -89,7 +88,7 @@ export class EditModal extends Component {
       this.state.address &&
       this.state.c_id
     ) {
-      Axios.post("workhouse/update/" + this.props.workhouse.w_id, newWorkhouse)
+      Axios.post("workhouse/update/" + this.props.workhouse.index_no, newWorkhouse)
         .then((res) => {
           console.log(res.data);
         })
