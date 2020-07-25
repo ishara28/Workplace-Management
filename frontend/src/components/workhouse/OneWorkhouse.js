@@ -118,7 +118,8 @@ export class OneWorkhouse extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("workhouse/block/" + this.props.workhouse.index_no, blockedWorkhouse)
+      console.log(blockedWorkhouse);
+      Axios.post("/workhouse/block/" + this.props.workhouse.index_no, blockedWorkhouse)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();

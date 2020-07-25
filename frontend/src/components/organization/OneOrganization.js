@@ -118,7 +118,7 @@ export class OneOrganization extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("organization/block/" + this.props.organization.m_id, blockedOrganization)
+      Axios.post("organization/block/" + this.props.organization.o_id, blockedOrganization)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
