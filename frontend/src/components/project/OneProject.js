@@ -42,15 +42,6 @@ export class OneProject extends Component {
     });
   };
 
-  toggleBlock = () => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        blockModal: !prevState.blockModal,
-      };
-    });
-  };
-
   showEditModal = () => {
     this.setState({ editModal: true });
   };
@@ -68,32 +59,49 @@ export class OneProject extends Component {
     // }, 1000);
   };
 
-  removeProject = () => {
-    Axios.post("/project/remove/" + this.props.project.p_id)
+  startProject = () => {
+    Axios.post("/project/start/" + this.props.project.p_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
 
-  removeDialog = () => {
+  endProject = () => {
+    Axios.post("/project/end/" + this.props.project.p_id)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  closeProject = () => {
+    Axios.post("/project/close/" + this.props.project.p_id)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  cancelProject = () => {
+    Axios.post("/project/cancel/" + this.props.project.p_id)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  startDialog = () => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <h2>Are you sure to remove?</h2>
-            {/* <p>You want to delete this file?</p> */}
+            <h2>Do you want to start?</h2>
             <div style={{ textAlign: "center" }}>
               <Button style={{ margin: 3 }} onClick={onClose}>
                 No
               </Button>
               <Button
-                color="danger"
+                color="success"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeProject();
+                  this.startProject();
                   onClose();
                 }}
               >
-                Yes, Remove
+                Yes, Start
               </Button>
             </div>
           </div>
@@ -102,30 +110,85 @@ export class OneProject extends Component {
     });
   };
 
-  blockProject = () => {
-    var tempDate = new Date();
-    var date =
-      tempDate.getFullYear() +
-      "-" +
-      (tempDate.getMonth() + 1) +
-      "-" +
-      tempDate.getDate();
+  endDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to end?</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.endProject();
+                  onClose();
+                }}
+              >
+                Yes, End
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
 
-    const currDate = date;
+  closeDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to close?</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.closeProject();
+                  onClose();
+                }}
+              >
+                Yes, Close
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
 
-    var blockedProject = {
-      blocked_date: currDate,
-      reason: this.state.blockReason,
-    };
-    if (this.state.blockReason) {
-      Axios.post("project/block/" + this.props.project.p_id, blockedProject)
-        .then((res) => console.log(res.data))
-        .then(() => {
-          this.toggleBlock();
-          window.location.reload(false);
-        })
-        .catch((err) => console.log(err));
-    }
+  cancelDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to cancel?</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.cancelProject();
+                  onClose();
+                }}
+              >
+                Yes, Cancel
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   render() {
@@ -158,19 +221,31 @@ export class OneProject extends Component {
                 style={{ color: "white" }}
                 onClick={this.showEditModal}
               >
-                Edit
+                Update
               </DropdownItem>
               <DropdownItem
                 style={{ color: "white" }}
-                onClick={this.removeDialog}
+                onClick={this.startDialog}
               >
-                Remove
+                Start
               </DropdownItem>
               <DropdownItem
                 style={{ color: "white" }}
-                onClick={this.toggleBlock}
+                onClick={this.endDialog}
               >
-                Block
+                End
+              </DropdownItem>
+              <DropdownItem
+                style={{ color: "white" }}
+                onClick={this.closeDialog}
+              >
+                Close
+              </DropdownItem>
+              <DropdownItem
+                style={{ color: "white" }}
+                onClick={this.cancelDialog}
+              >
+                Cancel
               </DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
@@ -204,37 +279,6 @@ export class OneProject extends Component {
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended  */}
-
-        {/* Confirm block modal  */}
-        <div>
-          <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
-            <ModalHeader toggle={this.toggleBlock}>
-              Do you want to block "{this.props.project.index_no}"?
-            </ModalHeader>
-            <ModalBody>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>Reason</InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  placeholder="reason here..."
-                  value={this.state.blockReason}
-                  onChange={(e) =>
-                    this.setState({ blockReason: e.target.value })
-                  }
-                />
-              </InputGroup>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" onClick={this.blockProject}>
-                Block
-              </Button>
-              <Button color="secondary" onClick={this.toggleBlock}>
-                Cancel
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
       </tr>
     );
   }
