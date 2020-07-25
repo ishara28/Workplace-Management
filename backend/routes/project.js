@@ -27,7 +27,7 @@ router.post("/register", (req, res) => {
     reg_date: req.body.reg_date,
     description: req.body.description,
     estimated_start: req.body.estimated_start,
-    estimated_days: req.body.estimated_days,
+    estimated_days: req.body.estimated_days,  
     estimated_value: req.body.estimated_value,
     status: req.body.status,
     workhouse_id: req.body.workhouse_id,

@@ -28,6 +28,7 @@ export class RegisterModal extends Component {
     super(props);
 
     this.state = {
+      customers: [],
       modal: false,
       index_no: "",
       reg_id: "",
@@ -37,6 +38,12 @@ export class RegisterModal extends Component {
       reg_date: currDate,
       isEmptyAlertVisible: false,
     };
+  }
+
+  componentDidMount() {
+    Axios.get("/customer/")
+      .then((res) => this.setState({ customers: res.data }))
+      .then(() => console.log("STATE", this.state.customers));
   }
 
   toggle = () => {
@@ -51,7 +58,7 @@ export class RegisterModal extends Component {
   registerAgreement = () => {
     var tempDate = new Date();
     const index_no =
-      "C-" +
+      "A-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +
@@ -100,7 +107,7 @@ export class RegisterModal extends Component {
       <div>
         <div style={{ float: "right", marginRight: 10 }}>
           <Button style={{ backgroundColor: "#7a1d63" }} onClick={this.toggle}>
-            Register Machinery
+            Register Agreement
           </Button>
         </div>
         <Modal isOpen={this.state.modal} toggle={this.state.modal} size="lg">
@@ -108,7 +115,7 @@ export class RegisterModal extends Component {
             style={{ backgroundColor: "#7a1d63", color: "white" }}
             toggle={this.toggle}
           >
-            Register Machinery
+            Register Agreement
           </ModalHeader>
           <ModalBody>
             <FormGroup row>
@@ -141,6 +148,30 @@ export class RegisterModal extends Component {
                     this.setState({ description: e.target.value })
                   }
                 />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="browser" sm={3}>
+                Owner
+              </Label>
+              <Col sm={9}>
+                <Input
+                  list="browsers"
+                  name="browser"
+                  id="browser"
+                  // value={this.state.owner}
+                  onChange={(e) => this.setState({ owner_id: e.target.value })}
+                ></Input>
+                <datalist id="browsers">
+                  {this.state.customers.map((customer) => {
+                    return (
+                      <option value={customer.c_id}>
+                        {customer.index_no + " - " + customer.name}
+                      </option>
+                    );
+                  })}
+                </datalist>
               </Col>
             </FormGroup>
 

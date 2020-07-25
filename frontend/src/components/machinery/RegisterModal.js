@@ -161,20 +161,20 @@ export class RegisterModal extends Component {
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
+                <Label for="browser" sm={2}>
                   Owner
                 </Label>
                 <Col sm={10}>
                   <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.owner}
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    // value={this.state.owner}
                     onChange={(e) =>
                       this.setState({ owner_id: e.target.value })
                     }
-                  >
-                    <option>Choose Owner</option>
+                  ></Input>
+                  <datalist id="browsers">
                     {this.state.customers.map((customer) => {
                       return (
                         <option value={customer.c_id}>
@@ -182,7 +182,7 @@ export class RegisterModal extends Component {
                         </option>
                       );
                     })}
-                  </Input>
+                  </datalist>
                 </Col>
               </FormGroup>
 
