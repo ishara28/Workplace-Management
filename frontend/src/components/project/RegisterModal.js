@@ -124,6 +124,7 @@ export class RegisterModal extends Component {
           this.state.agent_id &&
           this.state.agreement_id
         ) {
+          console.log(newProject);
           Axios.post("project/register", newProject)
             .then((res) => console.log(res.data))
             .then(() => {
@@ -277,6 +278,32 @@ export class RegisterModal extends Component {
                       return (
                         <option value={agent.c_id}>
                           {agent.index_no + " - " + agent.name}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="agreement_id" sm={2}>
+                  Agreement
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="select"
+                    name="agreement_id"
+                    id="agreement_id"
+                    value={this.state.agreement_id}
+                    onChange={(e) =>
+                      this.setState({ agreement_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Agreement</option>
+                    {this.state.agreements.map((agreement) => {
+                      return (
+                        <option value={agreement.a_id}>
+                          {agreement.index_no}
                         </option>
                       );
                     })}

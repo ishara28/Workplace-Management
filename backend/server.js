@@ -24,6 +24,7 @@ const MachineryRoute = require("./routes/machinery");
 const WorkhouseRoute = require("./routes/workhouse");
 const OrganizationRoute = require("./routes/organization");
 const AgreementRoute = require("./routes/agreement");
+const ProjectRoute = require("./routes/project");
 const AuthRoute = require("./routes/auth");
 
 app.use("/customer", CustomerRoute);
@@ -31,6 +32,7 @@ app.use("/machinery", MachineryRoute);
 app.use("/workhouse", WorkhouseRoute);
 app.use("/organization", OrganizationRoute);
 app.use("/agreement", AgreementRoute);
+app.use('/project',ProjectRoute);
 app.use("/auth", AuthRoute);
 
 const PORT = 5000 || process.env.PORT;
