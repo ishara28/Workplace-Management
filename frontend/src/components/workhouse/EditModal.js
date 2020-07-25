@@ -37,136 +37,136 @@ const currDate = date;
 //   "" +
 //   tempDate.getSeconds();
 
-export class RegisterModal extends Component {
+export class EditModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       customers: [],
-      index_no: "",
-      reg_date: currDate,
-      status: "ACTIVE",
-      reg_id: "",
-      category: "",
-      owner_id: "",
+      telephone: "",
+      email:"",
+      address: "",
+      c_id: "",
       description: "",
       isFieldsEmpty: false,
     };
   }
 
   componentDidMount() {
+    console.log("Workhouse", this.props.workhouse);
+    this.setState({
+      telephone: this.props.workhouse.telephone,
+      email: this.props.workhouse.email,
+      address: this.props.workhouse.address,
+      c_id: this.props.workhouse.c_id,
+      description: this.props.workhouse.description,
+    });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      //   .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
   }
 
   closeBtn = (
-    <button className="close" onClick={this.props.closeModal}>
+    <button className="close" onClick={this.props.closeEditModal}>
       &times;
     </button>
   );
 
-  submitData = () => {
-    var tempDate = new Date();
-    const index_no =
-      "M-" +
-      tempDate.getFullYear().toString().slice(2) +
-      (tempDate.getMonth() + 1).toString() +
-      tempDate.getDate().toString() +
-      "-" +
-      tempDate.getHours() +
-      tempDate.getMinutes() +
-      tempDate.getSeconds();
-
-    this.setState(
-      {
-        index_no: index_no,
-      },
-      () => {
-        const newMachinery = {
-          index_no: this.state.index_no,
-          reg_id: this.state.reg_id,
-          reg_date: this.state.reg_date,
-          status: this.state.status,
-          category: this.state.category,
-          description: this.state.description,
-          owner_id: this.state.owner_id,
-        };
-        if (
-          this.state.reg_id &&
-          this.state.description &&
-          this.state.category &&
-          this.state.owner_id
-        ) {
-          Axios.post("machinery/register", newMachinery)
-            .then((res) => console.log(res.data))
-            .then(() => {
-              this.props.closeModal();
-              this.props.registrySuccessAlert();
-            });
-        } else {
-          this.setState({ isFieldsEmpty: true });
-        }
-      }
-    );
+  updateData = () => {
+    const newWorkhouse = {
+      telephone: this.state.telephone,
+      email: this.state.email,
+      address: this.state.address,
+      description: this.state.description,
+      c_id: this.state.c_id,
+    };
+    if (
+      this.state.telephone &&
+      this.state.email &&
+      this.state.description &&
+      this.state.address &&
+      this.state.c_id
+    ) {
+      Axios.post("workhouse/update/" + this.props.workhouse.index_no, newWorkhouse)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .then(() => {
+          this.props.closeEditModal();
+          this.props.registrySuccessAlert();
+        });
+    } else {
+      this.setState({ isFieldsEmpty: true });
+    }
   };
 
   render() {
     return (
       <div>
-        <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn}>Machinery Register</ModalHeader>
+        <Modal size="lg" isOpen={this.props.showEditModal}>
+          <ModalHeader close={this.closeBtn}>Edit Workhouse</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
-                <Label for="exampleEmail" sm={2}>
-                  Reg id
+                <Label for="telephone" sm={2}>
+                  Telephone
                 </Label>
                 <Col sm={10}>
                   <Input
-                    name="index_no"
-                    id="exampleEmail"
-                    placeholder="Reg id here..."
-                    value={this.state.reg_id}
-                    onChange={(e) => this.setState({ reg_id: e.target.value })}
+                    name="telephone"
+                    id="telephone"
+                    type="text"
+                    value={this.state.telephone}
+                    onChange={(e) => this.setState({ telephone: e.target.value })}
                   />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
-                  Category
+                <Label for="email" sm={2}>
+                  email
                 </Label>
                 <Col sm={10}>
                   <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.category}
-                    onChange={(e) =>
-                      this.setState({ category: e.target.value })
-                    }
-                  >
-                    <option>Choose Category</option>
-                    <option>VEHICLE</option>
-                    <option>TOOL</option>
-                  </Input>
+                    name="email"
+                    id="email"
+                    type="email"
+                    value={this.state.email}
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
-                  Owner
+                <Label for="address" sm={2}>
+                Address
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={this.state.address}
+                    onChange={(e) =>
+                      this.setState({ address: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="c_id" sm={2}>
+                  Customer
                 </Label>
                 <Col sm={10}>
                   <Input
                     type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.owner}
+                    name="c_id"
+                    id="c_id"
+                    value={this.state.c_id}
                     onChange={(e) =>
-                      this.setState({ owner_id: e.target.value })
+                      this.setState({ c_id: e.target.value })
                     }
                   >
                     <option>Choose Owner</option>
@@ -182,14 +182,14 @@ export class RegisterModal extends Component {
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleText" sm={2}>
+                <Label for="description" sm={2}>
                   Description
                 </Label>
                 <Col sm={10}>
                   <Input
                     type="textarea"
-                    name="text"
-                    id="exampleText"
+                    name="description"
+                    id="description"
                     value={this.state.description}
                     onChange={(e) =>
                       this.setState({ description: e.target.value })
@@ -206,11 +206,11 @@ export class RegisterModal extends Component {
           <ModalFooter>
             <Button
               style={{ backgroundColor: "#23272B" }}
-              onClick={this.submitData}
+              onClick={this.updateData}
             >
-              Register Now
+              Update Now
             </Button>{" "}
-            <Button color="secondary" onClick={this.props.closeModal}>
+            <Button color="secondary" onClick={this.props.closeEditModal}>
               Cancel
             </Button>
           </ModalFooter>
@@ -220,4 +220,4 @@ export class RegisterModal extends Component {
   }
 }
 
-export default RegisterModal;
+export default EditModal;

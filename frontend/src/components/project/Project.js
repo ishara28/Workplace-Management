@@ -17,17 +17,17 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
-import Onemachine from "./Onemachine";
+import OneProject from "./OneProject";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
 
-export class Machinery extends Component {
+export class Project extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      machinery: [],
-      machineryClone: [],
+      project: [],
+      projectClone: [],
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -36,13 +36,13 @@ export class Machinery extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/machinery/")
+    Axios.get("/project/")
       .then((res) =>
         this.setState({
-          machinery: res.data,
+          project: res.data,
         })
       )
-      // .then(() => console.log(this.state.machinery))
+      // .then(() => console.log(this.state.project))
       .catch((err) => console.log(err));
   }
 
@@ -77,7 +77,7 @@ export class Machinery extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Machinery</BreadcrumbItem>
+          <BreadcrumbItem active>Project</BreadcrumbItem>
         </Breadcrumb>
 
         {/* <div className="container-fluid d-flex flex-row-reverse">
@@ -108,44 +108,52 @@ export class Machinery extends Component {
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
           >
-            Register a machinery
+            Register a project
           </Button>
         </div>
 
-        {/* Machines List  */}
+        {/* Projects List  */}
         <div>
           <Table striped bordered hover responsive>
             <thead style={{ backgroundColor: "#23272B", color: "white" }}>
               <tr>
-                <th>Index No.</th>
-                <th>Reg Id</th>
-                <th>Registered date</th>
-                <th>Category</th>
+                <th>Index No</th>
+                <th>Registered Date</th>
+                <th>Owner</th>
                 <th>Description</th>
+                <th>Estimated Start</th>
+                <th>Estimated Days</th>
+                <th>Estimated Value</th>
                 <th>Status</th>
+                <th>Workhouse</th>
+                <th>Agent</th>
+                <th>Agreement</th>
               </tr>
             </thead>
             <tbody>
-              {this.state.machinery
-                .filter((machine) => {
+              {this.state.project
+                .filter((project) => {
                   return (
-                    machine.index_no.includes(this.state.searchValue) ||
-                    machine.reg_id.includes(this.state.searchValue) ||
-                    machine.reg_date.includes(this.state.searchValue) ||
-                    machine.category.includes(
+                    project.index_no.includes(this.state.searchValue) ||
+                    project.owner_id.includes(this.state.searchValue) ||
+                    project.reg_date.includes(this.state.searchValue) ||
+                    project.description.includes(this.state.searchValue) ||
+                    project.estimated_start.includes(this.state.searchValue) ||
+                    project.estimated_days.includes(this.state.searchValue) ||
+                    project.estimated_value.includes(this.state.searchValue) ||
+                    project.status.includes(
                       this.state.searchValue.toUpperCase()
                     ) ||
-                    machine.description.includes(this.state.searchValue) ||
-                    machine.status.includes(
-                      this.state.searchValue.toUpperCase()
-                    )
+                    project.workhouse_id.includes(this.state.searchValue) ||
+                    project.agent_id.includes(this.state.searchValue) ||
+                    project.agreement_id.includes(this.state.searchValue)
                   );
                 })
-                .map((machine) => {
-                  return <Onemachine machine={machine} />;
+                .map((project) => {
+                  return <OneProject project={project} />;
                 })}
-              {/* {this.state.machinery.map((machine) => {
-                return <Onemachine machine={machine} />;
+              {/* {this.state.project.map((project) => {
+                return <OneProject project={project} />;
               })} */}
             </tbody>
           </Table>
@@ -177,7 +185,7 @@ export class Machinery extends Component {
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >
-            Machine Successfully Registered!
+            Project Successfully Registered!
           </Alert>
         </div>
       </div>
@@ -185,4 +193,4 @@ export class Machinery extends Component {
   }
 }
 
-export default Machinery;
+export default Project;

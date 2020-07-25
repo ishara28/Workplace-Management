@@ -22,7 +22,7 @@ router.get("/blocked", (req, res) => {
 //Register a workhouse
 router.post("/register", (req, res) => {
   let workhouse = {
-    w_id: req.body.w_id,
+    index_no: req.body.index_no,
     index_no: req.body.index_no,
     reg_date: req.body.reg_date,
     status: req.body.status,
@@ -41,16 +41,16 @@ router.post("/register", (req, res) => {
 });
 
 //Get a single workhouse
-router.get("/:w_id", (req, res) => {
-  let sql = "SELECT * FROM workhouse  WHERE w_id = ?";
-  let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
+router.get("/:index_no", (req, res) => {
+  let sql = "SELECT * FROM workhouse  WHERE index_no = ?";
+  let query = mySqlConnection.query(sql, req.params.index_no, (err, result) => {
     if (err) throw err;
     res.send(result);
   });
 });
 
 //Update workhouse details
-router.post("/update/:w_id", (req, res) => {
+router.post("/update/:index_no", (req, res) => {
   let workhouse = {
     address: req.body.address,
     telephone: req.body.telephone,
@@ -58,10 +58,10 @@ router.post("/update/:w_id", (req, res) => {
     description: req.body.description,
     c_id: req.body.c_id,
   };
-  let sql = "UPDATE workhouse SET ? WHERE w_id = ?";
+  let sql = "UPDATE workhouse SET ? WHERE index_no = ?";
   let query = mySqlConnection.query(
     sql,
-    [workhouse, req.params.w_id],
+    [workhouse, req.params.index_no],
     (err, result) => {
       if (err) throw err;
       res.send("Updated Successfully!");
@@ -70,28 +70,28 @@ router.post("/update/:w_id", (req, res) => {
 });
 
 //Remove existing workhouse
-router.post("/remove/:w_id", (req, res) => {
-  let sql = "UPDATE workhouse SET status = 'REMOVED' WHERE w_id = ?";
-  let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
+router.post("/remove/:index_no", (req, res) => {
+  let sql = "UPDATE workhouse SET status = 'REMOVED' WHERE index_no = ?";
+  let query = mySqlConnection.query(sql, req.params.index_no, (err, result) => {
     if (err) throw err;
     res.send("Removed");
   });
 });
 
 //Block existing workhouse
-router.post("/block/:w_id", (req, res) => {
+router.post("/block/:index_no", (req, res) => {
   let blockWorkhose = {
-    w_id: req.params.w_id,
+    index_no: req.params.index_no,
     blocked_date: req.body.blocked_date,
     reason: req.body.reason,
   };
 
   let sql =
-    "UPDATE workhouse SET status = 'BLOCKED' WHERE w_id = ? ; INSERT INTO blocked_workhouse SET ?";
+    "UPDATE workhouse SET status = 'BLOCKED' WHERE index_no = ? ; INSERT INTO blocked_workhouse SET ?";
 
   let query = mySqlConnection.query(
     sql,
-    [req.params.w_id, blockWorkhose],
+    [req.params.index_no, blockWorkhose],
     (err, result) => {
       if (err) throw err;
       console.log("Workhose Blocked");

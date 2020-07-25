@@ -6,7 +6,7 @@ router.post("/", (req, res) => {
   var password = req.body.password;
   if (username && password) {
     mySqlConnection.query(
-      "SELECT * FROM users WHERE username = ? AND password = ?",
+      "SELECT * FROM user WHERE username = ? AND password = ?",
       [username, password],
       (error, results, fields) => {
         if (results.length > 0) {

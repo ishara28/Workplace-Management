@@ -31,7 +31,6 @@ router.get("/:a_id", (req, res) => {
 //Register a agreement
 router.post("/register", (req, res) => {
   let agreement = {
-    a_id: req.body.a_id,
     index_no: req.body.index_no,
     reg_date: req.body.reg_date,
     reg_id: req.body.reg_id,

@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardBody,
-  CardText,
   Button,
   Alert,
   Table,
@@ -17,17 +13,17 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
-import Onemachine from "./Onemachine";
+import OneWorkhouse from "./OneWorkhouse";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
 
-export class Machinery extends Component {
+export class Workhouse extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      machinery: [],
-      machineryClone: [],
+      workhouse: [],
+      workhouseClone: [],
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -36,13 +32,13 @@ export class Machinery extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/machinery/")
+    Axios.get("/workhouse/")
       .then((res) =>
         this.setState({
-          machinery: res.data,
+          workhouse: res.data,
         })
       )
-      // .then(() => console.log(this.state.machinery))
+      // .then(() => console.log(this.state.workhouse))
       .catch((err) => console.log(err));
   }
 
@@ -77,7 +73,7 @@ export class Machinery extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Machinery</BreadcrumbItem>
+          <BreadcrumbItem active>Workhouse</BreadcrumbItem>
         </Breadcrumb>
 
         {/* <div className="container-fluid d-flex flex-row-reverse">
@@ -108,44 +104,44 @@ export class Machinery extends Component {
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
           >
-            Register a machinery
+            Register a workhouse
           </Button>
         </div>
 
-        {/* Machines List  */}
+        {/* Workhouses List  */}
         <div>
           <Table striped bordered hover responsive>
             <thead style={{ backgroundColor: "#23272B", color: "white" }}>
               <tr>
                 <th>Index No.</th>
-                <th>Reg Id</th>
                 <th>Registered date</th>
-                <th>Category</th>
-                <th>Description</th>
                 <th>Status</th>
+                <th>Address</th>
+                <th>Telephone</th>
+                <th>email</th>
+                <th>Description</th>
+                <th>Customer</th>
               </tr>
             </thead>
             <tbody>
-              {this.state.machinery
-                .filter((machine) => {
+              {this.state.workhouse
+                .filter((workhouse) => {
                   return (
-                    machine.index_no.includes(this.state.searchValue) ||
-                    machine.reg_id.includes(this.state.searchValue) ||
-                    machine.reg_date.includes(this.state.searchValue) ||
-                    machine.category.includes(
-                      this.state.searchValue.toUpperCase()
-                    ) ||
-                    machine.description.includes(this.state.searchValue) ||
-                    machine.status.includes(
-                      this.state.searchValue.toUpperCase()
-                    )
-                  );
+                    workhouse.index_no.includes(this.state.searchValue) ||
+                    workhouse.reg_date.includes(this.state.searchValue) ||
+                    workhouse.status.includes(this.state.searchValue.toUpperCase()) ||
+                    workhouse.address.includes(this.state.searchValue) ||
+                    workhouse.telephone.includes(this.state.searchValue) ||
+                    workhouse.email.includes(this.state.searchValue) ||
+                    workhouse.description.includes(this.state.searchValue) ||
+                    workhouse.c_id.includes(this.state.searchValue)
+                  )
                 })
-                .map((machine) => {
-                  return <Onemachine machine={machine} />;
+                .map((workhouse) => {
+                  return <OneWorkhouse workhouse={workhouse} />;
                 })}
-              {/* {this.state.machinery.map((machine) => {
-                return <Onemachine machine={machine} />;
+              {/* {this.state.workhouse.map((workhouse) => {
+                return <OneWorkhouse workhouse={workhouse} />;
               })} */}
             </tbody>
           </Table>
@@ -177,7 +173,7 @@ export class Machinery extends Component {
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >
-            Machine Successfully Registered!
+            Workhouse Successfully Registered!
           </Alert>
         </div>
       </div>
@@ -185,4 +181,4 @@ export class Machinery extends Component {
   }
 }
 
-export default Machinery;
+export default Workhouse;

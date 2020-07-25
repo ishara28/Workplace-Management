@@ -3,15 +3,15 @@ import Header from './Header';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
-import Customer from './Customer';
-import Machinery from './Machinery';
-import Workhouse from './Workhouse';
-import Organization from './Organization';
-import Agreement from './Agreement';
-import Project from './Project';
+import Customer from './customers/Customer';
+import Machinery from "./machinery/Machinery";
+import Workhouse from "./workhouse/Workhouse";
+import Organization from './organization/Organization';
+import Agreement from './agreements/Agreement';
+import Project from './project/Project';
 import { connect } from 'react-redux'
 import OneWorkhouse from './OneWorkhouse'
-import {fetchWorkhouses, fetchMachineries} from '../redux/ActionCreators'
+import {fetchWorkhouses} from '../redux/ActionCreators'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,8 +20,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchWorkhouses:()=>dispatch(fetchWorkhouses()),
-    fetchMachineries:()=>dispatch(fetchMachineries())
+    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
 })
 
 class Main extends Component {
@@ -29,8 +28,7 @@ class Main extends Component {
     super(props);
   }
     componentDidMount(){
-        this.props.fetchWorkhouses();
-        this.props.fetchMachineries();
+        this.props.fetchWorkhouses()
     }
 
   render() {
