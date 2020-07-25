@@ -60,15 +60,29 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log("Project", this.props.project);
     this.setState({
-      reg_id: this.props.project.reg_id,
-      category: this.props.project.category,
-      owner_id: this.props.project.owner_id,
+      owner_id: this.props.project.c_id,
       description: this.props.project.description,
+      estimated_start: this.props.project.estimated_start,
+      estimated_days: this.props.project.estimated_days,
+      estimated_value: this.props.project.estimated_value,
+      workhouse_id: this.props.project.workhouse_id,
+      agent_id: this.props.project.c_id,
+      agreement_id: this.props.project.a_id,
     });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
       //   .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
+
+    Axios.get("/workhouse/")
+    .then((res) => this.setState({ workhouses: res.data }))
+    .then(() => console.log(this.state.workhouses))
+    .catch((err) => console.log(err));
+
+    Axios.get("/agreement/")
+    .then((res) => this.setState({ agreements: res.data }))
+    .then(() => console.log(this.state.agreements))
+    .catch((err) => console.log(err));
   }
 
   closeBtn = (
@@ -79,10 +93,14 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newProject = {
-      reg_id: this.state.reg_id,
-      category: this.state.category,
-      description: this.state.description,
       owner_id: this.state.owner_id,
+      description: this.state.description,
+      estimated_start: this.state.estimated_start,
+      estimated_days: this.state.estimated_days,
+      estimated_value: this.state.estimated_value,
+      workhouse_id: this.state.workhouse_id,
+      agent_id: this.state.agent_id,
+      agreement_id: this.state.agreement_id
     };
     if (
       this.state.owner_id &&
@@ -94,6 +112,7 @@ export class EditModal extends Component {
       this.state.agent_id &&
       this.state.agreement_id
     ) {
+      console.log(newProject);
       Axios.post("project/update/" + this.props.project.p_id, newProject)
         .then((res) => console.log(res.data))
         .then(() => {
@@ -251,6 +270,33 @@ export class EditModal extends Component {
                   </Input>
                 </Col>
               </FormGroup>
+
+              <FormGroup row>
+                <Label for="agreement_id" sm={2}>
+                  Agreement
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="select"
+                    name="agreement_id"
+                    id="agreement_id"
+                    value={this.state.agreement_id}
+                    onChange={(e) =>
+                      this.setState({ agreement_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Agreement</option>
+                    {this.state.agreements.map((agreement) => {
+                      return (
+                        <option value={agreement.a_id}>
+                          {agreement.index_no}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+              
             </Form>
 
             {this.state.isFieldsEmpty && (

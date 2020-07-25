@@ -139,7 +139,7 @@ export class OneProject extends Component {
             {this.props.project.description}
           </textarea>
         </td>
-        <td>{this.props.project.estimated_start}</td>
+        <td>{this.props.project.estimated_start.slice(0, 10)}</td>
         <td>{this.props.project.estimated_days}</td>
         <td>{this.props.project.estimated_value}</td>
         <th>{this.props.project.status}</th>
