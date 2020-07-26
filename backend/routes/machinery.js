@@ -4,7 +4,7 @@ const mysqlConnection = require("../dbconnection");
 //Get all the machineries
 router.get("/", (req, res) => {
   let sql =
-    "SELECT m_id, c_id, machinery.index_no, machinery.reg_id, machinery.reg_date, category, machinery.description, machinery.status, machinery.owner_index_no, customer.name FROM machinery INNER JOIN customer";
+    "SELECT m_id, c_id, machinery.index_no, machinery.reg_id, machinery.reg_date, category, machinery.description, machinery.status, machinery.owner_index_no, customer.name FROM machinery LEFT OUTER JOIN customer ON machinery.owner_index_no=customer.index_no";
   let query = mysqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);

@@ -36,6 +36,7 @@ export class RegisterModal extends Component {
       start_date: "",
       end_date: "",
       reg_date: currDate,
+      customer_index_no: "",
       isEmptyAlertVisible: false,
     };
   }
@@ -77,6 +78,7 @@ export class RegisterModal extends Component {
           reg_date: this.state.reg_date,
           reg_id: this.state.reg_id,
           description: this.state.description,
+          customer_index_no: this.state.customer_index_no,
           start_date: this.state.start_date,
           end_date: this.state.end_date,
           status: "ACTIVE",
@@ -86,6 +88,7 @@ export class RegisterModal extends Component {
           this.state.reg_id &&
           this.state.description &&
           this.state.start_date &&
+          this.state.customer_index_no &&
           this.state.end_date
         ) {
           Axios.post("/agreement/register", newAgreement)
@@ -148,6 +151,30 @@ export class RegisterModal extends Component {
                     this.setState({ description: e.target.value })
                   }
                 />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="browser" sm={3}>
+                Customer
+              </Label>
+              <Col sm={9}>
+                <Input
+                  list="browsers"
+                  name="browser"
+                  id="browser"
+                  value={this.state.customer_index_no}
+                  onChange={(e) =>
+                    this.setState({ customer_index_no: e.target.value })
+                  }
+                ></Input>
+                <datalist id="browsers">
+                  {this.state.customers.map((customer) => {
+                    return (
+                      <option value={customer.index_no}>{customer.name}</option>
+                    );
+                  })}
+                </datalist>
               </Col>
             </FormGroup>
 

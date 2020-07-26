@@ -3,7 +3,8 @@ const mySqlConnection = require("../dbconnection");
 
 //Get all agreements
 router.get("/", (req, res) => {
-  let sql = "SELECT * FROM agreement";
+  let sql =
+    "SELECT agreement.a_id, agreement.index_no, agreement.reg_id, agreement.reg_date, agreement.description, agreement.start_date, agreement.end_date, agreement.status, agreement.customer_index_no, customer.name FROM agreement LEFT OUTER JOIN customer ON agreement.customer_index_no=customer.index_no";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -35,6 +36,7 @@ router.post("/register", (req, res) => {
     reg_date: req.body.reg_date,
     reg_id: req.body.reg_id,
     description: req.body.description,
+    customer_index_no: req.body.customer_index_no,
     start_date: req.body.start_date,
     end_date: req.body.end_date,
     status: req.body.status,
@@ -52,18 +54,39 @@ router.post("/update/:a_id", (req, res) => {
   let agreement = {
     reg_id: req.body.reg_id,
     description: req.body.description,
+    customer_index_no: req.body.customer_index_no,
     start_date: req.body.start_date,
     end_date: req.body.end_date,
   };
-  let sql = "UPDATE agreement SET ? WHERE a_id = ?";
-  let query = mySqlConnection.query(
-    sql,
-    [agreement, req.params.a_id],
+
+  ///////////////////////////////
+
+  let sql_1 = "SELECT * FROM customer WHERE index_no = ? ";
+  let query_1 = mySqlConnection.query(
+    sql_1,
+    req.body.customer_index_no,
     (err, result) => {
       if (err) throw err;
-      res.send("Updated Successfully!");
+      if (result.length > 0) {
+        let sql = "UPDATE agreement SET ? WHERE a_id = ?";
+        let query = mySqlConnection.query(
+          sql,
+          [agreement, req.params.a_id],
+          (err, result) => {
+            if (err) throw err;
+            res.send("Updated Successfully!");
+          }
+        );
+      } else {
+        res.send({
+          isError: true,
+          message: "Select a valid owner",
+        });
+      }
     }
   );
+
+  //////////////////////////////
 });
 
 //Remove existing agreement
