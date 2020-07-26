@@ -62,11 +62,12 @@ export class Machinery extends Component {
   };
 
   registrySuccessAlert = () => {
-    this.setState({ successAlertVisible: true });
-    setTimeout(() => {
-      this.setState({ successAlertVisible: false });
-      window.location.reload(false);
-    }, 3000);
+    alert("Machine Successfully Registered!");
+    window.location.reload(false);
+    // this.setState({ successAlertVisible: true });
+    // setTimeout(() => {
+    //   this.setState({ successAlertVisible: false });
+    // }, 3000);
   };
 
   render() {
@@ -78,7 +79,6 @@ export class Machinery extends Component {
           </BreadcrumbItem>
           <BreadcrumbItem active>Machinery</BreadcrumbItem>
         </Breadcrumb>
-
 
         {/* Search  */}
         <div style={{ float: "left", width: "300px", marginLeft: 10 }}>
@@ -116,6 +116,7 @@ export class Machinery extends Component {
                 <th>Category</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Owner</th>
               </tr>
             </thead>
             <tbody>
@@ -129,6 +130,7 @@ export class Machinery extends Component {
                       this.state.searchValue.toUpperCase()
                     ) ||
                     machine.description.includes(this.state.searchValue) ||
+                    machine.name.includes(this.state.searchValue) ||
                     machine.status.includes(
                       this.state.searchValue.toUpperCase()
                     )

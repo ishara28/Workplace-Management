@@ -48,9 +48,10 @@ export class RegisterModal extends Component {
       status: "ACTIVE",
       reg_id: "",
       category: "",
-      owner_id: "",
+      owner_index_no: "",
       description: "",
       isFieldsEmpty: false,
+      validOwnerMsg: false,
     };
   }
 
@@ -91,20 +92,26 @@ export class RegisterModal extends Component {
           status: this.state.status,
           category: this.state.category,
           description: this.state.description,
-          owner_id: this.state.owner_id,
+          owner_index_no: this.state.owner_index_no,
         };
+
         if (
           this.state.reg_id &&
           this.state.description &&
           this.state.category &&
-          this.state.owner_id
+          this.state.owner_index_no
         ) {
-          Axios.post("machinery/register", newMachinery)
-            .then((res) => console.log(res.data))
-            .then(() => {
+          Axios.post("machinery/register", newMachinery).then((res) => {
+            if (res.data.isError) {
+              this.setState({
+                validOwnerMsg: true,
+              });
+              console.log(res.data.message);
+            } else {
               this.props.closeModal();
               this.props.registrySuccessAlert();
-            });
+            }
+          });
         } else {
           this.setState({ isFieldsEmpty: true });
         }
@@ -169,16 +176,16 @@ export class RegisterModal extends Component {
                     list="browsers"
                     name="browser"
                     id="browser"
-                    // value={this.state.owner}
+                    value={this.state.owner_index_no}
                     onChange={(e) =>
-                      this.setState({ owner_id: e.target.value })
+                      this.setState({ owner_index_no: e.target.value })
                     }
                   ></Input>
                   <datalist id="browsers">
                     {this.state.customers.map((customer) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={customer.index_no}>
+                          {customer.name}
                         </option>
                       );
                     })}
@@ -206,6 +213,9 @@ export class RegisterModal extends Component {
 
             {this.state.isFieldsEmpty && (
               <Alert color="danger">Check whether all inputs are filled!</Alert>
+            )}
+            {this.state.validOwnerMsg && (
+              <Alert color="danger">Select a valid owner!</Alert>
             )}
           </ModalBody>
           <ModalFooter>

@@ -3,7 +3,8 @@ const mysqlConnection = require("../dbconnection");
 
 //Get all the machineries
 router.get("/", (req, res) => {
-  let sql = "SELECT * FROM machinery";
+  let sql =
+    "SELECT  machinery.index_no, machinery.reg_id, machinery.reg_date, category, machinery.description, machinery.status, customer.name FROM machinery INNER JOIN customer";
   let query = mysqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -39,13 +40,29 @@ router.post("/register", (req, res) => {
     status: req.body.status,
     category: req.body.category,
     description: req.body.description,
-    owner_id: req.body.owner_id,
+    owner_index_no: req.body.owner_index_no,
   };
-  let sql = "INSERT INTO machinery SET ? ";
-  let query = mysqlConnection.query(sql, machinery, (err, result) => {
-    if (err) throw err;
-    res.send("New Machinery registered");
-  });
+
+  let sql_1 = "SELECT * FROM customer WHERE index_no = ? ";
+  let query_1 = mysqlConnection.query(
+    sql_1,
+    req.body.owner_index_no,
+    (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+        let sql = "INSERT INTO machinery SET ? ";
+        let query = mysqlConnection.query(sql, machinery, (err, result) => {
+          if (err) throw err;
+          res.send("New Machinery registered");
+        });
+      } else {
+        res.send({
+          isError: true,
+          message: "Select a valid owner",
+        });
+      }
+    }
+  );
 });
 
 //Remove existing machinery(Change status to REMOVED)
