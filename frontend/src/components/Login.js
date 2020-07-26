@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import { useAuth } from "./auth";
 import '../stylesheets/Login.css'
 
-function Login() {
+function Login(props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
     const [username, setUsername] = useState("");
