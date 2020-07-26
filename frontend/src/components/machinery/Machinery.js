@@ -123,17 +123,27 @@ export class Machinery extends Component {
               {this.state.machinery
                 .filter((machine) => {
                   return (
-                    machine.index_no.includes(this.state.searchValue) ||
-                    machine.reg_id.includes(this.state.searchValue) ||
-                    machine.reg_date.includes(this.state.searchValue) ||
-                    machine.category.includes(
-                      this.state.searchValue.toUpperCase()
-                    ) ||
-                    machine.description.includes(this.state.searchValue) ||
-                    machine.name.includes(this.state.searchValue) ||
-                    machine.status.includes(
-                      this.state.searchValue.toUpperCase()
-                    )
+                    machine.index_no
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.reg_id
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.reg_date
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.category
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.description
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.name
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.status
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase())
                   );
                 })
                 .map((machine) => {

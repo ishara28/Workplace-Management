@@ -4,7 +4,7 @@ const mysqlConnection = require("../dbconnection");
 //Get all the machineries
 router.get("/", (req, res) => {
   let sql =
-    "SELECT  machinery.index_no, machinery.reg_id, machinery.reg_date, category, machinery.description, machinery.status, customer.name FROM machinery INNER JOIN customer";
+    "SELECT m_id, c_id, machinery.index_no, machinery.reg_id, machinery.reg_date, category, machinery.description, machinery.status, machinery.owner_index_no, customer.name FROM machinery INNER JOIN customer";
   let query = mysqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -102,17 +102,37 @@ router.post("/update/:m_id", (req, res) => {
     reg_id: req.body.reg_id,
     category: req.body.category,
     description: req.body.description,
-    owner_id: req.body.owner_id,
+    owner_index_no: req.body.owner_index_no,
   };
-  let sql = "UPDATE machinery SET ? WHERE m_id = ?";
-  let query = mysqlConnection.query(
-    sql,
-    [machinery, req.params.m_id],
+
+  ///////////////////////////////////
+
+  let sql_1 = "SELECT * FROM customer WHERE index_no = ? ";
+  let query_1 = mysqlConnection.query(
+    sql_1,
+    req.body.owner_index_no,
     (err, result) => {
-      console.log("Machinery Updated");
-      res.send("Machinery Updated");
+      if (err) throw err;
+      if (result.length > 0) {
+        let sql = "UPDATE machinery SET ? WHERE m_id = ?";
+        let query = mysqlConnection.query(
+          sql,
+          [machinery, req.params.m_id],
+          (err, result) => {
+            console.log("Machinery Updated");
+            res.send("Machinery Updated");
+          }
+        );
+      } else {
+        res.send({
+          isError: true,
+          message: "Select a valid owner",
+        });
+      }
     }
   );
+
+  /////////////////////////////////////
 });
 
 module.exports = router;
