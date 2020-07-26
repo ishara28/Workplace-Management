@@ -4,7 +4,7 @@ const mySqlConnection = require("../dbconnection");
 //Get all agreements
 router.get("/", (req, res) => {
   let sql =
-    "SELECT agreement.a_id, agreement.index_no, agreement.reg_id, agreement.reg_date, agreement.description, agreement.start_date, agreement.end_date, agreement.status, agreement.customer_index_no, customer.name FROM agreement LEFT OUTER JOIN customer ON agreement.customer_index_no=customer.index_no";
+    "SELECT agreement.a_id, agreement.index_no, agreement.reg_id, agreement.reg_date, agreement.description, agreement.start_date, agreement.end_date, agreement.status, agreement.customer_index_no, customer.name FROM agreement LEFT OUTER JOIN customer ON agreement.customer_index_no=customer.index_no ORDER BY agreement.a_id";
   let query = mySqlConnection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
