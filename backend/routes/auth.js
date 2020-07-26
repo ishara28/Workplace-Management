@@ -9,11 +9,12 @@ router.post("/", (req, res) => {
       "SELECT * FROM user WHERE username = ? AND password = ?",
       [username, password],
       (error, results, fields) => {
+        console.log(results);
         if (results.length > 0) {
           req.session.isLogged = true;
           req.session.username = username;
           res.send({
-            message: "Logged in successfully!",
+            username: username,
             isLogged: true,
           });
         } else {

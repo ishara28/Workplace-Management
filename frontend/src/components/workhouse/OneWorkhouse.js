@@ -19,6 +19,7 @@ import EditModal from "./EditModal";
 import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { useAuth } from "../auth";
 
 export class OneWorkhouse extends Component {
   constructor(props) {
@@ -62,10 +63,6 @@ export class OneWorkhouse extends Component {
   registrySuccessAlert = () => {
     alert("Updated successfully!");
     window.location.reload(false);
-    // this.setState({ successAlertVisible: true });
-    // setTimeout(() => {
-    //   this.setState({ successAlertVisible: false });
-    // }, 1000);
   };
 
   removeWorkhouse = () => {
@@ -118,7 +115,7 @@ export class OneWorkhouse extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      console.log(blockedWorkhouse);
+      
       Axios.post("/workhouse/block/" + this.props.workhouse.index_no, blockedWorkhouse)
         .then((res) => console.log(res.data))
         .then(() => {

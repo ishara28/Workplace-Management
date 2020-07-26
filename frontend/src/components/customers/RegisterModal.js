@@ -87,7 +87,7 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.description
         ) {
-          Axios.post("/customer/register", newCustomer)
+          Axios.post("/customer/register", newCustomer,{header:this.props.token})
             .then((res) => console.log(res.data))
             .then(() => {
               alert("Customer Successfully Registered!");

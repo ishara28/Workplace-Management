@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { AuthContext } from "./auth";
+import PrivateRoute from '../PrivateRoute';
 import Header from './Header';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
 import Customer from './customers/Customer';
@@ -9,115 +11,42 @@ import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
 import Agreement from './agreements/Agreement';
 import Project from './project/Project';
-import { connect } from 'react-redux'
-import OneWorkhouse from './OneWorkhouse'
-import {fetchWorkhouses} from '../redux/ActionCreators'
 
-const mapStateToProps = state => {
-    return{
-        username:state.Auth.username
+function App(props) {
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  }
+
+  const HomePage = ()=>{
+    if(authTokens){
+        return(<Home/>)
+    }
+    else{
+        return(<Login/>)
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchWorkhouses:()=>dispatch(fetchWorkhouses())
-})
-
-class Main extends Component {
-    componentDidMount(){
-        this.props.fetchWorkhouses()
-    }
-
-    render(){
-        const HomePage = ()=>{
-            if(this.props.username==null){
-                return(<Home/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const CustomerPage = ()=>{
-            if(this.props.username==null){
-                return(<Customer/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const MachineryPage = ()=>{
-            if(this.props.username==null){
-                return(<Machinery/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const WorkhousePage = ()=>{
-            if(this.props.username==null){
-                return(<Workhouse/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const OrganizationPage = ()=>{
-            if(this.props.username==null){
-                return(<Organization/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const AgreementPage = ()=>{
-            if(this.props.username==null){
-                return(<Agreement/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const ProjectPage = ()=>{
-            if(this.props.username==null){
-                return(<Project/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        const OneWorkhousePage = ({match})=>{
-            if(this.props.username==null){
-                return(<OneWorkhouse index_no={match.params.index_no}/>)
-            }
-            else{
-                return(<Login/>)
-            }
-        }
-
-        return (
-            <>
-                {this.props.username==null && <Header/>}
-                <Switch>
-                    <Route exact path="/" component={HomePage}/>
-                    <Route path="/customer" component={CustomerPage}/>
-                    <Route path="/machinery" component={MachineryPage}/>
-                    <Route exact path="/workhouse" component={WorkhousePage}/>
-                    <Route path="/workhouse/:index_no" component={OneWorkhousePage}/>
-                    <Route path="/organization" component={OrganizationPage}/>
-                    <Route path="/agreement" component={AgreementPage}/>
-                    <Route path="/project" component={ProjectPage}/>
-                    <Redirect to="/"/>
-                </Switch>
-            </>
-        )
-    }
+  return (
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        {authTokens && <Header/>}
+        
+        <Router>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={HomePage} />
+            <PrivateRoute path="/customer" component={()=>(<Customer token={authTokens}/>)} />
+            <PrivateRoute path="/workhouse" component={()=>(<Workhouse token={authTokens}/>)} />
+            <PrivateRoute path="/machinery" component={()=>(<Machinery token={authTokens}/>)} />
+            <PrivateRoute path="/organization" component={()=>(<Organization token={authTokens}/>)} />
+            <PrivateRoute path="/agreement" component={()=>(<Agreement token={authTokens}/>)} />
+            <PrivateRoute path="/project" component={()=>(<Project token={authTokens}/>)} />
+            <Redirect to="/"/>
+      </Router>
+    </AuthContext.Provider>
+  );
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main))
+export default App;
