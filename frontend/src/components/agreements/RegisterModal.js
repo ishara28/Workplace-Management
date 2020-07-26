@@ -152,30 +152,6 @@ export class RegisterModal extends Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="browser" sm={3}>
-                Owner
-              </Label>
-              <Col sm={9}>
-                <Input
-                  list="browsers"
-                  name="browser"
-                  id="browser"
-                  // value={this.state.owner}
-                  onChange={(e) => this.setState({ owner_id: e.target.value })}
-                ></Input>
-                <datalist id="browsers">
-                  {this.state.customers.map((customer) => {
-                    return (
-                      <option value={customer.c_id}>
-                        {customer.index_no + " - " + customer.name}
-                      </option>
-                    );
-                  })}
-                </datalist>
-              </Col>
-            </FormGroup>
-
-            <FormGroup row>
               <Label for="exampleEmail" sm={3}>
                 Start Date
               </Label>
