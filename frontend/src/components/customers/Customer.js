@@ -26,7 +26,6 @@ class Customer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.token.isLogged)
     Axios.get("/customer/",{
       headers: this.props.token
     })
