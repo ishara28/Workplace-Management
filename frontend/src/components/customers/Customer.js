@@ -26,9 +26,13 @@ class Customer extends Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     Axios.get("/customer/",{
       headers: this.props.token
     })
+=======
+    Axios.get("/customer/")
+>>>>>>> Ishara
       .then((res) => this.setState({ customers: res.data }))
       .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
@@ -45,7 +49,11 @@ class Customer extends Component {
         </Breadcrumb>
 
         {/* Register Modal  */}
+<<<<<<< HEAD
         <RegisterModal token={this.props.token}/>
+=======
+        <RegisterModal />
+>>>>>>> Ishara
 
         {/* Customer Table  */}
 
@@ -123,7 +131,11 @@ class Customer extends Component {
                   );
                 })
                 .map((customer) => {
+<<<<<<< HEAD
                   return <OneCustomer customer={customer} token={this.props.token}/>;
+=======
+                  return <OneCustomer customer={customer} />;
+>>>>>>> Ishara
                 })}
             </tbody>
           </Table>

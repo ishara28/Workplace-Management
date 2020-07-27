@@ -141,6 +141,10 @@ export class Onemachine extends Component {
           </textarea>
         </td>
         <th>{this.props.machine.status}</th>
+<<<<<<< HEAD
+=======
+        <td>{this.props.machine.name}</td>
+>>>>>>> Ishara
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm">

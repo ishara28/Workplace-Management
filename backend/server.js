@@ -32,7 +32,7 @@ app.use("/machinery", MachineryRoute);
 app.use("/workhouse", WorkhouseRoute);
 app.use("/organization", OrganizationRoute);
 app.use("/agreement", AgreementRoute);
-app.use('/project',ProjectRoute);
+app.use("/project", ProjectRoute);
 app.use("/auth", AuthRoute);
 
 const PORT = 5000 || process.env.PORT;
