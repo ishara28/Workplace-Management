@@ -69,7 +69,11 @@ export class OneCustomer extends Component {
   };
 
   removeMachine = () => {
+<<<<<<< HEAD
     Axios.post("/customer/remove/" + this.props.customer.c_id,{header:this.props.token})
+=======
+    Axios.post("/customer/remove/" + this.props.customer.c_id)
+>>>>>>> Ishara
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -118,7 +122,11 @@ export class OneCustomer extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
+<<<<<<< HEAD
       Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer,{header:this.props.token})
+=======
+      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
+>>>>>>> Ishara
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -204,7 +212,10 @@ export class OneCustomer extends Component {
           closeEditModal={this.closeEditModal}
           customer={this.props.customer}
           registrySuccessAlert={this.registrySuccessAlert}
+<<<<<<< HEAD
           token={this.props.token}
+=======
+>>>>>>> Ishara
         />
         {/* Edit modal ended 
 

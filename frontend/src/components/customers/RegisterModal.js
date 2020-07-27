@@ -87,7 +87,11 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.description
         ) {
+<<<<<<< HEAD
           Axios.post("/customer/register", newCustomer,{header:this.props.token})
+=======
+          Axios.post("/customer/register", newCustomer)
+>>>>>>> Ishara
             .then((res) => console.log(res.data))
             .then(() => {
               alert("Customer Successfully Registered!");

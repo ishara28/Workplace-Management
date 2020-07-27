@@ -31,8 +31,15 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
+<<<<<<< HEAD
       reg_id: "",
       description: "",
+=======
+      customers: [],
+      reg_id: "",
+      description: "",
+      customer_index_no: "",
+>>>>>>> Ishara
       start_date: "",
       end_date: "",
       isFieldsEmpty: false,
@@ -44,11 +51,24 @@ export class EditModal extends Component {
       {
         reg_id: this.props.agreement.reg_id,
         description: this.props.agreement.description,
+<<<<<<< HEAD
         start_date: this.props.agreement.start_date.slice(0, 10),
         end_date: this.props.agreement.end_date.slice(0, 10),
       },
       () => console.log("State", this.state)
     );
+=======
+        customer_index_no: this.props.agreement.customer_index_no,
+        start_date: this.props.agreement.start_date.slice(0, 10),
+        end_date: this.props.agreement.end_date.slice(0, 10),
+      },
+      () => console.log("Props", this.props)
+    );
+    Axios.get("/customer/")
+      .then((res) => this.setState({ customers: res.data }))
+      //   .then(() => console.log(this.state.customers))
+      .catch((err) => console.log(err));
+>>>>>>> Ishara
   }
 
   closeBtn = (
@@ -61,16 +81,34 @@ export class EditModal extends Component {
     const newAgreement = {
       reg_id: this.state.reg_id,
       description: this.state.description,
+<<<<<<< HEAD
+=======
+      customer_index_no: this.state.customer_index_no,
+>>>>>>> Ishara
       start_date: this.state.start_date,
       end_date: this.state.end_date,
     };
     if (this.state.reg_id && this.state.description) {
+<<<<<<< HEAD
       Axios.post("agreement/update/" + this.props.agreement.a_id, newAgreement)
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
         });
+=======
+      Axios.post(
+        "agreement/update/" + this.props.agreement.a_id,
+        newAgreement
+      ).then((res) => {
+        if (res.data.isError) {
+          alert("Select a valid customer!");
+        } else {
+          this.props.closeEditModal();
+          this.props.registrySuccessAlert();
+        }
+      });
+>>>>>>> Ishara
     } else {
       this.setState({ isFieldsEmpty: true });
     }
@@ -116,6 +154,35 @@ export class EditModal extends Component {
               </FormGroup>
 
               <FormGroup row>
+<<<<<<< HEAD
+=======
+                <Label for="browser" sm={2}>
+                  Customer
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    value={this.state.customer_index_no}
+                    onChange={(e) =>
+                      this.setState({ customer_index_no: e.target.value })
+                    }
+                  ></Input>
+                  <datalist id="browsers">
+                    {this.state.customers.map((customer) => {
+                      return (
+                        <option value={customer.index_no}>
+                          {customer.name}
+                        </option>
+                      );
+                    })}
+                  </datalist>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+>>>>>>> Ishara
                 <Label for="exampleText" sm={2}>
                   Start Date
                 </Label>
