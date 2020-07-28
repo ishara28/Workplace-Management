@@ -45,11 +45,7 @@ export class EditModal extends Component {
       customers: [],
       reg_id: "",
       category: "",
-<<<<<<< HEAD
       owner_id: "",
-=======
-      owner_index_no: "",
->>>>>>> Ishara
       description: "",
       isFieldsEmpty: false,
     };
@@ -60,11 +56,7 @@ export class EditModal extends Component {
     this.setState({
       reg_id: this.props.machine.reg_id,
       category: this.props.machine.category,
-<<<<<<< HEAD
       owner_id: this.props.machine.owner_id,
-=======
-      owner_index_no: this.props.machine.owner_index_no,
->>>>>>> Ishara
       description: this.props.machine.description,
     });
     Axios.get("/customer/")
@@ -84,17 +76,12 @@ export class EditModal extends Component {
       reg_id: this.state.reg_id,
       category: this.state.category,
       description: this.state.description,
-<<<<<<< HEAD
       owner_id: this.state.owner_id,
-=======
-      owner_index_no: this.state.owner_index_no,
->>>>>>> Ishara
     };
     if (
       this.state.reg_id &&
       this.state.description &&
       this.state.category &&
-<<<<<<< HEAD
       this.state.owner_id
     ) {
       Axios.post("machinery/update/" + this.props.machine.m_id, newMachinery)
@@ -103,21 +90,6 @@ export class EditModal extends Component {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
         });
-=======
-      this.state.owner_index_no
-    ) {
-      Axios.post(
-        "machinery/update/" + this.props.machine.m_id,
-        newMachinery
-      ).then((res) => {
-        if (res.data.isError) {
-          alert("Select a valid owner");
-        } else {
-          this.props.closeEditModal();
-          this.props.registrySuccessAlert();
-        }
-      });
->>>>>>> Ishara
     } else {
       this.setState({ isFieldsEmpty: true });
     }
@@ -172,7 +144,6 @@ export class EditModal extends Component {
                 </Label>
                 <Col sm={10}>
                   <Input
-<<<<<<< HEAD
                     type="select"
                     name="select"
                     id="exampleSelect"
@@ -190,25 +161,6 @@ export class EditModal extends Component {
                       );
                     })}
                   </Input>
-=======
-                    list="browsers"
-                    name="browser"
-                    id="browser"
-                    value={this.state.owner_index_no}
-                    onChange={(e) =>
-                      this.setState({ owner_index_no: e.target.value })
-                    }
-                  ></Input>
-                  <datalist id="browsers">
-                    {this.state.customers.map((customer) => {
-                      return (
-                        <option value={customer.index_no}>
-                          {customer.name}
-                        </option>
-                      );
-                    })}
-                  </datalist>
->>>>>>> Ishara
                 </Col>
               </FormGroup>
 

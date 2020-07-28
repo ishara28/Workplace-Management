@@ -27,10 +27,7 @@ export class Machinery extends Component {
 
     this.state = {
       machinery: [],
-<<<<<<< HEAD
       machineryClone: [],
-=======
->>>>>>> Ishara
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -66,20 +63,11 @@ export class Machinery extends Component {
   };
 
   registrySuccessAlert = () => {
-<<<<<<< HEAD
     this.setState({ successAlertVisible: true });
     setTimeout(() => {
       this.setState({ successAlertVisible: false });
       window.location.reload(false);
     }, 3000);
-=======
-    alert("Machine Successfully Registered!");
-    window.location.reload(false);
-    // this.setState({ successAlertVisible: true });
-    // setTimeout(() => {
-    //   this.setState({ successAlertVisible: false });
-    // }, 3000);
->>>>>>> Ishara
   };
 
   render() {
@@ -92,7 +80,6 @@ export class Machinery extends Component {
           <BreadcrumbItem active>Machinery</BreadcrumbItem>
         </Breadcrumb>
 
-<<<<<<< HEAD
         {/* <div className="container-fluid d-flex flex-row-reverse">
           <button className="btn btn-success ml-2">Register</button>
           <input
@@ -101,9 +88,6 @@ export class Machinery extends Component {
             placeholder="Search by Id"
           />
         </div> */}
-=======
-        {/* Search  */}
->>>>>>> Ishara
         <div style={{ float: "left", width: "300px", marginLeft: 10 }}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -119,11 +103,7 @@ export class Machinery extends Component {
           </InputGroup>
         </div>
 
-<<<<<<< HEAD
         <div style={{ float: "right", margin: 5 }}>
-=======
-        <div style={{ float: "right", marginRight: 5, marginBottom: 10 }}>
->>>>>>> Ishara
           <Button
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
@@ -143,17 +123,12 @@ export class Machinery extends Component {
                 <th>Category</th>
                 <th>Description</th>
                 <th>Status</th>
-<<<<<<< HEAD
-=======
-                <th>Owner</th>
->>>>>>> Ishara
               </tr>
             </thead>
             <tbody>
               {this.state.machinery
                 .filter((machine) => {
                   return (
-<<<<<<< HEAD
                     machine.index_no.includes(this.state.searchValue) ||
                     machine.reg_id.includes(this.state.searchValue) ||
                     machine.reg_date.includes(this.state.searchValue) ||
@@ -164,29 +139,6 @@ export class Machinery extends Component {
                     machine.status.includes(
                       this.state.searchValue.toUpperCase()
                     )
-=======
-                    machine.index_no
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.reg_id
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.reg_date
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.category
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.description
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.name
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase()) ||
-                    machine.status
-                      .toUpperCase()
-                      .includes(this.state.searchValue.toUpperCase())
->>>>>>> Ishara
                   );
                 })
                 .map((machine) => {

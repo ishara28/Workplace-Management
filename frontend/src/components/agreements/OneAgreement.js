@@ -137,10 +137,6 @@ export class OneAgreement extends Component {
         <th scope="row">{this.props.agreement.index_no}</th>
         <td>{this.props.agreement.reg_date.slice(0, 10)}</td>
         <td>{this.props.agreement.reg_id}</td>
-<<<<<<< HEAD
-=======
-        <td>{this.props.agreement.name}</td>
->>>>>>> Ishara
         <td>
           <textarea name="" id="" cols="30" disabled>
             {this.props.agreement.description}

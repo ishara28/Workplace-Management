@@ -1,98 +1,33 @@
 import React, { Component } from "react";
-import { MDBDataTable } from "mdbreact";
-import Axios from "axios";
+import axios from "axios";
 
-export class DatatablePage extends Component {
+export class Test extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: {},
-      machinery: [],
-      columns: [
-        {
-          label: "Machine Id",
-          field: "m_id",
-          // sort: "asc",
-          width: 150,
-        },
-        {
-          label: "Index No",
-          field: "index_no",
-          // sort: "asc",
-          width: "270",
-        },
-        {
-          label: "Reg Id",
-          field: "reg_id",
-          // sort: "asc",
-          width: 200,
-        },
-        {
-          label: "Reg Date",
-          field: "reg_date",
-          // sort: "asc",
-          width: 100,
-        },
-        {
-          label: "Status",
-          field: "status",
-          // sort: "asc",
-          width: 150,
-        },
-        {
-          label: "Category",
-          field: "category",
-          // sort: "asc",
-          width: 100,
-        },
-        {
-          label: "Description",
-          field: "description",
-          // sort: "asc",
-          width: 100,
-        },
-        {
-          label: "Owner Id",
-          field: "owner_id",
-          // sort: "asc",
-          width: 100,
-        },
-      ],
+      members: [],
     };
   }
 
   componentDidMount() {
-    Axios.get("/machinery/")
-      .then((res) =>
-        this.setState(
-          {
-            machinery: res.data,
-          },
-          () => {
-            this.setState({
-              data: { columns: this.state.columns, rows: this.state.machinery },
-            });
-          }
-        )
+    axios.get("/members/").then((res) =>
+      this.setState(
+        {
+          members: res.data,
+        },
+        () => console.log(this.state.members)
       )
-      .then(() => console.log(this.state.machinery))
-      .catch((err) => console.log(err));
+    );
   }
+
   render() {
     return (
       <div>
-        <MDBDataTable
-          hover
-          sortable
-          responsive
-          striped
-          bordered
-          data={this.state.data}
-        />
+        <p>Test Component</p>
       </div>
     );
   }
 }
 
-export default DatatablePage;
+export default Test;

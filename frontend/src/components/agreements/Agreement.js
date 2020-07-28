@@ -78,10 +78,6 @@ export class Agreement extends Component {
                 <th>Index No.</th>
                 <th>Reg. date</th>
                 <th>Reg. Id</th>
-<<<<<<< HEAD
-=======
-                <th>Customer</th>
->>>>>>> Ishara
                 <th>Description</th>
                 <th>Start Date</th>
                 <th>End Date</th>

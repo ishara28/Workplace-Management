@@ -88,11 +88,7 @@ export class EditModal extends Component {
       this.state.email &&
       this.state.description
     ) {
-<<<<<<< HEAD
       Axios.post("customer/update/" + this.props.customer.c_id, newCustomer,{header:this.props.token})
-=======
-      Axios.post("customer/update/" + this.props.customer.c_id, newCustomer)
->>>>>>> Ishara
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();
