@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
 import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useAuth } from "./auth";
-import { Redirect } from 'react-router-dom';
-import axios from 'axios'
 
-function Header(props) {
+function Header() {
     const  [modalUsername,setModalUsername] = useState(false)
     const  [modalPassword,setModalPassword] = useState(false)
     const  [modalDelete,setModalDelete] = useState(false)
@@ -20,56 +18,15 @@ function Header(props) {
 
     function changeUsername(event){
         event.preventDefault();
-        const updated = {
-            username:username,
-            password:password,
-            newUsername:newUsername
-        };
-        axios.post("/auth/username",updated,{
-            headers: props.token
-          })
-        .then((res) => console.log(res.data))
-        .then(() => {
-            alert("Username Successfully changed!");
-            setModalUsername(false);
-        })
-        .catch((err) => console.log(err));
 
     }
 
     function changePassword(event){
         event.preventDefault();
-        const updated = {
-            username:username,
-            password:password,
-            newUsername:newUsername
-        };
-        axios.post("/auth/pwd",updated,{
-            headers: props.token
-          })
-        .then((res) => console.log(res.data))
-        .then(() => {
-            alert("Password Successfully changed!");
-            setModalPassword(false);
-        })
-        .catch((err) => console.log(err));
     }
 
     function deleteAccount(){
-        const updated = {
-            username:username,
-            password:password,
-            newUsername:newUsername
-        };
-        axios.delete("/auth/delete",updated,{
-            headers: props.token
-          })
-        .then((res) => console.log(res.data))
-        .then(() => {
-            setModalDelete(false);
-            Redirect('/login')
-        })
-        .catch((err) => console.log(err));
+        
     }
 
     function logOut() {
