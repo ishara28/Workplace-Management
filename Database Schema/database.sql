@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2020 at 06:42 PM
+-- Generation Time: Jul 28, 2020 at 02:48 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -36,16 +36,17 @@ CREATE TABLE `agreement` (
   `description` varchar(200) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `status` enum('ACTIVE','REMOVED','BLOCKED','EXPIRED') NOT NULL DEFAULT 'ACTIVE'
+  `status` enum('ACTIVE','REMOVED','BLOCKED','EXPIRED') NOT NULL DEFAULT 'ACTIVE',
+  `customer_index_no` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `agreement`
 --
 
-INSERT INTO `agreement` (`a_id`, `index_no`, `reg_date`, `reg_id`, `description`, `start_date`, `end_date`, `status`) VALUES
-(11, 'C-20724-21590', '2020-07-24', 'sss', 'sss', '2020-06-26', '2020-08-04', 'REMOVED'),
-(12, 'C-20724-22647', '2020-07-24', '123', 'xxxxxxx', '2020-07-17', '2020-07-04', 'ACTIVE');
+INSERT INTO `agreement` (`a_id`, `index_no`, `reg_date`, `reg_id`, `description`, `start_date`, `end_date`, `status`, `customer_index_no`) VALUES
+(14, 'A-20726-15386', '2020-07-26', 'ddd', 'dddsss', '2020-05-29', '2020-07-21', 'BLOCKED', 'C-20726-13620'),
+(15, 'A-20726-172537', '2020-07-26', 'ddd', '00', '2020-07-25', '2020-07-25', 'ACTIVE', 'C-20726-15507');
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,7 @@ CREATE TABLE `blocked_agreement` (
 --
 
 INSERT INTO `blocked_agreement` (`a_id`, `blocked_date`, `reason`) VALUES
-(11, '2020-07-24', 'fbf');
+(14, '2020-07-27', 'd');
 
 -- --------------------------------------------------------
 
@@ -83,9 +84,7 @@ CREATE TABLE `blocked_customer` (
 --
 
 INSERT INTO `blocked_customer` (`c_id`, `blocked_date`, `reason`) VALUES
-(3, '2020-07-24', 'DDD'),
-(4, '2020-07-24', 'Dont need'),
-(5, '2020-07-24', 'DDD');
+(6, '2020-07-27', 's');
 
 -- --------------------------------------------------------
 
@@ -99,6 +98,13 @@ CREATE TABLE `blocked_machinery` (
   `reason` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `blocked_machinery`
+--
+
+INSERT INTO `blocked_machinery` (`m_id`, `blocked_date`, `reason`) VALUES
+(43, '2020-07-26', 'aaa');
+
 -- --------------------------------------------------------
 
 --
@@ -110,6 +116,13 @@ CREATE TABLE `blocked_organization` (
   `blocked_date` date NOT NULL,
   `reason` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `blocked_organization`
+--
+
+INSERT INTO `blocked_organization` (`o_id`, `blocked_date`, `reason`) VALUES
+(1, '2020-07-25', 'aaa');
 
 -- --------------------------------------------------------
 
@@ -154,9 +167,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`c_id`, `index_no`, `name`, `nic_passport`, `address`, `telephone`, `email`, `description`, `reg_date`, `status`) VALUES
-(3, 'C-20723-215319', 'Ishara Madushan', '199732110052', 'Malimbada,\n Kirimatimulla,\n Matara', '0763356691', 'ishara@gmail.com', 'Description DDD', '2012-05-05', 'REMOVED'),
-(4, 'C-20723-22157', 'Dilanka Anuradha', '9785632154v', 'Thihagoda,\nMatara.', '0715469563', 'dilanka@gmail.com', 'Descrition about dilanka.', '2020-07-23', 'REMOVED'),
-(5, 'C-20724-103325', 'Janaka Shamal', '9785426251v', 'Kirinda, \nMatara', '0765623154', 'janakashamal@gmail.com', 'CZCZCZ', '2020-07-24', 'REMOVED');
+(6, 'C-20726-13620', 'Ishara Shanuka', '199732110052', 'Matara', '0763356691', 'ishara@gmail.com', 'Description12', '2020-07-26', 'BLOCKED'),
+(7, 'C-20726-15507', 'Dilanka Anuradha', '97845631455v', 'Thihagoda', '0714521254', 'dilanka@gmail.com', 'Description', '2020-07-26', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -172,15 +184,17 @@ CREATE TABLE `machinery` (
   `status` enum('ACTIVE','REMOVED','BLOCKED','') NOT NULL DEFAULT 'ACTIVE',
   `category` enum('VEHICLE','TOOL') DEFAULT NULL,
   `description` varchar(500) NOT NULL,
-  `owner_id` int(11) NOT NULL
+  `owner_index_no` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `machinery`
 --
 
-INSERT INTO `machinery` (`m_id`, `index_no`, `reg_id`, `reg_date`, `status`, `category`, `description`, `owner_id`) VALUES
-(36, 'M-20723-21559', 'ddd', '2020-07-23', 'ACTIVE', 'VEHICLE', '12453', 3);
+INSERT INTO `machinery` (`m_id`, `index_no`, `reg_id`, `reg_date`, `status`, `category`, `description`, `owner_index_no`) VALUES
+(42, 'M-20726-13652', 'r234', '2020-07-26', 'REMOVED', 'VEHICLE', 'Acccvfvfvfv', 'C-20726-15507'),
+(43, 'M-20726-13755', 'sss', '2020-07-26', 'BLOCKED', 'VEHICLE', 'ss', 'C-20726-13620'),
+(44, 'M-20726-13817', 'ddd', '2020-07-26', 'ACTIVE', 'TOOL', 'saaaa', 'C-20726-15507');
 
 -- --------------------------------------------------------
 
@@ -200,6 +214,13 @@ CREATE TABLE `organization` (
   `reg_id` varchar(20) NOT NULL,
   `c_id` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `organization`
+--
+
+INSERT INTO `organization` (`o_id`, `index_no`, `reg_date`, `status`, `address`, `telephone`, `email`, `description`, `reg_id`, `c_id`) VALUES
+(1, 'O-20725-9529', '2020-07-25', 'BLOCKED', 'scscs', 'xv', 'isharaliyanage97@gmail.co', ' xx', 'xxx', '4');
 
 -- --------------------------------------------------------
 
@@ -234,6 +255,13 @@ CREATE TABLE `user` (
   `password` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`) VALUES
+(1, 'user', '123456');
+
 -- --------------------------------------------------------
 
 --
@@ -260,7 +288,8 @@ CREATE TABLE `workhouse` (
 -- Indexes for table `agreement`
 --
 ALTER TABLE `agreement`
-  ADD PRIMARY KEY (`a_id`);
+  ADD PRIMARY KEY (`a_id`),
+  ADD KEY `customer_index_no` (`customer_index_no`);
 
 --
 -- Indexes for table `blocked_agreement`
@@ -296,14 +325,15 @@ ALTER TABLE `blocked_workhouse`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`c_id`);
+  ADD PRIMARY KEY (`c_id`,`index_no`),
+  ADD KEY `index_no` (`index_no`);
 
 --
 -- Indexes for table `machinery`
 --
 ALTER TABLE `machinery`
   ADD PRIMARY KEY (`m_id`),
-  ADD KEY `c_id` (`owner_id`);
+  ADD KEY `owner_index_no` (`owner_index_no`);
 
 --
 -- Indexes for table `organization`
@@ -339,25 +369,25 @@ ALTER TABLE `workhouse`
 -- AUTO_INCREMENT for table `agreement`
 --
 ALTER TABLE `agreement`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `blocked_customer`
 --
 ALTER TABLE `blocked_customer`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `blocked_machinery`
 --
 ALTER TABLE `blocked_machinery`
-  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `blocked_organization`
 --
 ALTER TABLE `blocked_organization`
-  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `blocked_workhouse`
@@ -369,19 +399,19 @@ ALTER TABLE `blocked_workhouse`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `machinery`
 --
 ALTER TABLE `machinery`
-  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `organization`
 --
 ALTER TABLE `organization`
-  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `project`
@@ -393,7 +423,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `workhouse`
@@ -404,6 +434,12 @@ ALTER TABLE `workhouse`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `agreement`
+--
+ALTER TABLE `agreement`
+  ADD CONSTRAINT `agreement_ibfk_1` FOREIGN KEY (`customer_index_no`) REFERENCES `customer` (`index_no`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `blocked_agreement`
@@ -433,7 +469,7 @@ ALTER TABLE `blocked_organization`
 -- Constraints for table `machinery`
 --
 ALTER TABLE `machinery`
-  ADD CONSTRAINT `machinery_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `customer` (`c_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `machinery_ibfk_1` FOREIGN KEY (`owner_index_no`) REFERENCES `customer` (`index_no`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
