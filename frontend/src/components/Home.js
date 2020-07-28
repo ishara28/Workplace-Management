@@ -1,23 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../stylesheets/Home.css";
-import { Button } from "reactstrap";
-import Axios from "axios";
-
-const log = () => {
-  const user = {
-    username: "111",
-    password: "me123",
-  };
-  Axios.post("/auth", user).then((res) => console.log(res.data));
-};
 
 function Home(props) {
   return (
     <>
-      <Button color="info" onClick={log}>
-        LOG
-      </Button>
       <div className="d-flex flex-row justify-content-around mb-5 mt-5">
         <Link to="/customer">
           <button className="btn btn-primary tile">
@@ -42,8 +29,8 @@ function Home(props) {
           </button>
         </Link>
         <Link to="/agreement">
-          <button className="btn  tile" style={{ backgroundColor: "#7a1d63" }}>
-            <h2 style={{ color: "white" }}>Agreements</h2>
+          <button className="btn btn-secondary tile">
+            <h2>Agreements</h2>
           </button>
         </Link>
         <Link to="/project">

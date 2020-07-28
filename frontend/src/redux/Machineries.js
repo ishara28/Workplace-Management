@@ -1,6 +1,6 @@
 export const Machineries = (state = {}, action) => {
-    switch(action.type){
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
