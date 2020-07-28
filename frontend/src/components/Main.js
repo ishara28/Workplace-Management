@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { AuthContext } from "./auth";
-import PrivateRoute from '../PrivateRoute';
+import React, { Component } from "react";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Header from './Header';
 import Home from './Home';
 import Login from './Login'
@@ -11,42 +9,96 @@ import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
 import Agreement from './agreements/Agreement';
 import Project from './project/Project';
+import { connect } from "react-redux";
 
-function App(props) {
-  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
-  const [authTokens, setAuthTokens] = useState(existingTokens);
+const mapStateToProps = (state) => {
+  return {
+    username: state.Auth.username,
+  };
+};
 
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
+class Main extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: localStorage.getItem("username"),
+    };
   }
 
-  const HomePage = ()=>{
-    if(authTokens){
-        return(<Home/>)
-    }
-    else{
-        return(<Login/>)
-    }
+  render() {
+    const HomePage = () => {
+      if (this.state.username != null) {
+        return <Home />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const CustomerPage = () => {
+      if (this.state.username != null) {
+        return <Customer />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const MachineryPage = () => {
+      if (this.state.username != null) {
+        return <Machinery />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const WorkhousePage = () => {
+      if (this.state.username != null) {
+        return <Workhouse />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const OrganizationPage = () => {
+      if (this.state.username != null) {
+        return <Organization />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const AgreementPage = () => {
+      if (this.state.username != null) {
+        return <Agreement />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const ProjectPage = () => {
+      if (this.state.username != null) {
+        return <Project />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    return (
+      <>
+        {this.state.username != null && <Header />}
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/customer" component={CustomerPage} />
+          <Route path="/machinery" component={MachineryPage} />
+          <Route path="/workhouse" component={WorkhousePage} />
+          <Route path="/organization" component={OrganizationPage} />
+          <Route path="/agreement" component={AgreementPage} />
+          <Route path="/project" component={ProjectPage} />
+          <Redirect to="/" />
+        </Switch>
+      </>
+    );
+  }
 }
 
-  return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
-        {authTokens && <Header/>}
-        
-        <Router>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/" component={HomePage} />
-            <PrivateRoute path="/customer" component={()=>(<Customer token={authTokens}/>)} />
-            <PrivateRoute path="/workhouse" component={()=>(<Workhouse token={authTokens}/>)} />
-            <PrivateRoute path="/machinery" component={()=>(<Machinery token={authTokens}/>)} />
-            <PrivateRoute path="/organization" component={()=>(<Organization token={authTokens}/>)} />
-            <PrivateRoute path="/agreement" component={()=>(<Agreement token={authTokens}/>)} />
-            <PrivateRoute path="/project" component={()=>(<Project token={authTokens}/>)} />
-            <Redirect to="/"/>
-      </Router>
-    </AuthContext.Provider>
-  );
-}
-
-export default App;
+export default withRouter(connect(mapStateToProps)(Main));

@@ -28,6 +28,7 @@ export class RegisterModal extends Component {
     super(props);
 
     this.state = {
+      customers: [],
       modal: false,
       index_no: "",
       reg_id: "",
@@ -35,8 +36,15 @@ export class RegisterModal extends Component {
       start_date: "",
       end_date: "",
       reg_date: currDate,
+      customer_index_no: "",
       isEmptyAlertVisible: false,
     };
+  }
+
+  componentDidMount() {
+    Axios.get("/customer/")
+      .then((res) => this.setState({ customers: res.data }))
+      .then(() => console.log("STATE", this.state.customers));
   }
 
   toggle = () => {
@@ -51,7 +59,7 @@ export class RegisterModal extends Component {
   registerAgreement = () => {
     var tempDate = new Date();
     const index_no =
-      "C-" +
+      "A-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +
@@ -70,6 +78,7 @@ export class RegisterModal extends Component {
           reg_date: this.state.reg_date,
           reg_id: this.state.reg_id,
           description: this.state.description,
+          customer_index_no: this.state.customer_index_no,
           start_date: this.state.start_date,
           end_date: this.state.end_date,
           status: "ACTIVE",
@@ -79,6 +88,7 @@ export class RegisterModal extends Component {
           this.state.reg_id &&
           this.state.description &&
           this.state.start_date &&
+          this.state.customer_index_no &&
           this.state.end_date
         ) {
           Axios.post("/agreement/register", newAgreement)
@@ -100,7 +110,7 @@ export class RegisterModal extends Component {
       <div>
         <div style={{ float: "right", marginRight: 10 }}>
           <Button style={{ backgroundColor: "#7a1d63" }} onClick={this.toggle}>
-            Register Customer
+            Register Agreement
           </Button>
         </div>
         <Modal isOpen={this.state.modal} toggle={this.state.modal} size="lg">
@@ -108,7 +118,7 @@ export class RegisterModal extends Component {
             style={{ backgroundColor: "#7a1d63", color: "white" }}
             toggle={this.toggle}
           >
-            Register Customer
+            Register Agreement
           </ModalHeader>
           <ModalBody>
             <FormGroup row>
@@ -132,6 +142,7 @@ export class RegisterModal extends Component {
               </Label>
               <Col sm={9}>
                 <Input
+                  type="textarea"
                   name="index_no"
                   id="exampleEmail"
                   placeholder="Description here..."
@@ -140,6 +151,30 @@ export class RegisterModal extends Component {
                     this.setState({ description: e.target.value })
                   }
                 />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="browser" sm={3}>
+                Customer
+              </Label>
+              <Col sm={9}>
+                <Input
+                  list="browsers"
+                  name="browser"
+                  id="browser"
+                  value={this.state.customer_index_no}
+                  onChange={(e) =>
+                    this.setState({ customer_index_no: e.target.value })
+                  }
+                ></Input>
+                <datalist id="browsers">
+                  {this.state.customers.map((customer) => {
+                    return (
+                      <option value={customer.index_no}>{customer.name}</option>
+                    );
+                  })}
+                </datalist>
               </Col>
             </FormGroup>
 

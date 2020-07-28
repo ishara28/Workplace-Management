@@ -26,9 +26,7 @@ class Customer extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/customer/",{
-      headers: this.props.token
-    })
+    Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
       .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
@@ -45,7 +43,7 @@ class Customer extends Component {
         </Breadcrumb>
 
         {/* Register Modal  */}
-        <RegisterModal token={this.props.token}/>
+        <RegisterModal />
 
         {/* Customer Table  */}
 
@@ -123,7 +121,7 @@ class Customer extends Component {
                   );
                 })
                 .map((customer) => {
-                  return <OneCustomer customer={customer} token={this.props.token}/>;
+                  return <OneCustomer customer={customer} />;
                 })}
             </tbody>
           </Table>

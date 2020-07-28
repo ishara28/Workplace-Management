@@ -69,7 +69,7 @@ export class OneCustomer extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.customer.c_id,{header:this.props.token})
+    Axios.post("/customer/remove/" + this.props.customer.c_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -114,11 +114,12 @@ export class OneCustomer extends Component {
     const currDate = date;
 
     var blockedCustomer = {
+      c_id:this.props.customer.c_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer,{header:this.props.token})
+      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -204,7 +205,6 @@ export class OneCustomer extends Component {
           closeEditModal={this.closeEditModal}
           customer={this.props.customer}
           registrySuccessAlert={this.registrySuccessAlert}
-          token={this.props.token}
         />
         {/* Edit modal ended 
 

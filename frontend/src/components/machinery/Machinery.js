@@ -27,7 +27,6 @@ export class Machinery extends Component {
 
     this.state = {
       machinery: [],
-      machineryClone: [],
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -63,11 +62,12 @@ export class Machinery extends Component {
   };
 
   registrySuccessAlert = () => {
-    this.setState({ successAlertVisible: true });
-    setTimeout(() => {
-      this.setState({ successAlertVisible: false });
-      window.location.reload(false);
-    }, 3000);
+    alert("Machine Successfully Registered!");
+    window.location.reload(false);
+    // this.setState({ successAlertVisible: true });
+    // setTimeout(() => {
+    //   this.setState({ successAlertVisible: false });
+    // }, 3000);
   };
 
   render() {
@@ -80,14 +80,7 @@ export class Machinery extends Component {
           <BreadcrumbItem active>Machinery</BreadcrumbItem>
         </Breadcrumb>
 
-        {/* <div className="container-fluid d-flex flex-row-reverse">
-          <button className="btn btn-success ml-2">Register</button>
-          <input
-            type="text"
-            className="form-control textbox"
-            placeholder="Search by Id"
-          />
-        </div> */}
+        {/* Search  */}
         <div style={{ float: "left", width: "300px", marginLeft: 10 }}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -103,7 +96,7 @@ export class Machinery extends Component {
           </InputGroup>
         </div>
 
-        <div style={{ float: "right", margin: 5 }}>
+        <div style={{ float: "right", marginRight: 5, marginBottom: 10 }}>
           <Button
             style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
@@ -123,22 +116,34 @@ export class Machinery extends Component {
                 <th>Category</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Owner</th>
               </tr>
             </thead>
             <tbody>
               {this.state.machinery
                 .filter((machine) => {
                   return (
-                    machine.index_no.includes(this.state.searchValue) ||
-                    machine.reg_id.includes(this.state.searchValue) ||
-                    machine.reg_date.includes(this.state.searchValue) ||
-                    machine.category.includes(
-                      this.state.searchValue.toUpperCase()
-                    ) ||
-                    machine.description.includes(this.state.searchValue) ||
-                    machine.status.includes(
-                      this.state.searchValue.toUpperCase()
-                    )
+                    machine.index_no
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.reg_id
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.reg_date
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.category
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.description
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.name
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase()) ||
+                    machine.status
+                      .toUpperCase()
+                      .includes(this.state.searchValue.toUpperCase())
                   );
                 })
                 .map((machine) => {

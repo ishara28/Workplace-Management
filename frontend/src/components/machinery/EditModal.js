@@ -45,7 +45,7 @@ export class EditModal extends Component {
       customers: [],
       reg_id: "",
       category: "",
-      owner_id: "",
+      owner_index_no: "",
       description: "",
       isFieldsEmpty: false,
     };
@@ -56,7 +56,7 @@ export class EditModal extends Component {
     this.setState({
       reg_id: this.props.machine.reg_id,
       category: this.props.machine.category,
-      owner_id: this.props.machine.owner_id,
+      owner_index_no: this.props.machine.owner_index_no,
       description: this.props.machine.description,
     });
     Axios.get("/customer/")
@@ -76,20 +76,25 @@ export class EditModal extends Component {
       reg_id: this.state.reg_id,
       category: this.state.category,
       description: this.state.description,
-      owner_id: this.state.owner_id,
+      owner_index_no: this.state.owner_index_no,
     };
     if (
       this.state.reg_id &&
       this.state.description &&
       this.state.category &&
-      this.state.owner_id
+      this.state.owner_index_no
     ) {
-      Axios.post("machinery/update/" + this.props.machine.m_id, newMachinery)
-        .then((res) => console.log(res.data))
-        .then(() => {
+      Axios.post(
+        "machinery/update/" + this.props.machine.m_id,
+        newMachinery
+      ).then((res) => {
+        if (res.data.isError) {
+          alert("Select a valid owner");
+        } else {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
-        });
+        }
+      });
     } else {
       this.setState({ isFieldsEmpty: true });
     }
@@ -144,23 +149,23 @@ export class EditModal extends Component {
                 </Label>
                 <Col sm={10}>
                   <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.owner}
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    value={this.state.owner_index_no}
                     onChange={(e) =>
-                      this.setState({ owner_id: e.target.value })
+                      this.setState({ owner_index_no: e.target.value })
                     }
-                  >
-                    <option>Choose Owner</option>
+                  ></Input>
+                  <datalist id="browsers">
                     {this.state.customers.map((customer) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={customer.index_no}>
+                          {customer.name}
                         </option>
                       );
                     })}
-                  </Input>
+                  </datalist>
                 </Col>
               </FormGroup>
 

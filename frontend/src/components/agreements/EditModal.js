@@ -31,8 +31,10 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
+      customers: [],
       reg_id: "",
       description: "",
+      customer_index_no: "",
       start_date: "",
       end_date: "",
       isFieldsEmpty: false,
@@ -44,11 +46,16 @@ export class EditModal extends Component {
       {
         reg_id: this.props.agreement.reg_id,
         description: this.props.agreement.description,
+        customer_index_no: this.props.agreement.customer_index_no,
         start_date: this.props.agreement.start_date.slice(0, 10),
         end_date: this.props.agreement.end_date.slice(0, 10),
       },
-      () => console.log("State", this.state)
+      () => console.log("Props", this.props)
     );
+    Axios.get("/customer/")
+      .then((res) => this.setState({ customers: res.data }))
+      //   .then(() => console.log(this.state.customers))
+      .catch((err) => console.log(err));
   }
 
   closeBtn = (
@@ -61,16 +68,22 @@ export class EditModal extends Component {
     const newAgreement = {
       reg_id: this.state.reg_id,
       description: this.state.description,
+      customer_index_no: this.state.customer_index_no,
       start_date: this.state.start_date,
       end_date: this.state.end_date,
     };
     if (this.state.reg_id && this.state.description) {
-      Axios.post("agreement/update/" + this.props.agreement.a_id, newAgreement)
-        .then((res) => console.log(res.data))
-        .then(() => {
+      Axios.post(
+        "agreement/update/" + this.props.agreement.a_id,
+        newAgreement
+      ).then((res) => {
+        if (res.data.isError) {
+          alert("Select a valid customer!");
+        } else {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
-        });
+        }
+      });
     } else {
       this.setState({ isFieldsEmpty: true });
     }
@@ -112,6 +125,32 @@ export class EditModal extends Component {
                       this.setState({ description: e.target.value })
                     }
                   ></Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="browser" sm={2}>
+                  Customer
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    value={this.state.customer_index_no}
+                    onChange={(e) =>
+                      this.setState({ customer_index_no: e.target.value })
+                    }
+                  ></Input>
+                  <datalist id="browsers">
+                    {this.state.customers.map((customer) => {
+                      return (
+                        <option value={customer.index_no}>
+                          {customer.name}
+                        </option>
+                      );
+                    })}
+                  </datalist>
                 </Col>
               </FormGroup>
 

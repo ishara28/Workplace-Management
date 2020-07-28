@@ -48,9 +48,10 @@ export class RegisterModal extends Component {
       status: "ACTIVE",
       reg_id: "",
       category: "",
-      owner_id: "",
+      owner_index_no: "",
       description: "",
       isFieldsEmpty: false,
+      validOwnerMsg: false,
     };
   }
 
@@ -91,20 +92,26 @@ export class RegisterModal extends Component {
           status: this.state.status,
           category: this.state.category,
           description: this.state.description,
-          owner_id: this.state.owner_id,
+          owner_index_no: this.state.owner_index_no,
         };
+
         if (
           this.state.reg_id &&
           this.state.description &&
           this.state.category &&
-          this.state.owner_id
+          this.state.owner_index_no
         ) {
-          Axios.post("machinery/register", newMachinery)
-            .then((res) => console.log(res.data))
-            .then(() => {
+          Axios.post("machinery/register", newMachinery).then((res) => {
+            if (res.data.isError) {
+              this.setState({
+                validOwnerMsg: true,
+              });
+              console.log(res.data.message);
+            } else {
               this.props.closeModal();
               this.props.registrySuccessAlert();
-            });
+            }
+          });
         } else {
           this.setState({ isFieldsEmpty: true });
         }
@@ -116,7 +123,12 @@ export class RegisterModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn}>Machinery Register</ModalHeader>
+          <ModalHeader
+            style={{ backgroundColor: "#23272B", color: "white" }}
+            close={this.closeBtn}
+          >
+            Machinery Register
+          </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -156,28 +168,28 @@ export class RegisterModal extends Component {
               </FormGroup>
 
               <FormGroup row>
-                <Label for="exampleSelect" sm={2}>
+                <Label for="browser" sm={2}>
                   Owner
                 </Label>
                 <Col sm={10}>
                   <Input
-                    type="select"
-                    name="select"
-                    id="exampleSelect"
-                    value={this.state.owner}
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    value={this.state.owner_index_no}
                     onChange={(e) =>
-                      this.setState({ owner_id: e.target.value })
+                      this.setState({ owner_index_no: e.target.value })
                     }
-                  >
-                    <option>Choose Owner</option>
+                  ></Input>
+                  <datalist id="browsers">
                     {this.state.customers.map((customer) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={customer.index_no}>
+                          {customer.name}
                         </option>
                       );
                     })}
-                  </Input>
+                  </datalist>
                 </Col>
               </FormGroup>
 
@@ -201,6 +213,9 @@ export class RegisterModal extends Component {
 
             {this.state.isFieldsEmpty && (
               <Alert color="danger">Check whether all inputs are filled!</Alert>
+            )}
+            {this.state.validOwnerMsg && (
+              <Alert color="danger">Select a valid owner!</Alert>
             )}
           </ModalBody>
           <ModalFooter>
