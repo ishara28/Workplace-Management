@@ -2,14 +2,14 @@ import Header from "./Header";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
-import Workhouse from "./Workhouse";
-import Organization from "./Organization";
-import Project from "./Project";
 import { connect } from "react-redux";
 import Machinery from "./machinery/Machinery";
 import Customer from "./customers/Customer";
 import Agreement from "./agreements/Agreement";
 import React, { Component } from "react";
+import Organization from "./organization/Organization";
+import Project from "./project/Project";
+import Workhouse from "./workhouse/Workhouse";
 
 const mapStateToProps = (state) => {
   return {
