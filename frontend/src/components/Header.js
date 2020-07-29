@@ -13,11 +13,22 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Form,
+  FormGroup,
+  Button,
+  Input,
+  Col,
+  Label
 } from "reactstrap";
 import { connect } from "react-redux";
 import { updateUsername } from "../redux/ActionCreators";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import axios from 'axios'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+var CryptoJS = require("crypto-js");
 
 const mapStateToProps = (state) => ({
   username: state.Auth.username,
@@ -89,12 +100,41 @@ class Header extends Component {
     });
   }
 
-  changeUsername(values) {
+  changeUsername() {
     this.toggleModalUsername();
+    const updated = {
+      username: this.state.newUsername
+    }
+    console.log(updated);
+
+    axios.post("/auth/changeun/"+this.state.username, updated )
+      .then((res) => console.log(res.data))
+      .then(() => {
+      this.setState({ modal: false });
+      window.location.reload(false);
+    });
   }
 
   changePassword(values) {
     this.toggleModalPassword();
+    const hashPwd = CryptoJS.SHA256(this.state.password);
+    const encryptPwd = hashPwd.toString(CryptoJS.enc.Base64);
+
+    const hashNewPwd = CryptoJS.SHA256(this.state.password);
+    const encryptNewPwd = hashNewPwd.toString(CryptoJS.enc.Base64);
+
+    const updated = {
+      newPassword: encryptNewPwd,
+      password: encryptPwd
+    }
+
+    axios.post("/auth/changepw/"+this.state.username, updated )
+            .then((res) => console.log(res.data))
+            .then(() => {
+              alert("Password Successfully Changed!");
+              this.setState({ modal: false });
+              window.location.reload(false);
+            });
   }
 
   /*deleteAccount(values) {
@@ -102,116 +142,94 @@ class Header extends Component {
   }*/
 
   logout() {
-    this.props.updateUsername(null);
-    localStorage.removeItem("username");
-    window.location.href = "/";
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2 className="text-danger">Do you want to logout?</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="danger" onClick={()=>{
+                this.props.updateUsername(null);
+                localStorage.removeItem("username");
+                window.location.href = "/";
+              }}>
+                Log out
+              </Button>
+              <Button color="primary" className="ml-3" onClick={onClose}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+
+    
   }
 
   render() {
     return (
       <>
-        <Modal
-          isOpen={this.state.modalUsername}
-          toggle={this.toggleModalUsername}
-        >
-          <ModalHeader>Change username</ModalHeader>
+        <Modal isOpen={this.state.modalUsername}>
+          <ModalHeader toggle={this.toggleModalUsername} className="bg-primary text-white">Change username</ModalHeader>
           <ModalBody>
-            <form onSubmit={(values) => this.changeUsername(values)}>
-              <input
-                type="text"
-                className="form-control mb-3"
-                id="username"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChange}
-                placeholder="username"
-                required
-              />
-              <input
-                type="password"
-                className="form-control mb-3"
-                id="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChange}
-                placeholder="password"
-                required
-              />
-              <input
-                type="text"
-                className="form-control mb-3"
-                id="newUsername"
-                name="newUsername"
-                value={this.state.newUsername}
-                onChange={this.handleInputChange}
-                placeholder="new username"
-                required
-              />
+            
+            <Form onSubmit={this.changeUsername}>
+              <FormGroup>
+                <Label for="username">username</Label>
+                <Input type="text" name="username" id="username" value={this.state.username} onChange={this.handleInputChange} required/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="password">password</Label>
+                <Input type="password" name="password" id="password" value={this.state.password} onChange={this.handleInputChange} required/>
+              </FormGroup>
+                
+              <FormGroup>
+                <Label for="newUsername">new username</Label>
+                <Input type="text" name="newUsername" id="newUsername" value={this.state.newUsername} onChange={this.handleInputChange} required/>
+              </FormGroup>
+
               <center>
-                <button type="submit" className="btn btn-success">
-                  Change
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Cancel
-                </button>
+                <Button type="submit" color="success">Change</Button>
+                <Button onClick={this.toggleModalUsername} color="primary" className="ml-3">Cancel</Button>
               </center>
-            </form>
+            </Form>
+            
           </ModalBody>
         </Modal>
 
-        <Modal
-          isOpen={this.state.modalPassword}
-          toggle={this.toggleModalPassword}
-        >
-          <ModalHeader>Change password</ModalHeader>
+        <Modal isOpen={this.state.modalPassword}>
+          <ModalHeader toggle={this.toggleModalPassword} className="bg-primary text-white">Change username</ModalHeader>
           <ModalBody>
-            <form onSubmit={(values) => this.changePassword(values)}>
-              <input
-                type="text"
-                className="form-control mb-3"
-                id="username"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChange}
-                placeholder="username"
-                required
-              />
-              <input
-                type="password"
-                className="form-control mb-3"
-                id="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChange}
-                placeholder="password"
-                required
-              />
-              <input
-                type="password"
-                className="form-control mb-3"
-                id="newPassword"
-                name="newPassword"
-                value={this.state.newPassword}
-                onChange={this.handleInputChange}
-                placeholder="new password"
-                required
-              />
-              <input
-                type="password"
-                className="form-control mb-3"
-                id="confNewPassword"
-                name="confNewPassword"
-                value={this.state.confNewPassword}
-                onChange={this.handleInputChange}
-                placeholder="confirm new password"
-                required
-              />
+            
+            <Form onSubmit={(values) => this.changeUsername(values)}>
+              <FormGroup>
+                <Label for="username">username</Label>
+                <Input type="text" name="username" id="username" value={this.state.username} onChange={this.handleInputChange} required/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="password">password</Label>
+                <Input type="password" name="password" id="password" value={this.state.password} onChange={this.handleInputChange} required/>
+              </FormGroup>
+                
+              <FormGroup>
+                <Label for="newPassword">new password</Label>
+                <Input type="password" name="newPassword" id="newPassword" value={this.state.newPassword} onChange={this.handleInputChange} required/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="confNewPassword">confirm new password</Label>
+                <Input type="password" name="confNewPassword" id="confNewPassword" value={this.state.confNewPassword} onChange={this.handleInputChange} required/>
+              </FormGroup>
+
               <center>
-                <button type="submit" className="btn btn-success">
-                  change
-                </button>
+                <Button type="submit" color="success">Change</Button>
+                <Button onClick={this.toggleModalPassword} color="primary" className="ml-3">Cancel</Button>
               </center>
-            </form>
+            </Form>
+           
           </ModalBody>
         </Modal>
 
@@ -260,7 +278,7 @@ class Header extends Component {
                 >
                   Delete account
                 </DropdownItem>*/}
-                <DropdownItem onClick={this.logout}>Log out</DropdownItem>
+                <DropdownItem onClick={this.logout} className="text-danger">Log out</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </Nav>

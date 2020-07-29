@@ -60,7 +60,20 @@ export class OneCustomer extends Component {
   };
 
   registrySuccessAlert = () => {
-    alert("Updated successfully!");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Updated successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
     window.location.reload(false);
     // this.setState({ successAlertVisible: true });
     // setTimeout(() => {
@@ -151,30 +164,27 @@ export class OneCustomer extends Component {
         <th>{this.props.customer.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm">
-              Operation
+            <DropdownToggle caret size="sm" color="primary">
+              Actions
             </DropdownToggle>
             <DropdownMenu
-              style={{ backgroundColor: "#23272B", color: "white" }}
+              right
             >
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.showEditModal}
               >
                 Edit
               </DropdownItem>
-              <DropdownItem
-                style={{ color: "white" }}
+              {this.props.customer.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
-              </DropdownItem>
-              <DropdownItem
-                style={{ color: "white" }}
+              </DropdownItem>}
+              {this.props.customer.status!=="BLOCKED" &&  <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
-              </DropdownItem>
+              </DropdownItem>}
             </DropdownMenu>
           </ButtonDropdown>
         </td>

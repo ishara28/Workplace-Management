@@ -12,6 +12,8 @@ import {
   Alert,
 } from "reactstrap";
 import Axios from "axios";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 var tempDate = new Date();
 var date =
@@ -90,7 +92,20 @@ export class RegisterModal extends Component {
           Axios.post("/customer/register", newCustomer)
             .then((res) => console.log(res.data))
             .then(() => {
-              alert("Customer Successfully Registered!");
+              confirmAlert({
+                customUI: ({ onClose }) => {
+                  return (
+                    <div className="custom-ui">
+                      <h2>Customer Successfully Registered!</h2>
+                      <div style={{ textAlign: "center" }}>
+                        <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                          OK
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                },
+              });
               this.setState({ modal: false });
               window.location.reload(false);
             });

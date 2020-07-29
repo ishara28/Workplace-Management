@@ -73,7 +73,6 @@ class Login extends Component {
             return (
               <div className="custom-ui">
                 <h2 className="text-danger">Invalid Login</h2>
-                {/* <p>You want to delete this file?</p> */}
                 <div style={{ textAlign: "center" }}>
                   <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
                     OK
