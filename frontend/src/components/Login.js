@@ -3,7 +3,12 @@ import "../stylesheets/Login.css";
 import { updateUsername } from "../redux/ActionCreators";
 import { connect } from "react-redux";
 import Axios from "axios";
-var CryptoJS = require("crypto-js");;
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import {Button} from 'reactstrap'
+
+var CryptoJS = require("crypto-js");
+
 
 const mapStateToProps = (state) => {
   return {
@@ -55,13 +60,29 @@ class Login extends Component {
       username: this.state.username,
       password: encryptPwd,
     };
-    Axios.post("/auth/", user).then((res) => {
+    Axios.post("/auth/", user)
+    .then((res) => {
       if (res.data.isLogged) {
         this.props.updateUsername(encryptUsername);
         localStorage.setItem("username", encryptUsername);
         window.location.href = "/";
-      } else {
-        console.log("Invalid Login");
+      }
+      else {
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div className="custom-ui">
+                <h2 className="text-danger">Invalid Login</h2>
+                {/* <p>You want to delete this file?</p> */}
+                <div style={{ textAlign: "center" }}>
+                  <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                    OK
+                  </Button>
+                </div>
+              </div>
+            );
+          },
+        });
       }
     });
 
