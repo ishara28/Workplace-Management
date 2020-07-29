@@ -3,6 +3,7 @@ import "../stylesheets/Login.css";
 import { updateUsername } from "../redux/ActionCreators";
 import { connect } from "react-redux";
 import Axios from "axios";
+var CryptoJS = require("crypto-js");;
 
 const mapStateToProps = (state) => {
   return {
@@ -39,14 +40,25 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    
+    const hashPwd = CryptoJS.SHA256(this.state.password);
+
+    const encryptPwd = hashPwd.toString(CryptoJS.enc.Base64);
+
+    console.log(encryptPwd);
+
+    const hashUsername = CryptoJS.SHA256(this.state.username);
+
+    const encryptUsername = hashUsername.toString(CryptoJS.enc.Base64);
+
     const user = {
       username: this.state.username,
-      password: this.state.password,
+      password: encryptPwd,
     };
     Axios.post("/auth/", user).then((res) => {
       if (res.data.isLogged) {
-        this.props.updateUsername(this.state.username);
-        localStorage.setItem("username", this.state.username);
+        this.props.updateUsername(encryptUsername);
+        localStorage.setItem("username", encryptUsername);
         window.location.href = "/";
       } else {
         console.log("Invalid Login");
