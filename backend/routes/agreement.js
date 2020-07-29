@@ -124,28 +124,49 @@ router.post("/remove/:a_id", (req, res) => {
 
 //Block existing agreement
 router.post("/block/:a_id", (req, res) => {
-  if (req.session.isLogged) {
-    let blockAgreement = {
-      a_id: req.params.a_id,
-      blocked_date: req.body.blocked_date,
-      reason: req.body.reason,
-    };
+  let sql_1 = "SELECT * FROM blocked_agreement WHERE a_id = ?";
 
-    let sql =
-      "UPDATE agreement SET status = 'BLOCKED' WHERE a_id = ? ; INSERT INTO blocked_agreement SET ?";
+  let query_1 = mySqlConnection.query(sql_1, req.params.a_id, (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      let blockAgreement = {
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
 
-    let query = mySqlConnection.query(
-      sql,
-      [req.params.a_id, blockAgreement],
-      (err, result) => {
-        if (err) throw err;
-        console.log("Agreement Blocked");
-        res.send("Agreement Blocked");
-      }
-    );
-  } else {
-    res.send("Login First!");
-  }
+      let sql =
+        "UPDATE agreement SET status = 'BLOCKED' WHERE a_id = ? ; UPDATE blocked_agreement SET ? WHERE a_id = ?";
+
+      let query = mySqlConnection.query(
+        sql,
+        [req.params.a_id, blockAgreement, req.params.a_id],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Agreement Blocked");
+          res.send("Agreement Blocked");
+        }
+      );
+    } else {
+      let blockAgreement = {
+        a_id: req.params.a_id,
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
+
+      let sql =
+        "UPDATE agreement SET status = 'BLOCKED' WHERE a_id = ? ; INSERT INTO blocked_agreement SET ?";
+
+      let query = mySqlConnection.query(
+        sql,
+        [req.params.a_id, blockAgreement],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Agreement Blocked");
+          res.send("Agreement Blocked");
+        }
+      );
+    }
+  });
 });
 
 module.exports = router;
