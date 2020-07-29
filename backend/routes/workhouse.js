@@ -112,28 +112,53 @@ router.post("/remove/:index_no", (req, res) => {
 
 //Block existing workhouse
 router.post("/block/:index_no", (req, res) => {
-  if (req.session.isLogged) {
-    let blockWorkhose = {
-      index_no: req.params.index_no,
-      blocked_date: req.body.blocked_date,
-      reason: req.body.reason,
-    };
+  let sql_1 = "SELECT * FROM blocked_workhouse WHERE index_no = ?";
 
-    let sql =
-      "UPDATE workhouse SET status = 'BLOCKED' WHERE index_no = ? ; INSERT INTO blocked_workhouse SET ?";
+  let query_1 = mySqlConnection.query(
+    sql_1,
+    req.params.index_no,
+    (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+        let blockWorkhose = {
+          blocked_date: req.body.blocked_date,
+          reason: req.body.reason,
+        };
 
-    let query = mySqlConnection.query(
-      sql,
-      [req.params.index_no, blockWorkhose],
-      (err, result) => {
-        if (err) throw err;
-        console.log("Workhose Blocked");
-        res.send("Workhouse Blocked");
+        let sql =
+          "UPDATE workhouse SET status = 'BLOCKED' WHERE index_no = ? ; UPDATE blocked_workhouse SET ? WHERE index_no = ?";
+
+        let query = mySqlConnection.query(
+          sql,
+          [req.params.index_no, blockWorkhose, req.params.index_no],
+          (err, result) => {
+            if (err) throw err;
+            console.log("Workhose Blocked");
+            res.send("Workhouse Blocked");
+          }
+        );
+      } else {
+        let blockWorkhose = {
+          index_no: req.params.index_no,
+          blocked_date: req.body.blocked_date,
+          reason: req.body.reason,
+        };
+
+        let sql =
+          "UPDATE workhouse SET status = 'BLOCKED' WHERE index_no = ? ; INSERT INTO blocked_workhouse SET ?";
+
+        let query = mySqlConnection.query(
+          sql,
+          [req.params.index_no, blockWorkhose],
+          (err, result) => {
+            if (err) throw err;
+            console.log("Workhose Blocked");
+            res.send("Workhouse Blocked");
+          }
+        );
       }
-    );
-  } else {
-    res.send("Login First!");
-  }
+    }
+  );
 });
 
 module.exports = router;

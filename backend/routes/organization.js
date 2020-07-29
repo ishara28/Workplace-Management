@@ -108,28 +108,49 @@ router.post("/remove/:o_id", (req, res) => {
 
 //Block existing organization
 router.post("/block/:o_id", (req, res) => {
-  if (req.session.isLogged) {
-    let blockOrganization = {
-      o_id: req.params.o_id,
-      blocked_date: req.body.blocked_date,
-      reason: req.body.reason,
-    };
+  let sql_1 = "SELECT * FROM blocked_organization WHERE o_id = ?";
 
-    let sql =
-      "UPDATE organization SET status = 'BLOCKED' WHERE o_id = ? ; INSERT INTO blocked_organization SET ?";
+  let query_1 = mySqlConnection.query(sql_1, req.params.o_id, (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      let blockOrganization = {
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
 
-    let query = mySqlConnection.query(
-      sql,
-      [req.params.o_id, blockOrganization],
-      (err, result) => {
-        if (err) throw err;
-        console.log("Organization Blocked");
-        res.send("Organization Blocked");
-      }
-    );
-  } else {
-    res.send("Login First!");
-  }
+      let sql =
+        "UPDATE organization SET status = 'BLOCKED' WHERE o_id = ? ; UPDATE blocked_organization SET ? WHERE o_id = ?";
+
+      let query = mySqlConnection.query(
+        sql,
+        [req.params.o_id, blockOrganization, req.params.o_id],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Organization Blocked");
+          res.send("Organization Blocked");
+        }
+      );
+    } else {
+      let blockOrganization = {
+        o_id: req.params.o_id,
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
+
+      let sql =
+        "UPDATE organization SET status = 'BLOCKED' WHERE o_id = ? ; INSERT INTO blocked_organization SET ?";
+
+      let query = mySqlConnection.query(
+        sql,
+        [req.params.o_id, blockOrganization],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Organization Blocked");
+          res.send("Organization Blocked");
+        }
+      );
+    }
+  });
 });
 
 module.exports = router;

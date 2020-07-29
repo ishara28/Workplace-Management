@@ -96,28 +96,49 @@ router.post("/remove/:m_id", (req, res) => {
 
 //Block an existing machinery
 router.post("/block/:m_id", (req, res) => {
-  if (req.session.isLogged) {
-    let blockedMachinery = {
-      m_id: req.params.m_id,
-      blocked_date: req.body.blocked_date,
-      reason: req.body.reason,
-    };
+  let sql_1 = "SELECT * FROM blocked_machinery WHERE m_id = ?";
 
-    let sql =
-      "UPDATE machinery SET status = 'BLOCKED' WHERE m_id = ? ; INSERT INTO blocked_machinery SET ?";
+  let query_1 = mysqlConnection.query(sql_1, req.params.m_id, (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      let blockedMachinery = {
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
 
-    let query = mysqlConnection.query(
-      sql,
-      [req.params.m_id, blockedMachinery],
-      (err, result) => {
-        if (err) throw err;
-        console.log("Machinery Blocked");
-        res.send("Machinery Blocked");
-      }
-    );
-  } else {
-    res.send("Login First!");
-  }
+      let sql =
+        "UPDATE machinery SET status = 'BLOCKED' WHERE m_id = ? ; UPDATE blocked_machinery SET ? WHERE m_id = ?";
+
+      let query = mysqlConnection.query(
+        sql,
+        [req.params.m_id, blockedMachinery, req.params.m_id],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Machinery Blocked");
+          res.send("Machinery Blocked");
+        }
+      );
+    } else {
+      let blockedMachinery = {
+        m_id: req.params.m_id,
+        blocked_date: req.body.blocked_date,
+        reason: req.body.reason,
+      };
+
+      let sql =
+        "UPDATE machinery SET status = 'BLOCKED' WHERE m_id = ? ; INSERT INTO blocked_machinery SET ?";
+
+      let query = mysqlConnection.query(
+        sql,
+        [req.params.m_id, blockedMachinery],
+        (err, result) => {
+          if (err) throw err;
+          console.log("Machinery Blocked");
+          res.send("Machinery Blocked");
+        }
+      );
+    }
+  });
 });
 
 //Update machine details
