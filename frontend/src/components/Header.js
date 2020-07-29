@@ -17,6 +17,7 @@ import {
 import { connect } from "react-redux";
 import { updateUsername } from "../redux/ActionCreators";
 import { Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 const mapStateToProps = (state) => ({
   username: state.Auth.username,
@@ -46,11 +47,11 @@ class Header extends Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleModalUsername = this.toggleModalUsername.bind(this);
     this.toggleModalPassword = this.toggleModalPassword.bind(this);
-    this.toggleModalDelete = this.toggleModalDelete.bind(this);
+    //this.toggleModalDelete = this.toggleModalDelete.bind(this);
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.changeUsername = this.changeUsername.bind(this);
-    this.deleteAccount = this.deleteAccount.bind(this);
+    //this.deleteAccount = this.deleteAccount.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -72,11 +73,11 @@ class Header extends Component {
     });
   }
 
-  toggleModalDelete() {
+  /*toggleModalDelete() {
     this.setState({
       modalDelete: !this.state.modalDelete,
     });
-  }
+  }*/
 
   handleInputChange(event) {
     const target = event.target;
@@ -96,9 +97,9 @@ class Header extends Component {
     this.toggleModalPassword();
   }
 
-  deleteAccount(values) {
+  /*deleteAccount(values) {
     this.toggleModalDelete();
-  }
+  }*/
 
   logout() {
     this.props.updateUsername(null);
@@ -148,7 +149,10 @@ class Header extends Component {
               />
               <center>
                 <button type="submit" className="btn btn-success">
-                  change
+                  Change
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Cancel
                 </button>
               </center>
             </form>
@@ -211,7 +215,7 @@ class Header extends Component {
           </ModalBody>
         </Modal>
 
-        <Modal isOpen={this.state.modalDelete} toggle={this.toggleModalDelete}>
+        {/*<Modal isOpen={this.state.modalDelete} toggle={this.toggleModalDelete}>
           <ModalHeader className="text-danger">Warning!</ModalHeader>
           <ModalBody>Do you want to delete account?</ModalBody>
           <ModalFooter>
@@ -225,7 +229,7 @@ class Header extends Component {
               Delete
             </button>
           </ModalFooter>
-        </Modal>
+        </Modal>*/}
 
         <Navbar dark color="primary" expand="md">
           <Nav>
@@ -241,7 +245,7 @@ class Header extends Component {
               toggle={this.toggleDropdown}
             >
               <DropdownToggle caret className="btn btn-light">
-                <b>{this.props.username}</b>
+                <FaUser/>
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem onClick={this.toggleModalUsername}>
@@ -250,12 +254,12 @@ class Header extends Component {
                 <DropdownItem onClick={this.toggleModalPassword}>
                   Change password
                 </DropdownItem>
-                <DropdownItem
+                {/*<DropdownItem
                   className="text-danger btn-danger"
                   onClick={this.deleteAccount}
                 >
                   Delete account
-                </DropdownItem>
+                </DropdownItem>*/}
                 <DropdownItem onClick={this.logout}>Log out</DropdownItem>
               </DropdownMenu>
             </Dropdown>

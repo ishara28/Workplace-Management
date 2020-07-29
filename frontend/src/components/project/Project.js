@@ -64,10 +64,11 @@ export class Project extends Component {
 
   registrySuccessAlert = () => {
     this.setState({ successAlertVisible: true });
-    setTimeout(() => {
-      this.setState({ successAlertVisible: false });
-      window.location.reload(false);
-    }, 3000);
+    window.location.reload(false);
+    //setTimeout(() => {
+      //this.setState({ successAlertVisible: false });
+      //window.location.reload(false);
+    //}, 3000);
   };
 
   render() {
