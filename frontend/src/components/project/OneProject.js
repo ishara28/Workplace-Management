@@ -51,7 +51,21 @@ export class OneProject extends Component {
   };
 
   registrySuccessAlert = () => {
-    alert("Updated successfully!");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Updated successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="info" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+    //alert("Updated successfully!");
     window.location.reload(false);
     // this.setState({ successAlertVisible: true });
     // setTimeout(() => {
@@ -211,38 +225,31 @@ export class OneProject extends Component {
         <th>{this.props.project.agreement_id}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm">
-              Operation
+            <DropdownToggle caret size="sm" color="info">
+              Actions
             </DropdownToggle>
-            <DropdownMenu
-              style={{ backgroundColor: "#23272B", color: "white" }}
-            >
+            <DropdownMenu right>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.showEditModal}
               >
                 Update
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.startDialog}
               >
                 Start
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.endDialog}
               >
                 End
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.closeDialog}
               >
                 Close
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.cancelDialog}
               >
                 Cancel

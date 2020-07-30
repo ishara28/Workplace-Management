@@ -106,17 +106,18 @@ export class Project extends Component {
 
         <div style={{ float: "right", margin: 5 }}>
           <Button
-            style={{ backgroundColor: "#23272B" }}
+            color="info"
+            className="mr-2"
             onClick={this.showModal}
           >
-            Register a project
+            Register
           </Button>
         </div>
 
         {/* Projects List  */}
         <div>
           <Table striped bordered hover responsive>
-            <thead style={{ backgroundColor: "#23272B", color: "white" }}>
+            <thead className="text-white bg-info">
               <tr>
                 <th>Index No</th>
                 <th>Registered Date</th>

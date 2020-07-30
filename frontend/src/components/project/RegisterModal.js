@@ -15,6 +15,8 @@ import {
   Alert,
 } from "reactstrap";
 import Axios from "axios";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 var tempDate = new Date();
 var date =
@@ -128,8 +130,23 @@ export class RegisterModal extends Component {
           Axios.post("project/register", newProject)
             .then((res) => console.log(res.data))
             .then(() => {
+              confirmAlert({
+                customUI: ({ onClose }) => {
+                  return (
+                    <div className="custom-ui">
+                      <h2>Registered successfully!</h2>
+                      <div style={{ textAlign: "center" }}>
+                        <Button color="info" style={{ margin: 3 }} onClick={onClose}>
+                          OK
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                },
+              });
               this.props.closeModal();
-              this.props.registrySuccessAlert();
+              window.location.reload();
+              //this.props.registrySuccessAlert();
             });
         } else {
           this.setState({ isFieldsEmpty: true });
@@ -142,7 +159,7 @@ export class RegisterModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn}>Project Register</ModalHeader>
+          <ModalHeader close={this.closeBtn} className="text-white bg-info">Project Register</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -319,7 +336,7 @@ export class RegisterModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#23272B" }}
+              color="info"
               onClick={this.submitData}
             >
               Register Now
