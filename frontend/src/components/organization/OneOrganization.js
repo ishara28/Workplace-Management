@@ -170,16 +170,16 @@ export class OneOrganization extends Component {
               >
                 Edit
               </DropdownItem>
-              <DropdownItem
+              {this.props.organization.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
-              </DropdownItem>
-              <DropdownItem
+              </DropdownItem>}
+              {this.props.organization.status!=="BLOCKED" && <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
-              </DropdownItem>
+              </DropdownItem>}
             </DropdownMenu>
           </ButtonDropdown>
         </td>

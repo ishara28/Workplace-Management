@@ -168,16 +168,16 @@ export class OneWorkhouse extends Component {
               >
                 Edit
               </DropdownItem>
-              <DropdownItem
+              {this.props.workhouse.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
-              </DropdownItem>
-              <DropdownItem
+              </DropdownItem>}
+              {this.props.workhouse.status!=="BLOCKED" && <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
-              </DropdownItem>
+              </DropdownItem>}
             </DropdownMenu>
           </ButtonDropdown>
         </td>

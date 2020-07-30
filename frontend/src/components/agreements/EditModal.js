@@ -15,6 +15,8 @@ import {
   Alert,
 } from "reactstrap";
 import Axios from "axios";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 var tempDate = new Date();
 var date =
@@ -78,7 +80,21 @@ export class EditModal extends Component {
         newAgreement
       ).then((res) => {
         if (res.data.isError) {
-          alert("Select a valid customer!");
+          confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className="custom-ui">
+                  <h2>Select a valid customer!</h2>
+                  <div style={{ textAlign: "center" }}>
+                    <Button style={{ backgroundColor: "#7a1d63", color: "white", margin: 3 }} onClick={onClose}>
+                      OK
+                    </Button>
+                  </div>
+                </div>
+              );
+            },
+          });
+          //alert("Select a valid customer!");
         } else {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
@@ -93,7 +109,7 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Machinery</ModalHeader>
+          <ModalHeader close={this.closeBtn} style={{ backgroundColor: "#7a1d63", color: "white" }}>Edit Machinery</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -195,7 +211,7 @@ export class EditModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#23272B" }}
+              style={{ backgroundColor: "#7a1d63", color: "white" }}
               onClick={this.updateData}
             >
               Update Now

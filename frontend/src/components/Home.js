@@ -29,7 +29,7 @@ function Home(props) {
                     </button>
                 </Link>
                 <Link to="/agreement">
-                    <button className="btn btn-secondary tile">
+                    <button className="btn tile" style={{ backgroundColor: "#7a1d63", color: "white" }}> 
                         <h2>Agreements</h2>
                     </button>
                 </Link>
