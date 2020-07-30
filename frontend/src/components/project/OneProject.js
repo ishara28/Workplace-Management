@@ -234,26 +234,26 @@ export class OneProject extends Component {
               >
                 Update
               </DropdownItem>
-              <DropdownItem
+              {this.props.project.status!=="STARTED" && <DropdownItem
                 onClick={this.startDialog}
               >
                 Start
-              </DropdownItem>
-              <DropdownItem
+              </DropdownItem>}
+              {this.props.project.status!=="DONE" && <DropdownItem
                 onClick={this.endDialog}
               >
                 End
-              </DropdownItem>
-              <DropdownItem
+              </DropdownItem>}
+              {this.props.project.status!=="PAYED" && <DropdownItem
                 onClick={this.closeDialog}
               >
                 Close
-              </DropdownItem>
-              <DropdownItem
+              </DropdownItem>}
+              {this.props.project.status!=="CANCEL" && <DropdownItem
                 onClick={this.cancelDialog}
               >
                 Cancel
-              </DropdownItem>
+              </DropdownItem>}
             </DropdownMenu>
           </ButtonDropdown>
         </td>
