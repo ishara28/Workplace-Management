@@ -121,7 +121,7 @@ export class RegisterModal extends Component {
       <div>
         <div style={{ float: "right", marginRight: 10 }}>
           <Button style={{ backgroundColor: "#0069D9" }} onClick={this.toggle}>
-            Register Customer
+            Register
           </Button>
         </div>
         <Modal isOpen={this.state.modal} toggle={this.state.modal} size="lg">

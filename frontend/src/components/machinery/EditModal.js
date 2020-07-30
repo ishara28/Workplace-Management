@@ -15,6 +15,8 @@ import {
   Alert,
 } from "reactstrap";
 import Axios from "axios";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 var tempDate = new Date();
 var date =
@@ -89,7 +91,21 @@ export class EditModal extends Component {
         newMachinery
       ).then((res) => {
         if (res.data.isError) {
-          alert("Select a valid owner");
+          confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className="custom-ui">
+                  <h2>Select a valid owner</h2>
+                  <div style={{ textAlign: "center" }}>
+                    <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                      OK
+                    </Button>
+                  </div>
+                </div>
+              );
+            },
+          });
+          //alert("Select a valid owner");
         } else {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();
@@ -104,7 +120,7 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Machinery</ModalHeader>
+          <ModalHeader className="bg-dark text-white" close={this.closeBtn}>Edit Machinery</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>

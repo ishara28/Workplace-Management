@@ -16,6 +16,8 @@ import RegisterModal from "./RegisterModal";
 import Onemachine from "./Onemachine";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 export class Machinery extends Component {
   constructor(props) {
@@ -58,7 +60,21 @@ export class Machinery extends Component {
   };
 
   registrySuccessAlert = () => {
-    alert("Machine Successfully Registered!");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Machine Successfully Registered!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+    //alert("Machine Successfully Registered!");
     window.location.reload(false);
     // this.setState({ successAlertVisible: true });
     // setTimeout(() => {
@@ -94,17 +110,17 @@ export class Machinery extends Component {
 
         <div style={{ float: "right", marginRight: 5, marginBottom: 10 }}>
           <Button
-            style={{ backgroundColor: "#23272B" }}
             onClick={this.showModal}
+            className = "mr-3 btn-dark"
           >
-            Register a machinery
+            Register
           </Button>
         </div>
 
         {/* Machines List  */}
         <div>
           <Table striped bordered hover responsive>
-            <thead style={{ backgroundColor: "#23272B", color: "white" }}>
+            <thead className="bg-dark text-white">
               <tr>
                 <th>Index No.</th>
                 <th>Reg Id</th>
