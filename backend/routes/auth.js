@@ -41,19 +41,25 @@ router.post("/", (req, res) => {
 //Change Password of a user
 router.post("/changepw/:username", (req, res) => {
   if (req.session.isLogged) {
-    var password = req.body.password;
-    if (password) {
-      let sql = "UPDATE user SET password = ? WHERE username = ?";
-      let query = mySqlConnection.query(
-        sql,
-        [password, req.params.username],
-        (err, result) => {
-          if (err) throw err;
-          console.log("Password Changed");
-          res.send("Password Changed");
+    let sql_1 = "SELECT * FROM user WHERE username = ? AND password = ?";
+    let query_1 = mySqlConnection.query(
+      sql_1,
+      [req.params.username, req.body.password],
+      (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+          let sql_2 = "UPDATE user WHERE username = ? AND password = ?";
+          let query_2 = mySqlConnection.query(
+            sql_2,
+            [req.params.username, req.body.newPassword],
+            (err, result) => {
+              if (err) throw err;
+              res.send("Password changed!");
+            }
+          );
         }
-      );
-    }
+      }
+    );
   } else {
     res.send("Login First!");
   }
@@ -62,7 +68,7 @@ router.post("/changepw/:username", (req, res) => {
 router.post("/changeun/:username", (req, res) => {
   if (req.session.isLogged) {
     var newUsername = req.body.username;
-
+    console.log(req.body.username);
     let sql = "SELECT * FROM user WHERE username = ? ";
 
     let query = mySqlConnection.query(sql, newUsername, (err, result) => {

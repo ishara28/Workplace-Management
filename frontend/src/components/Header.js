@@ -105,7 +105,6 @@ class Header extends Component {
     const updated = {
       username: this.state.newUsername
     }
-    console.log(updated);
 
     axios.post("/auth/changeun/"+this.state.username, updated )
       .then((res) => console.log(res.data))
@@ -174,7 +173,7 @@ class Header extends Component {
           <ModalHeader toggle={this.toggleModalUsername} className="bg-primary text-white">Change username</ModalHeader>
           <ModalBody>
             
-            <Form onSubmit={this.changeUsername}>
+            <Form>
               <FormGroup>
                 <Label for="username">username</Label>
                 <Input type="text" name="username" id="username" value={this.state.username} onChange={this.handleInputChange} required/>
@@ -191,7 +190,7 @@ class Header extends Component {
               </FormGroup>
 
               <center>
-                <Button type="submit" color="success">Change</Button>
+                <Button type="button" color="success" onClick={this.changeUsername}>Change</Button>
                 <Button onClick={this.toggleModalUsername} color="primary" className="ml-3">Cancel</Button>
               </center>
             </Form>
