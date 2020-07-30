@@ -60,7 +60,21 @@ export class OneOrganization extends Component {
   };
 
   registrySuccessAlert = () => {
-    alert("Updated successfully!");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Updated successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+    //alert("Updated successfully!");
     window.location.reload(false);
     // this.setState({ successAlertVisible: true });
     // setTimeout(() => {
@@ -147,26 +161,21 @@ export class OneOrganization extends Component {
         
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm">
-              Operation
+            <DropdownToggle caret size="sm" color="danger">
+              Actions
             </DropdownToggle>
-            <DropdownMenu
-              style={{ backgroundColor: "#23272B", color: "white" }}
-            >
+            <DropdownMenu right >
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.showEditModal}
               >
                 Edit
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.toggleBlock}
               >
                 Block
@@ -207,7 +216,7 @@ export class OneOrganization extends Component {
         {/* Confirm block modal  */}
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
-            <ModalHeader toggle={this.toggleBlock}>
+            <ModalHeader toggle={this.toggleBlock} className="text-white bg-danger">
               Do you want to block "{this.props.organization.index_no}"?
             </ModalHeader>
             <ModalBody>

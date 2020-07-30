@@ -122,7 +122,7 @@ export class RegisterModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn}>Organization Register</ModalHeader>
+          <ModalHeader close={this.closeBtn} className="bg-danger text-white">Organization Register</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -234,7 +234,7 @@ export class RegisterModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#23272B" }}
+              color="primary"
               onClick={this.submitData}
             >
               Register Now

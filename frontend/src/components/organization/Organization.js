@@ -20,6 +20,8 @@ import RegisterModal from "./RegisterModal";
 import OneOrganization from "./OneOrganization";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 export class Organization extends Component {
   constructor(props) {
@@ -63,11 +65,26 @@ export class Organization extends Component {
   };
 
   registrySuccessAlert = () => {
-    this.setState({ successAlertVisible: true });
-    setTimeout(() => {
+    //this.setState({ successAlertVisible: true });
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Updated successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+    window.location.reload(false);
+    /*setTimeout(() => {
       this.setState({ successAlertVisible: false });
       window.location.reload(false);
-    }, 3000);
+    }, 3000);*/
   };
 
   render() {
@@ -92,7 +109,7 @@ export class Organization extends Component {
           <InputGroup>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaSearch style={{ color: "#23272B" }} />
+                <FaSearch style={{ color: "red" }} />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -105,17 +122,17 @@ export class Organization extends Component {
 
         <div style={{ float: "right", margin: 5 }}>
           <Button
-            style={{ backgroundColor: "#23272B" }}
+            color="danger"
             onClick={this.showModal}
           >
-            Register a organization
+            Register
           </Button>
         </div>
 
         {/* Machines List  */}
         <div>
           <Table striped bordered hover responsive>
-            <thead style={{ backgroundColor: "#23272B", color: "white" }}>
+            <thead className="text-white bg-danger">
               <tr>
                 <th>Index No</th>
                 <th>Registered date</th>

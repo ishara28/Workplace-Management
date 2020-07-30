@@ -108,7 +108,7 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Organization</ModalHeader>
+          <ModalHeader close={this.closeBtn} className="text-white bg-danger">Edit Organization</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
@@ -224,7 +224,7 @@ export class EditModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#23272B" }}
+              color="primary"
               onClick={this.updateData}
             >
               Update Now
