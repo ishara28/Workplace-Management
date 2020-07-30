@@ -61,7 +61,21 @@ export class OneWorkhouse extends Component {
   };
 
   registrySuccessAlert = () => {
-    alert("Updated successfully!");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Updated successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="success" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+    //alert("Updated successfully!");
     window.location.reload(false);
   };
 
@@ -145,26 +159,21 @@ export class OneWorkhouse extends Component {
         <td>{this.props.workhouse.c_id}</td>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm">
-              Operation
+            <DropdownToggle caret size="sm" className="btn-success">
+              Actions
             </DropdownToggle>
-            <DropdownMenu
-              style={{ backgroundColor: "#23272B", color: "white" }}
-            >
+            <DropdownMenu right>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.showEditModal}
               >
                 Edit
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>
               <DropdownItem
-                style={{ color: "white" }}
                 onClick={this.toggleBlock}
               >
                 Block
@@ -186,7 +195,7 @@ export class OneWorkhouse extends Component {
           }}
         >
           <Alert
-            style={{ backgroundColor: "#23272B", color: "white" }}
+            className="bg-success text-white"
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >
@@ -205,8 +214,8 @@ export class OneWorkhouse extends Component {
         {/* Confirm block modal  */}
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
-            <ModalHeader toggle={this.toggleBlock}>
-              Do you want to block "{this.props.workhouse.index_no}"?
+            <ModalHeader toggle={this.toggleBlock} className="bg-success text-white">
+              Do you want to block {this.props.workhouse.index_no}?
             </ModalHeader>
             <ModalBody>
               <InputGroup>

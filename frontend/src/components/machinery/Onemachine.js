@@ -66,7 +66,7 @@ export class Onemachine extends Component {
           <div className="custom-ui">
             <h2>Updated successfully!</h2>
             <div style={{ textAlign: "center" }}>
-              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+              <Button color="dark" style={{ margin: 3 }} onClick={onClose}>
                 OK
               </Button>
             </div>

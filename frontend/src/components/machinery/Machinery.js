@@ -66,7 +66,7 @@ export class Machinery extends Component {
           <div className="custom-ui">
             <h2>Machine Successfully Registered!</h2>
             <div style={{ textAlign: "center" }}>
-              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
+              <Button color="dark" style={{ margin: 3 }} onClick={onClose}>
                 OK
               </Button>
             </div>

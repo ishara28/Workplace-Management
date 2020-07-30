@@ -16,6 +16,8 @@ import RegisterModal from "./RegisterModal";
 import OneWorkhouse from "./OneWorkhouse";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 export class Workhouse extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ export class Workhouse extends Component {
       workhouse: [],
       workhouseClone: [],
       modal: false,
-      successAlertVisible: false,
+      //successAlertVisible: false,
       editModal: false,
       searchValue: "",
     };
@@ -59,7 +61,21 @@ export class Workhouse extends Component {
   };
 
   registrySuccessAlert = () => {
-    this.setState({ successAlertVisible: true });
+    //this.setState({ successAlertVisible: true });
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Registered successfully!</h2>
+            <div style={{ textAlign: "center" }}>
+              <Button color="success" style={{ margin: 3 }} onClick={onClose}>
+                OK
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
     window.location.reload(false);
   };
 
@@ -85,7 +101,7 @@ export class Workhouse extends Component {
           <InputGroup>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaSearch style={{ color: "#23272B" }} />
+                <FaSearch style={{ color: "green" }} />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -98,17 +114,17 @@ export class Workhouse extends Component {
 
         <div style={{ float: "right", margin: 5 }}>
           <Button
-            style={{ backgroundColor: "#23272B" }}
+            color="success"
             onClick={this.showModal}
           >
-            Register a workhouse
+            Register
           </Button>
         </div>
 
         {/* Workhouses List  */}
         <div>
           <Table striped bordered hover responsive>
-            <thead style={{ backgroundColor: "#23272B", color: "white" }}>
+            <thead className="bg-success text-white">
               <tr>
                 <th>Index No.</th>
                 <th>Registered date</th>
@@ -153,7 +169,7 @@ export class Workhouse extends Component {
         {/* Modal ended */}
 
         {/* Success alert  */}
-        <div
+        {/*<div
           style={{
             width: 500,
             textAlign: "center",
@@ -172,7 +188,7 @@ export class Workhouse extends Component {
           >
             Workhouse Successfully Registered!
           </Alert>
-        </div>
+        </div>*/}
       </div>
     );
   }
