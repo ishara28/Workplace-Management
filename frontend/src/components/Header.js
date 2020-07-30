@@ -62,6 +62,7 @@ class Header extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.changeUsername = this.changeUsername.bind(this);
+    this.changePassword = this.changePassword.bind(this);
     //this.deleteAccount = this.deleteAccount.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -109,17 +110,30 @@ class Header extends Component {
     axios.post("/auth/changeun/"+this.state.username, updated )
       .then((res) => console.log(res.data))
       .then(() => {
-      this.setState({ modal: false });
-      window.location.reload(false);
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div className="custom-ui">
+                <h2 className="text-danger">Username changed!</h2>
+                <div style={{ textAlign: "center" }}>
+                  <Button color="primary" className="ml-3" onClick={onClose}>
+                    OK
+                  </Button>
+                </div>
+              </div>
+            );
+          },
+        });
+        window.location.reload(false);
     });
   }
 
-  changePassword(values) {
+  changePassword() {
     this.toggleModalPassword();
     const hashPwd = CryptoJS.SHA256(this.state.password);
     const encryptPwd = hashPwd.toString(CryptoJS.enc.Base64);
 
-    const hashNewPwd = CryptoJS.SHA256(this.state.password);
+    const hashNewPwd = CryptoJS.SHA256(this.state.newPassword);
     const encryptNewPwd = hashNewPwd.toString(CryptoJS.enc.Base64);
 
     const updated = {
@@ -127,13 +141,29 @@ class Header extends Component {
       password: encryptPwd
     }
 
+    console.log(updated);
+
     axios.post("/auth/changepw/"+this.state.username, updated )
-            .then((res) => console.log(res.data))
-            .then(() => {
-              alert("Password Successfully Changed!");
-              this.setState({ modal: false });
-              window.location.reload(false);
-            });
+      .then((res) => console.log(res.data))
+      .then(() => {
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div className="custom-ui">
+                <h2 className="text-danger">Password changed!</h2>
+                <div style={{ textAlign: "center" }}>
+                  <Button color="primary" className="ml-3" onClick={onClose}>
+                    OK
+                  </Button>
+                </div>
+              </div>
+            );
+          },
+        });
+        //alert("Password Successfully Changed!");
+        this.setState({ modal: false });
+        window.location.reload(false);
+      });
   }
 
   /*deleteAccount(values) {
@@ -202,7 +232,7 @@ class Header extends Component {
           <ModalHeader toggle={this.toggleModalPassword} className="bg-primary text-white">Change username</ModalHeader>
           <ModalBody>
             
-            <Form onSubmit={(values) => this.changeUsername(values)}>
+            <Form>
               <FormGroup>
                 <Label for="username">username</Label>
                 <Input type="text" name="username" id="username" value={this.state.username} onChange={this.handleInputChange} required/>
@@ -224,7 +254,7 @@ class Header extends Component {
               </FormGroup>
 
               <center>
-                <Button type="submit" color="success">Change</Button>
+                <Button type="button" color="success" onClick={this.changePassword}>Change</Button>
                 <Button onClick={this.toggleModalPassword} color="primary" className="ml-3">Cancel</Button>
               </center>
             </Form>
