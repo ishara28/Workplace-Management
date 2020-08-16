@@ -164,7 +164,7 @@ export class OneAgent extends Component {
         <th>{this.props.agent.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm" color="primary">
+            <DropdownToggle caret size="sm" style={{ backgroundColor: "brown", color: "white" }}>
               Actions
             </DropdownToggle>
             <DropdownMenu

@@ -58,7 +58,7 @@ class Agent extends Component {
           <InputGroup>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaSearch style={{ color: "#0069D9" }} />
+                <FaSearch style={{ color: 'brown' }} />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -71,7 +71,7 @@ class Agent extends Component {
 
         <div>
           <Table striped bordered hover responsive size="sm">
-            <thead style={{ backgroundColor: "#0069D9", color: "white" }}>
+            <thead style={{ backgroundColor: "brown", color: "white" }}>
               <tr>
                 <th>Index No.</th>
                 <th>NIC / Passport</th>

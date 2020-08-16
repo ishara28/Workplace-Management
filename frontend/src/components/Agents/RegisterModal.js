@@ -120,13 +120,13 @@ export class RegisterModal extends Component {
     return (
       <div>
         <div style={{ float: "right", marginRight: 10 }}>
-          <Button style={{ backgroundColor: "#0069D9" }} onClick={this.toggle}>
+          <Button style={{ backgroundColor: "brown" }} onClick={this.toggle}>
             Register
           </Button>
         </div>
         <Modal isOpen={this.state.modal} toggle={this.state.modal} size="lg">
           <ModalHeader
-            style={{ backgroundColor: "#0069D9", color: "white" }}
+            style={{ backgroundColor: "brown", color: "white" }}
             toggle={this.toggle}
           >
             Register Agent
@@ -240,7 +240,7 @@ export class RegisterModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              style={{ backgroundColor: "#0069D9" }}
+              style={{ backgroundColor: "brown" }}
               onClick={this.registerAgent}
             >
               Register Now

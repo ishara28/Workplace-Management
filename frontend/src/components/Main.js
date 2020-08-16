@@ -5,7 +5,7 @@ import Home from './Home';
 import Login from './Login'
 import Customer from './Clients/Client';
 import Worker from './Workers/Worker'
-import moduleName from './Agents/Agent'
+import Agent from "./Agents/Agent";
 import Machinery from './Machineries/Machinery';
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
@@ -55,7 +55,7 @@ class Main extends Component {
 
     const AgentPage = () => {
       if (this.state.username != null) {
-        return <Worker />;
+        return <Agent />;
       } else {
         return <Login />;
       }
