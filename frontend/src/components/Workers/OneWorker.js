@@ -82,7 +82,7 @@ export class OneWorker extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.customer.c_id)
+    Axios.post("/customer/remove/" + this.props.worker.c_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -126,13 +126,13 @@ export class OneWorker extends Component {
 
     const currDate = date;
 
-    var blockedCustomer = {
-      c_id:this.props.customer.c_id,
+    var blockedWorker = {
+      c_id:this.props.worker.c_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
+      Axios.post("customer/block/" + this.props.worker.c_id, blockedWorker)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -145,23 +145,23 @@ export class OneWorker extends Component {
   render() {
     return (
       <tr style={{ fontSize: 15 }}>
-        <th scope="row">{this.props.customer.index_no}</th>
-        <td>{this.props.customer.name}</td>
-        <td>{this.props.customer.reg_date.slice(0, 10)}</td>
-        <td>{this.props.customer.nic_passport}</td>
+        <th scope="row">{this.props.worker.index_no}</th>
+        <td>{this.props.worker.name}</td>
+        <td>{this.props.worker.reg_date.slice(0, 10)}</td>
+        <td>{this.props.worker.nic_passport}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
-            {this.props.customer.address}
+            {this.props.worker.address}
           </textarea>
         </td>
-        <td>{this.props.customer.email}</td>
-        <td>{this.props.customer.telephone}</td>
+        <td>{this.props.worker.email}</td>
+        <td>{this.props.worker.telephone}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
-            {this.props.customer.description}
+            {this.props.worker.description}
           </textarea>
         </td>
-        <th>{this.props.customer.status}</th>
+        <th>{this.props.worker.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm" color="primary">
@@ -175,12 +175,12 @@ export class OneWorker extends Component {
               >
                 Edit
               </DropdownItem>
-              {this.props.customer.status!=="REMOVED" && <DropdownItem
+              {this.props.worker.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>}
-              {this.props.customer.status!=="BLOCKED" &&  <DropdownItem
+              {this.props.worker.status!=="BLOCKED" &&  <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
@@ -213,7 +213,7 @@ export class OneWorker extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          customer={this.props.customer}
+          worker={this.props.worker}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended 
@@ -222,7 +222,7 @@ export class OneWorker extends Component {
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
             <ModalHeader toggle={this.toggleBlock}>
-              Do you want to block "{this.props.customer.index_no}"?
+              Do you want to block "{this.props.worker.index_no}"?
             </ModalHeader>
             <ModalBody>
               <InputGroup>

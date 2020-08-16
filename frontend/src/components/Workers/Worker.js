@@ -15,20 +15,20 @@ import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
 import OneWorker from "./OneWorker";
 
-class Client extends Component {
+class Workers extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      customers: [],
+      workers: [],
       searchValue: "",
     };
   }
 
   componentDidMount() {
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      .then((res) => this.setState({ workers: res.data }))
+      .then(() => console.log(this.state.workers))
       .catch((err) => console.log(err));
   }
 
@@ -39,13 +39,13 @@ class Client extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Customer</BreadcrumbItem>
+          <BreadcrumbItem active>Worker</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}
         <RegisterModal />
 
-        {/* Customer Table  */}
+        {/* Worker Table  */}
 
         <div
           style={{
@@ -86,43 +86,43 @@ class Client extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.customers
-                .filter((customer) => {
+              {this.state.workers
+                .filter((worker) => {
                   return (
-                    customer.index_no
+                    worker.index_no
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    worker.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.name
+                    worker.name
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.nic_passport
+                    worker.nic_passport
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.address
+                    worker.address
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.telephone
+                    worker.telephone
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.description
+                    worker.description
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    worker.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.email
+                    worker.email
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.status
+                    worker.status
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase())
                   );
                 })
-                .map((customer) => {
-                  return <OneWorker customer={customer} />;
+                .map((worker) => {
+                  return <OneWorker worker={worker} />;
                 })}
             </tbody>
           </Table>
@@ -132,4 +132,4 @@ class Client extends Component {
   }
 }
 
-export default Client;
+export default Workers;

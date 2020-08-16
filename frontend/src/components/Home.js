@@ -8,7 +8,7 @@ function Home(props) {
         <Container fluid={true}>
             <Row className='mt-5'>
                 <Col>
-                    <Link to="/customer">
+                    <Link to="/client">
                         <button className="btn btn-primary tile">
                             <h2>Clients</h2>
                         </button>
@@ -16,7 +16,7 @@ function Home(props) {
                 </Col>
 
                 <Col>
-                    <Link to="/customer">
+                    <Link to="/worker">
                         <button className="btn tile" style={{ backgroundColor: "#fb15c9", color: "white" }}>
                             <h2>Workers</h2>
                         </button>
