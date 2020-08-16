@@ -28,7 +28,7 @@ function Home(props) {
             <Row className='mt-5'>
 
                 <Col>
-                    <Link to="/customer">
+                    <Link to="/agent">
                         <button className="btn tile" style={{ backgroundColor: "brown", color: "white" }}>
                             <h2>Agents</h2>
                         </button>

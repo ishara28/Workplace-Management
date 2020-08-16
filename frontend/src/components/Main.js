@@ -5,6 +5,7 @@ import Home from './Home';
 import Login from './Login'
 import Customer from './Clients/Client';
 import Worker from './Workers/Worker'
+import moduleName from './Agents/Agent'
 import Machinery from "./machinery/Machinery";
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
@@ -45,6 +46,14 @@ class Main extends Component {
     };
 
     const WorkerPage = () => {
+      if (this.state.username != null) {
+        return <Worker />;
+      } else {
+        return <Login />;
+      }
+    };
+
+    const AgentPage = () => {
       if (this.state.username != null) {
         return <Worker />;
       } else {
@@ -99,6 +108,7 @@ class Main extends Component {
           <Route exact path="/" component={HomePage} />
           <Route path="/client" component={ClientPage} />
           <Route path="/worker" component={WorkerPage} />
+          <Route path="/agent" component={AgentPage} />
           <Route path="/machinery" component={MachineryPage} />
           <Route path="/workhouse" component={WorkhousePage} />
           <Route path="/organization" component={OrganizationPage} />

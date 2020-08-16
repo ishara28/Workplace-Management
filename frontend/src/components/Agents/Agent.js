@@ -13,22 +13,22 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
-import OneCustomer from "./OneCustomer";
+import OneAgent from "./OneAgent";
 
 class Agent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      customers: [],
+      agents: [],
       searchValue: "",
     };
   }
 
   componentDidMount() {
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      .then((res) => this.setState({ agents: res.data }))
+      .then(() => console.log(this.state.agents))
       .catch((err) => console.log(err));
   }
 
@@ -39,13 +39,13 @@ class Agent extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Customer</BreadcrumbItem>
+          <BreadcrumbItem active>Agent</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}
         <RegisterModal />
 
-        {/* Customer Table  */}
+        {/* Agent Table  */}
 
         <div
           style={{
@@ -85,43 +85,43 @@ class Agent extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.customers
-                .filter((customer) => {
+              {this.state.agents
+                .filter((agent) => {
                   return (
-                    customer.index_no
+                    agent.index_no
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    agent.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.name
+                    agent.name
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.nic_passport
+                    agent.nic_passport
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.address
+                    agent.address
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.telephone
+                    agent.telephone
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.description
+                    agent.description
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    agent.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.email
+                    agent.email
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.status
+                    agent.status
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase())
                   );
                 })
-                .map((customer) => {
-                  return <OneCustomer customer={customer} />;
+                .map((agent) => {
+                  return <OneAgent agent={agent} />;
                 })}
             </tbody>
           </Table>

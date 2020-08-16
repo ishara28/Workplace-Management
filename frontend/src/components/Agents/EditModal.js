@@ -42,7 +42,7 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
-      customers: [],
+      agents: [],
       name: "",
       nic_passport: "",
       address: "",
@@ -54,14 +54,14 @@ export class EditModal extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.customer);
+    console.log(this.props.agent);
     this.setState({
-      name: this.props.customer.name,
-      nic_passport: this.props.customer.nic_passport,
-      address: this.props.customer.address,
-      telephone: this.props.customer.telephone,
-      email: this.props.customer.email,
-      description: this.props.customer.description,
+      name: this.props.agent.name,
+      nic_passport: this.props.agent.nic_passport,
+      address: this.props.agent.address,
+      telephone: this.props.agent.telephone,
+      email: this.props.agent.email,
+      description: this.props.agent.description,
     });
   }
 
@@ -72,7 +72,7 @@ export class EditModal extends Component {
   );
 
   updateData = () => {
-    const newCustomer = {
+    const newAgent = {
       name: this.state.name,
       nic_passport: this.state.nic_passport,
       address: this.state.address,
@@ -88,7 +88,7 @@ export class EditModal extends Component {
       this.state.email &&
       this.state.description
     ) {
-      Axios.post("customer/update/" + this.props.customer.c_id, newCustomer)
+      Axios.post("customer/update/" + this.props.agent.c_id, newAgent)
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();
@@ -103,7 +103,7 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Customer</ModalHeader>
+          <ModalHeader close={this.closeBtn}>Edit Agent</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>

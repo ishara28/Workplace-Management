@@ -20,7 +20,7 @@ import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class OneCustomer extends Component {
+export class OneAgent extends Component {
   constructor(props) {
     super(props);
 
@@ -82,7 +82,7 @@ export class OneCustomer extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.customer.c_id)
+    Axios.post("/customer/remove/" + this.props.agent.c_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -126,13 +126,13 @@ export class OneCustomer extends Component {
 
     const currDate = date;
 
-    var blockedCustomer = {
-      c_id:this.props.customer.c_id,
+    var blockedAgent = {
+      c_id:this.props.agent.c_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
+      Axios.post("customer/block/" + this.props.agent.c_id, blockedAgent)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -145,23 +145,23 @@ export class OneCustomer extends Component {
   render() {
     return (
       <tr style={{ fontSize: 15 }}>
-        <th scope="row">{this.props.customer.index_no}</th>
-        <td>{this.props.customer.name}</td>
-        <td>{this.props.customer.reg_date.slice(0, 10)}</td>
-        <td>{this.props.customer.nic_passport}</td>
+        <th scope="row">{this.props.agent.index_no}</th>
+        <td>{this.props.agent.name}</td>
+        <td>{this.props.agent.reg_date.slice(0, 10)}</td>
+        <td>{this.props.agent.nic_passport}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
-            {this.props.customer.address}
+            {this.props.agent.address}
           </textarea>
         </td>
-        <td>{this.props.customer.email}</td>
-        <td>{this.props.customer.telephone}</td>
+        <td>{this.props.agent.email}</td>
+        <td>{this.props.agent.telephone}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
-            {this.props.customer.description}
+            {this.props.agent.description}
           </textarea>
         </td>
-        <th>{this.props.customer.status}</th>
+        <th>{this.props.agent.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm" color="primary">
@@ -175,12 +175,12 @@ export class OneCustomer extends Component {
               >
                 Edit
               </DropdownItem>
-              {this.props.customer.status!=="REMOVED" && <DropdownItem
+              {this.props.agent.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>}
-              {this.props.customer.status!=="BLOCKED" &&  <DropdownItem
+              {this.props.agent.status!=="BLOCKED" &&  <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
@@ -213,7 +213,7 @@ export class OneCustomer extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          customer={this.props.customer}
+          agent={this.props.agent}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended 
@@ -222,7 +222,7 @@ export class OneCustomer extends Component {
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
             <ModalHeader toggle={this.toggleBlock}>
-              Do you want to block "{this.props.customer.index_no}"?
+              Do you want to block "{this.props.agent.index_no}"?
             </ModalHeader>
             <ModalBody>
               <InputGroup>
@@ -253,4 +253,4 @@ export class OneCustomer extends Component {
   }
 }
 
-export default OneCustomer;
+export default OneAgent;
