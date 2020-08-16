@@ -164,7 +164,7 @@ export class OneWorker extends Component {
         <th>{this.props.worker.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm" color="primary">
+            <DropdownToggle caret size="sm" style={{ backgroundColor: "#fb15c9", color: "white" }}>
               Actions
             </DropdownToggle>
             <DropdownMenu
@@ -202,7 +202,7 @@ export class OneWorker extends Component {
           }}
         >
           <Alert
-            style={{ backgroundColor: "#23272B", color: "white" }}
+            style={{ backgroundColor: "#fb15c9", color: "white" }}
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >

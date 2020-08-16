@@ -58,7 +58,7 @@ class Workers extends Component {
           <InputGroup>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaSearch style={{ color: "#0069D9" }} />
+                <FaSearch style={{ color: "#fb15c9" }} />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -71,7 +71,7 @@ class Workers extends Component {
 
         <div>
           <Table striped bordered hover responsive size="sm">
-            <thead style={{ backgroundColor: "#0069D9", color: "white" }}>
+            <thead style={{ backgroundColor: "#fb15c9", color: "white" }}>
               <tr>
                 <th>Index No.</th>
                 <th>NIC / Passport/ Reg. ID</th>

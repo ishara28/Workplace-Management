@@ -6,7 +6,7 @@ import Login from './Login'
 import Customer from './Clients/Client';
 import Worker from './Workers/Worker'
 import moduleName from './Agents/Agent'
-import Machinery from "./machinery/Machinery";
+import Machinery from './Machineries/Machinery';
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
 import Agreement from './agreements/Agreement';
