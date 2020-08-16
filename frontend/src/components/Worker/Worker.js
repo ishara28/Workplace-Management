@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
-import OneCustomer from "./OneCustomer";
+import OneWorker from "./OneWorker";
 
 class Client extends Component {
   constructor(props) {
@@ -122,7 +122,7 @@ class Client extends Component {
                   );
                 })
                 .map((customer) => {
-                  return <OneCustomer customer={customer} />;
+                  return <OneWorker customer={customer} />;
                 })}
             </tbody>
           </Table>

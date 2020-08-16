@@ -13,22 +13,22 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
-import OneCustomer from "./OneCustomer";
+import OneClient from "./OneClient";
 
 class Client extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      customers: [],
+      clients: [],
       searchValue: "",
     };
   }
 
   componentDidMount() {
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      .then((res) => this.setState({ clients: res.data }))
+      .then(() => console.log(this.state.clients))
       .catch((err) => console.log(err));
   }
 
@@ -39,13 +39,13 @@ class Client extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Customer</BreadcrumbItem>
+          <BreadcrumbItem active>Client</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}
         <RegisterModal />
 
-        {/* Customer Table  */}
+        {/* Client Table  */}
 
         <div
           style={{
@@ -85,43 +85,43 @@ class Client extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.customers
-                .filter((customer) => {
+              {this.state.clients
+                .filter((client) => {
                   return (
-                    customer.index_no
+                    client.index_no
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    client.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.name
+                    client.name
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.nic_passport
+                    client.nic_passport
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.address
+                    client.address
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.telephone
+                    client.telephone
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.description
+                    client.description
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.reg_date
+                    client.reg_date
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.email
+                    client.email
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase()) ||
-                    customer.status
+                    client.status
                       .toLowerCase()
                       .includes(this.state.searchValue.toLowerCase())
                   );
                 })
-                .map((customer) => {
-                  return <OneCustomer customer={customer} />;
+                .map((client) => {
+                  return <OneClient client={client} />;
                 })}
             </tbody>
           </Table>

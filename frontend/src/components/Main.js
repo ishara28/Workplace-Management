@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Header from './Header';
 import Home from './Home';
 import Login from './Login'
-import Customer from './customers/Customer';
+import Customer from './Clients/Client';
 import Machinery from "./machinery/Machinery";
 import Workhouse from "./workhouse/Workhouse";
 import Organization from './organization/Organization';
@@ -85,7 +85,7 @@ class Main extends Component {
 
     return (
       <>
-        {this.state.username != null && <Header/>}
+        {this.state.username != null && <Header />}
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/customer" component={CustomerPage} />

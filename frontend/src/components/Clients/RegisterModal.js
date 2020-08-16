@@ -52,7 +52,7 @@ export class RegisterModal extends Component {
     });
   };
 
-  registerCustomer = () => {
+  registerClient = () => {
     var tempDate = new Date();
     const index_no =
       "C-" +
@@ -69,7 +69,7 @@ export class RegisterModal extends Component {
         index_no: index_no,
       },
       () => {
-        const newCustomer = {
+        const newClient = {
           index_no: this.state.index_no,
           name: this.state.name,
           nic_passport: this.state.nic_passport,
@@ -89,14 +89,14 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.description
         ) {
-          Axios.post("/customer/register", newCustomer)
+          Axios.post("/customer/register", newClient)
             .then((res) => console.log(res.data))
             .then(() => {
               confirmAlert({
                 customUI: ({ onClose }) => {
                   return (
                     <div className="custom-ui">
-                      <h2>Customer Successfully Registered!</h2>
+                      <h2>Client Successfully Registered!</h2>
                       <div style={{ textAlign: "center" }}>
                         <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
                           OK
@@ -129,7 +129,7 @@ export class RegisterModal extends Component {
             style={{ backgroundColor: "#0069D9", color: "white" }}
             toggle={this.toggle}
           >
-            Register Customer
+            Register Client
           </ModalHeader>
           <ModalBody>
             <FormGroup row>
@@ -241,7 +241,7 @@ export class RegisterModal extends Component {
           <ModalFooter>
             <Button
               style={{ backgroundColor: "#0069D9" }}
-              onClick={this.registerCustomer}
+              onClick={this.registerClient}
             >
               Register Now
             </Button>{" "}

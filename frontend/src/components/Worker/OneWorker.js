@@ -18,9 +18,9 @@ import {
 import EditModal from "./EditModal";
 import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
-import "../Agent/node_modules/react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class OneCustomer extends Component {
+export class OneWorker extends Component {
   constructor(props) {
     super(props);
 
@@ -253,4 +253,4 @@ export class OneCustomer extends Component {
   }
 }
 
-export default OneCustomer;
+export default OneWorker;

@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
-import "../Agent/node_modules/react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 var tempDate = new Date();
 var date =
