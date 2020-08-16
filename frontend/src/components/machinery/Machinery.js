@@ -123,12 +123,13 @@ export class Machinery extends Component {
             <thead className="bg-dark text-white">
               <tr>
                 <th>Index No.</th>
-                <th>Reg Id</th>
+                <th>Reg. ID</th>
                 <th>Registered date</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Status</th>
                 <th>Owner</th>
+                <th>Site</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>

@@ -15,7 +15,7 @@ import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
 import OneCustomer from "./OneCustomer";
 
-class Client extends Component {
+class Agent extends Component {
   constructor(props) {
     super(props);
 
@@ -74,7 +74,7 @@ class Client extends Component {
             <thead style={{ backgroundColor: "#0069D9", color: "white" }}>
               <tr>
                 <th>Index No.</th>
-                <th>NIC / Passport/ Reg. ID</th>
+                <th>NIC / Passport</th>
                 <th>Name</th>
                 <th>Register Date</th>
                 <th>Description</th>
@@ -131,4 +131,4 @@ class Client extends Component {
   }
 }
 
-export default Client;
+export default Agent;

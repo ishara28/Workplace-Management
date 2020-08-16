@@ -23,7 +23,7 @@ import { FaSearch } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class Organization extends Component {
+export class ContactPerson extends Component {
   constructor(props) {
     super(props);
 
@@ -135,14 +135,13 @@ export class Organization extends Component {
             <thead className="text-white bg-danger">
               <tr>
                 <th>Index No</th>
-                <th>Registered date</th>
-                <th>Status</th>
+                <th>Organization</th>
+                <th>Name</th>
+                <th>Description</th>
                 <th>Address</th>
                 <th>Telephone</th>
-                <th>email</th>
-                <th>Description</th>
-                <th>Reg Id</th>
-                <th>Customer</th>
+                <th>email</th>                
+                <th>Status</th>
                 
               </tr>
             </thead>
@@ -207,4 +206,4 @@ export class Organization extends Component {
   }
 }
 
-export default Organization;
+export default ContactPerson;

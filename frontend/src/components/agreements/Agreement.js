@@ -76,13 +76,13 @@ export class Agreement extends Component {
             <thead style={{ backgroundColor: "#7a1d63", color: "white" }}>
               <tr>
                 <th>Index No.</th>
-                <th>Reg. date</th>
-                <th>Reg. Id</th>
-                <th>Customer</th>
+                <th>Reg. ID</th>
+                <th>Signed Date</th>
+                <th>Client</th>
                 <th>Description</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Status</th>
+                <th>Status</th> 
               </tr>
             </thead>
             <tbody>

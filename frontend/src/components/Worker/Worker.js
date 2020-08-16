@@ -77,6 +77,7 @@ class Client extends Component {
                 <th>NIC / Passport/ Reg. ID</th>
                 <th>Name</th>
                 <th>Register Date</th>
+                <th>Current Site</th>
                 <th>Description</th>
                 <th>Address</th>
                 <th>Telephone</th>

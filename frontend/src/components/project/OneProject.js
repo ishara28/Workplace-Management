@@ -210,7 +210,10 @@ export class OneProject extends Component {
       <tr>
         <th scope="row">{this.props.project.index_no}</th>
         <td>{this.props.project.reg_date.slice(0, 10)}</td>
+        <th>{this.props.project.agreement_id}</th>
         <td>{this.props.project.owner_id}</td>
+        <th>{this.props.project.agent_id}</th>
+        <th>{this.props.project.workhouse_id}</th>
         <td>
           <textarea name="" id="" cols="35" disabled>
             {this.props.project.description}
@@ -220,9 +223,6 @@ export class OneProject extends Component {
         <td>{this.props.project.estimated_days}</td>
         <td>{this.props.project.estimated_value}</td>
         <th>{this.props.project.status}</th>
-        <th>{this.props.project.workhouse_id}</th>
-        <th>{this.props.project.agent_id}</th>
-        <th>{this.props.project.agreement_id}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm" color="info">

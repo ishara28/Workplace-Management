@@ -19,7 +19,7 @@ import { FaSearch } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class Workhouse extends Component {
+export class Site extends Component {
   constructor(props) {
     super(props);
 
@@ -128,12 +128,12 @@ export class Workhouse extends Component {
               <tr>
                 <th>Index No.</th>
                 <th>Registered date</th>
-                <th>Status</th>
+                <th>Customer</th>
+                <th>Description</th>
                 <th>Address</th>
                 <th>Telephone</th>
                 <th>email</th>
-                <th>Description</th>
-                <th>Customer</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -194,4 +194,4 @@ export class Workhouse extends Component {
   }
 }
 
-export default Workhouse;
+export default Site;

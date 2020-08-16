@@ -20,7 +20,7 @@ import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class OneAgreement extends Component {
+export class OneCustomer extends Component {
   constructor(props) {
     super(props);
 
@@ -66,7 +66,7 @@ export class OneAgreement extends Component {
           <div className="custom-ui">
             <h2>Updated successfully!</h2>
             <div style={{ textAlign: "center" }}>
-              <Button style={{ backgroundColor: "#7a1d63", color: "white", margin: 3  }} onClick={onClose}>
+              <Button color="primary" style={{ margin: 3 }} onClick={onClose}>
                 OK
               </Button>
             </div>
@@ -74,7 +74,6 @@ export class OneAgreement extends Component {
         );
       },
     });
-    //alert("Updated successfully!");
     window.location.reload(false);
     // this.setState({ successAlertVisible: true });
     // setTimeout(() => {
@@ -83,7 +82,7 @@ export class OneAgreement extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/agreement/remove/" + this.props.agreement.a_id)
+    Axios.post("/customer/remove/" + this.props.customer.c_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -127,15 +126,13 @@ export class OneAgreement extends Component {
 
     const currDate = date;
 
-    var blockedAgreement = {
+    var blockedCustomer = {
+      c_id:this.props.customer.c_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post(
-        "agreement/block/" + this.props.agreement.a_id,
-        blockedAgreement
-      )
+      Axios.post("customer/block/" + this.props.customer.c_id, blockedCustomer)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -148,35 +145,42 @@ export class OneAgreement extends Component {
   render() {
     return (
       <tr style={{ fontSize: 15 }}>
-        <th scope="row">{this.props.agreement.index_no}</th>
-        <td>{this.props.agreement.reg_id}</td>
-        <td>{this.props.agreement.reg_date.slice(0, 10)}</td>
-        <td>{this.props.agreement.name}</td>
+        <th scope="row">{this.props.customer.index_no}</th>
+        <td>{this.props.customer.name}</td>
+        <td>{this.props.customer.reg_date.slice(0, 10)}</td>
+        <td>{this.props.customer.nic_passport}</td>
         <td>
-          <textarea name="" id="" cols="30" disabled>
-            {this.props.agreement.description}
+          <textarea name="" id="" cols="25" disabled>
+            {this.props.customer.address}
           </textarea>
         </td>
-        <td>{this.props.agreement.start_date.slice(0, 10)}</td>
-        <td>{this.props.agreement.end_date.slice(0, 10)}</td>
-        <th>{this.props.agreement.status}</th>
+        <td>{this.props.customer.email}</td>
+        <td>{this.props.customer.telephone}</td>
+        <td>
+          <textarea name="" id="" cols="25" disabled>
+            {this.props.customer.description}
+          </textarea>
+        </td>
+        <th>{this.props.customer.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret size="sm" style={{ backgroundColor: "#7a1d63", color: "white" }}>
+            <DropdownToggle caret size="sm" color="primary">
               Actions
             </DropdownToggle>
-            <DropdownMenu right>
+            <DropdownMenu
+              right
+            >
               <DropdownItem
                 onClick={this.showEditModal}
               >
                 Edit
               </DropdownItem>
-              {this.props.agreement.status!=="REMOVED" && <DropdownItem
+              {this.props.customer.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>}
-              {this.props.agreement.status!=="BLOCKED" && <DropdownItem
+              {this.props.customer.status!=="BLOCKED" &&  <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
@@ -209,7 +213,7 @@ export class OneAgreement extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          agreement={this.props.agreement}
+          customer={this.props.customer}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended 
@@ -218,7 +222,7 @@ export class OneAgreement extends Component {
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
             <ModalHeader toggle={this.toggleBlock}>
-              Do you want to block "{this.props.agreement.index_no}"?
+              Do you want to block "{this.props.customer.index_no}"?
             </ModalHeader>
             <ModalBody>
               <InputGroup>
@@ -249,4 +253,4 @@ export class OneAgreement extends Component {
   }
 }
 
-export default OneAgreement;
+export default OneCustomer;

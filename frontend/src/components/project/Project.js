@@ -121,15 +121,15 @@ export class Project extends Component {
               <tr>
                 <th>Index No</th>
                 <th>Registered Date</th>
-                <th>Owner</th>
+                <th>Agreement</th>
+                <th>Client</th>
+                <th>Agent</th>
+                <th>Site</th>
                 <th>Description</th>
                 <th>Estimated Start</th>
                 <th>Estimated Days</th>
                 <th>Estimated Value</th>
                 <th>Status</th>
-                <th>Workhouse</th>
-                <th>Agent</th>
-                <th>Agreement</th>
               </tr>
             </thead>
             <tbody>
@@ -137,18 +137,18 @@ export class Project extends Component {
                 .filter((project) => {
                   return (
                     project.index_no.includes(this.state.searchValue) ||
-                    project.owner_id.includes(this.state.searchValue) ||
                     project.reg_date.includes(this.state.searchValue) ||
+                    project.agreement_id.includes(this.state.searchValue)||
+                    project.owner_id.includes(this.state.searchValue) ||
+                    project.agent_id.includes(this.state.searchValue) ||
+                    project.workhouse_id.includes(this.state.searchValue) ||
                     project.description.includes(this.state.searchValue) ||
                     project.estimated_start.includes(this.state.searchValue) ||
                     project.estimated_days.includes(this.state.searchValue) ||
                     project.estimated_value.includes(this.state.searchValue) ||
                     project.status.includes(
                       this.state.searchValue.toUpperCase()
-                    ) ||
-                    project.workhouse_id.includes(this.state.searchValue) ||
-                    project.agent_id.includes(this.state.searchValue) ||
-                    project.agreement_id.includes(this.state.searchValue)
+                    )
                   );
                 })
                 .map((project) => {
