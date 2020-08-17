@@ -43,12 +43,13 @@ export class EditModal extends Component {
 
     this.state = {
       clients: [],
-      name: "",
       nic_passport: "",
+      name: "",
+      reg_date:'',
+      description: "",
       address: "",
       telephone: "",
       email: "",
-      description: "",
       isFieldsEmpty: false,
     };
   }
@@ -56,12 +57,13 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log(this.props.client);
     this.setState({
-      name: this.props.client.name,
       nic_passport: this.props.client.nic_passport,
+      name: this.props.client.name,
+      reg_date: this.props.client.reg_date,
+      description: this.props.client.description,
       address: this.props.client.address,
       telephone: this.props.client.telephone,
       email: this.props.client.email,
-      description: this.props.client.description,
     });
   }
 
@@ -73,20 +75,22 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newClient = {
-      name: this.state.name,
       nic_passport: this.state.nic_passport,
+      name: this.state.name,
+      reg_date: this.state.reg_date,
+      description: this.state.description,
       address: this.state.address,
       telephone: this.state.telephone,
       email: this.state.email,
-      description: this.state.description,
     };
     if (
-      this.state.name &&
       this.state.nic_passport &&
+      this.state.name &&
+      this.state.reg_date &&
+      this.state.description &&
       this.state.address &&
       this.state.telephone &&
-      this.state.email &&
-      this.state.description
+      this.state.email
     ) {
       Axios.post("customer/update/" + this.props.client.c_id, newClient)
         .then((res) => console.log(res.data))
@@ -103,9 +107,30 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn}>Edit Client</ModalHeader>
+          <ModalHeader 
+            close={this.closeBtn} 
+            style={{ backgroundColor: "#0069D9", color: "white" }}
+          >
+            Edit Client
+          </ModalHeader>
+          
           <ModalBody>
             <Form>
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  NIC / Passport / Reg. ID
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    placeholder="NIC / Passport / Reg. ID here..."
+                    value={this.state.nic_passport}
+                    onChange={(e) =>
+                      this.setState({ nic_passport: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
                   Name
@@ -121,14 +146,29 @@ export class EditModal extends Component {
 
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
-                  NIC / Passport
+                  Register Date
                 </Label>
                 <Col sm={9}>
                   <Input
-                    placeholder="Name here..."
-                    value={this.state.nic_passport}
+                    type='date'
+                    placeholder="Register Date here..."
+                    value={this.state.reg_date}
+                    onChange={(e) => this.setState({ reg_date: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Description
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="textarea"
+                    placeholder="Description  here..."
+                    value={this.state.description}
                     onChange={(e) =>
-                      this.setState({ nic_passport: e.target.value })
+                      this.setState({ description: e.target.value })
                     }
                   />
                 </Col>
@@ -172,22 +212,6 @@ export class EditModal extends Component {
                     placeholder="Email here..."
                     value={this.state.email}
                     onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Description
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="textarea"
-                    placeholder="Description  here..."
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
                   />
                 </Col>
               </FormGroup>
