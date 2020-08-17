@@ -46,7 +46,7 @@ function Home(props) {
                 
             <Row className='mt-5'>
                 <Col>
-                    <Link to="/workhouse">
+                    <Link to="/site">
                         <button className="btn btn-success tile">
                             <h2>Sites</h2>
                         </button>
@@ -54,9 +54,9 @@ function Home(props) {
                 </Col>
 
                 <Col>
-                    <Link to="/organization">
+                    <Link to="/cp">
                         <button className="btn btn-danger tile">
-                            <h2>Organizations</h2>
+                            <h2>Contact Person</h2>
                         </button>
                     </Link>
                 </Col>

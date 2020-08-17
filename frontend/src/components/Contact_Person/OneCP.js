@@ -20,7 +20,7 @@ import Axios from "axios";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-export class OneOrganization extends Component {
+export class OneCP extends Component {
   constructor(props) {
     super(props);
 
@@ -82,8 +82,8 @@ export class OneOrganization extends Component {
     // }, 1000);
   };
 
-  removeOrganization = () => {
-    Axios.post("/organization/remove/" + this.props.organization.o_id)
+  removeCP = () => {
+    Axios.post("/organization/remove/" + this.props.cp.o_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -103,7 +103,7 @@ export class OneOrganization extends Component {
                 color="danger"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeOrganization();
+                  this.removeCP();
                   onClose();
                 }}
               >
@@ -116,7 +116,7 @@ export class OneOrganization extends Component {
     });
   };
 
-  blockOrganization = () => {
+  blockCP = () => {
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -127,12 +127,12 @@ export class OneOrganization extends Component {
 
     const currDate = date;
 
-    var blockedOrganization = {
+    var blockedCP = {
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("organization/block/" + this.props.organization.o_id, blockedOrganization)
+      Axios.post("organization/block/" + this.props.cp.o_id, blockedCP)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -145,19 +145,19 @@ export class OneOrganization extends Component {
   render() {
     return (
       <tr>
-        <th scope="row">{this.props.organization.index_no}</th>
-        <td>{this.props.organization.reg_date.slice(0, 10)}</td>
-        <td>{this.props.organization.status}</td>
-        <td>{this.props.organization.address}</td>
-        <td>{this.props.organization.telephone}</td>
-        <td>{this.props.organization.email}</td>
+        <th scope="row">{this.props.cp.index_no}</th>
+        <td>{this.props.cp.reg_date.slice(0, 10)}</td>
+        <td>{this.props.cp.status}</td>
+        <td>{this.props.cp.address}</td>
+        <td>{this.props.cp.telephone}</td>
+        <td>{this.props.cp.email}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
-            {this.props.organization.description}
+            {this.props.cp.description}
           </textarea>
         </td>
-        <td>{this.props.organization.reg_id}</td>
-        <td>{this.props.organization.c_id}</td>
+        <td>{this.props.cp.reg_id}</td>
+        <td>{this.props.cp.c_id}</td>
         
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -170,12 +170,12 @@ export class OneOrganization extends Component {
               >
                 Edit
               </DropdownItem>
-              {this.props.organization.status!=="REMOVED" && <DropdownItem
+              {this.props.cp.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>}
-              {this.props.organization.status!=="BLOCKED" && <DropdownItem
+              {this.props.cp.status!=="BLOCKED" && <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
@@ -208,7 +208,7 @@ export class OneOrganization extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          organization={this.props.organization}
+          cp={this.props.cp}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended  */}
@@ -217,7 +217,7 @@ export class OneOrganization extends Component {
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
             <ModalHeader toggle={this.toggleBlock} className="text-white bg-danger">
-              Do you want to block "{this.props.organization.index_no}"?
+              Do you want to block "{this.props.cp.index_no}"?
             </ModalHeader>
             <ModalBody>
               <InputGroup>
@@ -234,7 +234,7 @@ export class OneOrganization extends Component {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={this.blockOrganization}>
+              <Button color="danger" onClick={this.blockCP}>
                 Block
               </Button>
               <Button color="secondary" onClick={this.toggleBlock}>
@@ -248,4 +248,4 @@ export class OneOrganization extends Component {
   }
 }
 
-export default OneOrganization;
+export default OneCP;

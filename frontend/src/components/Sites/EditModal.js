@@ -53,13 +53,13 @@ export class EditModal extends Component {
   }
 
   componentDidMount() {
-    console.log("Workhouse", this.props.workhouse);
+    console.log("Workhouse", this.props.site);
     this.setState({
-      telephone: this.props.workhouse.telephone,
-      email: this.props.workhouse.email,
-      address: this.props.workhouse.address,
-      c_id: this.props.workhouse.c_id,
-      description: this.props.workhouse.description,
+      telephone: this.props.site.telephone,
+      email: this.props.site.email,
+      address: this.props.site.address,
+      c_id: this.props.site.c_id,
+      description: this.props.site.description,
     });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
@@ -74,7 +74,7 @@ export class EditModal extends Component {
   );
 
   updateData = () => {
-    const newWorkhouse = {
+    const newSite = {
       telephone: this.state.telephone,
       email: this.state.email,
       address: this.state.address,
@@ -88,7 +88,7 @@ export class EditModal extends Component {
       this.state.address &&
       this.state.c_id
     ) {
-      Axios.post("workhouse/update/" + this.props.workhouse.index_no, newWorkhouse)
+      Axios.post("workhouse/update/" + this.props.site.index_no, newSite)
         .then((res) => {
           console.log(res.data);
         })
@@ -105,7 +105,7 @@ export class EditModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showEditModal}>
-          <ModalHeader close={this.closeBtn} className="text-white bg-success">Edit Workhouse</ModalHeader>
+          <ModalHeader close={this.closeBtn} className="text-white bg-success">Edit Site</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>

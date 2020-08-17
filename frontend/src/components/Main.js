@@ -7,8 +7,8 @@ import Customer from './Clients/Client';
 import Worker from './Workers/Worker'
 import Agent from "./Agents/Agent";
 import Machinery from './Machineries/Machinery';
-import Workhouse from "./workhouse/Workhouse";
-import Organization from './organization/Organization';
+import Site from './Sites/Site';
+import Organization from './Contact_Person/Contact_Person';
 import Agreement from './agreements/Agreement';
 import Project from './project/Project';
 import { connect } from "react-redux";
@@ -69,15 +69,15 @@ class Main extends Component {
       }
     };
 
-    const WorkhousePage = () => {
+    const SitePage = () => {
       if (this.state.username != null) {
-        return <Workhouse />;
+        return <Site />;
       } else {
         return <Login />;
       }
     };
 
-    const OrganizationPage = () => {
+    const CPPage = () => {
       if (this.state.username != null) {
         return <Organization />;
       } else {
@@ -110,8 +110,8 @@ class Main extends Component {
           <Route path="/worker" component={WorkerPage} />
           <Route path="/agent" component={AgentPage} />
           <Route path="/machinery" component={MachineryPage} />
-          <Route path="/workhouse" component={WorkhousePage} />
-          <Route path="/organization" component={OrganizationPage} />
+          <Route path="/site" component={SitePage} />
+          <Route path="/cp" component={CPPage} />
           <Route path="/agreement" component={AgreementPage} />
           <Route path="/project" component={ProjectPage} />
           <Redirect to="/" />

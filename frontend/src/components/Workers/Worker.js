@@ -39,7 +39,7 @@ class Workers extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Worker</BreadcrumbItem>
+          <BreadcrumbItem active>Workers</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}

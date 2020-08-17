@@ -21,7 +21,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useAuth } from "../auth";
 
-export class OneWorkhouse extends Component {
+export class OneSite extends Component {
   constructor(props) {
     super(props);
 
@@ -79,8 +79,8 @@ export class OneWorkhouse extends Component {
     window.location.reload(false);
   };
 
-  removeWorkhouse = () => {
-    Axios.post("/workhouse/remove/" + this.props.workhouse.index_no)
+  removeSite = () => {
+    Axios.post("/workhouse/remove/" + this.props.site.index_no)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -100,7 +100,7 @@ export class OneWorkhouse extends Component {
                 color="danger"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeWorkhouse();
+                  this.removeSite();
                   onClose();
                 }}
               >
@@ -113,7 +113,7 @@ export class OneWorkhouse extends Component {
     });
   };
 
-  blockWorkhouse = () => {
+  blockSite = () => {
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -124,13 +124,13 @@ export class OneWorkhouse extends Component {
 
     const currDate = date;
 
-    var blockedWorkhouse = {
+    var blockedSite = {
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
       
-      Axios.post("/workhouse/block/" + this.props.workhouse.index_no, blockedWorkhouse)
+      Axios.post("/workhouse/block/" + this.props.site.index_no, blockedSite)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -145,18 +145,18 @@ export class OneWorkhouse extends Component {
   render() {
     return (
       <tr>
-        <th scope="row">{this.props.workhouse.index_no}</th>
-        <td>{this.props.workhouse.reg_date.slice(0, 10)}</td>
-        <th>{this.props.workhouse.status}</th>
-        <td>{this.props.workhouse.address}</td>
-        <td>{this.props.workhouse.telephone}</td>
-        <td>{this.props.workhouse.email}</td>
+        <th scope="row">{this.props.site.index_no}</th>
+        <td>{this.props.site.reg_date.slice(0, 10)}</td>
+        <th>{this.props.site.status}</th>
+        <td>{this.props.site.address}</td>
+        <td>{this.props.site.telephone}</td>
+        <td>{this.props.site.email}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
-            {this.props.workhouse.description}
+            {this.props.site.description}
           </textarea>
         </td>
-        <td>{this.props.workhouse.c_id}</td>
+        <td>{this.props.site.c_id}</td>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm" className="btn-success">
@@ -168,12 +168,12 @@ export class OneWorkhouse extends Component {
               >
                 Edit
               </DropdownItem>
-              {this.props.workhouse.status!=="REMOVED" && <DropdownItem
+              {this.props.site.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
                 Remove
               </DropdownItem>}
-              {this.props.workhouse.status!=="BLOCKED" && <DropdownItem
+              {this.props.site.status!=="BLOCKED" && <DropdownItem
                 onClick={this.toggleBlock}
               >
                 Block
@@ -206,7 +206,7 @@ export class OneWorkhouse extends Component {
         <EditModal
           showEditModal={this.state.editModal}
           closeEditModal={this.closeEditModal}
-          workhouse={this.props.workhouse}
+          site={this.props.site}
           registrySuccessAlert={this.registrySuccessAlert}
         />
         {/* Edit modal ended  */}
@@ -215,7 +215,7 @@ export class OneWorkhouse extends Component {
         <div>
           <Modal isOpen={this.state.blockModal} toggle={this.toggleBlock}>
             <ModalHeader toggle={this.toggleBlock} className="bg-success text-white">
-              Do you want to block {this.props.workhouse.index_no}?
+              Do you want to block {this.props.site.index_no}?
             </ModalHeader>
             <ModalBody>
               <InputGroup>
@@ -232,7 +232,7 @@ export class OneWorkhouse extends Component {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={this.blockWorkhouse}>
+              <Button color="danger" onClick={this.blockSite}>
                 Block
               </Button>
               <Button color="secondary" onClick={this.toggleBlock}>
@@ -246,4 +246,4 @@ export class OneWorkhouse extends Component {
   }
 }
 
-export default OneWorkhouse;
+export default OneSite;

@@ -89,7 +89,7 @@ export class Machinery extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Machinery</BreadcrumbItem>
+          <BreadcrumbItem active>Machineries</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Search  */}

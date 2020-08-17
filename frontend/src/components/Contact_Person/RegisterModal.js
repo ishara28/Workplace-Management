@@ -46,11 +46,12 @@ export class RegisterModal extends Component {
       index_no: "",
       reg_date: currDate,
       status: "ACTIVE",
-      address:"",
-      telephone:"",
-      email:"",
+      address: "",
+      telephone: "",
+      email: "",
       description: "",
-      c_id:"",
+      reg_id: "",
+      c_id: "",
       isFieldsEmpty: false,
     };
   }
@@ -71,7 +72,7 @@ export class RegisterModal extends Component {
   submitData = () => {
     var tempDate = new Date();
     const index_no =
-      "W-" +
+      "O-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +
@@ -85,15 +86,15 @@ export class RegisterModal extends Component {
         index_no: index_no,
       },
       () => {
-        const newWorkhouse = {
+        const newCP = {
           index_no: this.state.index_no,
-          
           reg_date: this.state.reg_date,
           status: this.state.status,
           address: this.state.address,
           telephone: this.state.telephone,
           email: this.state.email,
           description: this.state.description,
+          reg_id: this.state.reg_id,
           c_id: this.state.c_id,
         };
         if (
@@ -101,9 +102,10 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.address &&
           this.state.description &&
+          this.state.reg_id &&
           this.state.c_id
         ) {
-          Axios.post("workhouse/register", newWorkhouse)
+          Axios.post("organization/register", newCP)
             .then((res) => console.log(res.data))
             .then(() => {
               this.props.closeModal();
@@ -120,12 +122,12 @@ export class RegisterModal extends Component {
     return (
       <div>
         <Modal size="lg" isOpen={this.props.showModal}>
-          <ModalHeader close={this.closeBtn} className="text-white bg-success">Workhouse Register</ModalHeader>
+          <ModalHeader close={this.closeBtn} className="bg-danger text-white">Contact Person Register</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup row>
                 <Label for="telephone" sm={2}>
-                  Telephone number
+                  Telephone
                 </Label>
                 <Col sm={10}>
                   <Input
@@ -144,9 +146,9 @@ export class RegisterModal extends Component {
                 </Label>
                 <Col sm={10}>
                   <Input
+                    type="email"
                     name="email"
                     id="email"
-                    type="email"
                     value={this.state.email}
                     onChange={(e) => this.setState({ email: e.target.value })}
                   />
@@ -159,13 +161,11 @@ export class RegisterModal extends Component {
                 </Label>
                 <Col sm={10}>
                   <Input
-                    type="textarea"
+                    type="text"
                     name="address"
                     id="address"
                     value={this.state.address}
-                    onChange={(e) =>
-                      this.setState({ address: e.target.value })
-                    }
+                    onChange={(e) => this.setState({ address: e.target.value })}
                   />
                 </Col>
               </FormGroup>
@@ -188,6 +188,20 @@ export class RegisterModal extends Component {
               </FormGroup>
 
               <FormGroup row>
+                <Label for="reg_id" sm={2}>
+                  Reg id
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    name="reg_id"
+                    id="reg_id"
+                    value={this.state.reg_id}
+                    onChange={(e) => this.setState({ reg_id: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
                 <Label for="c_id" sm={2}>
                   Customer
                 </Label>
@@ -201,7 +215,7 @@ export class RegisterModal extends Component {
                       this.setState({ c_id: e.target.value })
                     }
                   >
-                    <option>Choose Customer</option>
+                    <option>Choose Owner</option>
                     {this.state.customers.map((customer) => {
                       return (
                         <option value={customer.c_id}>
@@ -220,7 +234,7 @@ export class RegisterModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button
-              color="success"
+              color="primary"
               onClick={this.submitData}
             >
               Register Now

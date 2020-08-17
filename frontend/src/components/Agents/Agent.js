@@ -39,7 +39,7 @@ class Agent extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Agent</BreadcrumbItem>
+          <BreadcrumbItem active>Agents</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}

@@ -39,7 +39,7 @@ class Client extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Client</BreadcrumbItem>
+          <BreadcrumbItem active>Clients</BreadcrumbItem>
         </Breadcrumb>
 
         {/* Register Modal  */}

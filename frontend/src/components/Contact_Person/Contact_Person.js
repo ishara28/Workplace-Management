@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
-import OneOrganization from "./OneOrganization";
+import OneCP from "./OneCP";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -28,8 +28,8 @@ export class ContactPerson extends Component {
     super(props);
 
     this.state = {
-      organization: [],
-      organizationClone: [],
+      cp: [],
+      cpClone: [],
       modal: false,
       successAlertVisible: false,
       editModal: false,
@@ -41,7 +41,7 @@ export class ContactPerson extends Component {
     Axios.get("/organization/")
       .then((res) =>
         this.setState({
-          organization: res.data,
+          cp: res.data,
         })
       )
       // .then(() => console.log(this.state.organization))
@@ -94,7 +94,7 @@ export class ContactPerson extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Organization</BreadcrumbItem>
+          <BreadcrumbItem active>Contact Person</BreadcrumbItem>
         </Breadcrumb>
 
         {/* <div className="container-fluid d-flex flex-row-reverse">
@@ -146,24 +146,24 @@ export class ContactPerson extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.organization
-                .filter((organization) => {
+              {this.state.cp
+                .filter((cp) => {
                   return (
-                    organization.index_no.includes(this.state.searchValue) ||
-                    organization.reg_date.includes(this.state.searchValue) ||
-                    organization.status.includes(
+                    cp.index_no.includes(this.state.searchValue) ||
+                    cp.reg_date.includes(this.state.searchValue) ||
+                    cp.status.includes(
                       this.state.searchValue.toUpperCase()
                     ) ||
-                    organization.address.includes(this.state.searchValue) ||
-                    organization.telephone.includes(this.state.searchValue) ||
-                    organization.email.includes(this.state.searchValue) ||
-                    organization.description.includes(this.state.searchValue) ||
-                    organization.reg_id.includes(this.state.searchValue) ||
-                    organization.c_id.includes(this.state.searchValue)
+                    cp.address.includes(this.state.searchValue) ||
+                    cp.telephone.includes(this.state.searchValue) ||
+                    cp.email.includes(this.state.searchValue) ||
+                    cp.description.includes(this.state.searchValue) ||
+                    cp.reg_id.includes(this.state.searchValue) ||
+                    cp.c_id.includes(this.state.searchValue)
                   );
                 })
-                .map((organization) => {
-                  return <OneOrganization organization={organization} />;
+                .map((cp) => {
+                  return <OneCP cp={cp} />;
                 })}
               {/* {this.state.organization.map((organization) => {
                 return <OneOrganization organization={organization} />;
@@ -198,7 +198,7 @@ export class ContactPerson extends Component {
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >
-            Organization Successfully Registered!
+            Contact Person Successfully Registered!
           </Alert>
         </div>
       </div>

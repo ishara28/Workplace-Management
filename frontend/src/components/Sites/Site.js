@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
-import OneWorkhouse from "./OneWorkhouse";
+import OneWorkhouse from "./OneSite";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -24,8 +24,8 @@ export class Site extends Component {
     super(props);
 
     this.state = {
-      workhouse: [],
-      workhouseClone: [],
+      site: [],
+      siteClone: [],
       modal: false,
       //successAlertVisible: false,
       editModal: false,
@@ -37,7 +37,7 @@ export class Site extends Component {
     Axios.get("/workhouse/")
       .then((res) =>
         this.setState({
-          workhouse: res.data,
+          site: res.data,
         })
       )
       // .then(() => console.log(this.state.workhouse))
@@ -86,7 +86,7 @@ export class Site extends Component {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Workhouse</BreadcrumbItem>
+          <BreadcrumbItem active>Site</BreadcrumbItem>
         </Breadcrumb>
 
         {/* <div className="container-fluid d-flex flex-row-reverse">
@@ -121,7 +121,7 @@ export class Site extends Component {
           </Button>
         </div>
 
-        {/* Workhouses List  */}
+        {/* Sites List  */}
         <div>
           <Table striped bordered hover responsive>
             <thead className="bg-success text-white">
@@ -137,21 +137,21 @@ export class Site extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.workhouse
-                .filter((workhouse) => {
+              {this.state.site
+                .filter((site) => {
                   return (
-                    workhouse.index_no.includes(this.state.searchValue) ||
-                    workhouse.reg_date.includes(this.state.searchValue) ||
-                    workhouse.status.includes(this.state.searchValue.toUpperCase()) ||
-                    workhouse.address.includes(this.state.searchValue) ||
-                    workhouse.telephone.includes(this.state.searchValue) ||
-                    workhouse.email.includes(this.state.searchValue) ||
-                    workhouse.description.includes(this.state.searchValue) ||
-                    workhouse.c_id.includes(this.state.searchValue)
+                    site.index_no.includes(this.state.searchValue) ||
+                    site.reg_date.includes(this.state.searchValue) ||
+                    site.status.includes(this.state.searchValue.toUpperCase()) ||
+                    site.address.includes(this.state.searchValue) ||
+                    site.telephone.includes(this.state.searchValue) ||
+                    site.email.includes(this.state.searchValue) ||
+                    site.description.includes(this.state.searchValue) ||
+                    site.c_id.includes(this.state.searchValue)
                   )
                 })
-                .map((workhouse) => {
-                  return <OneWorkhouse workhouse={workhouse} />;
+                .map((site) => {
+                  return <OneWorkhouse site={site} />;
                 })}
               {/* {this.state.workhouse.map((workhouse) => {
                 return <OneWorkhouse workhouse={workhouse} />;
