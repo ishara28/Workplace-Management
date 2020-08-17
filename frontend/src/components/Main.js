@@ -8,7 +8,7 @@ import Worker from './Workers/Worker'
 import Agent from "./Agents/Agent";
 import Machinery from './Machineries/Machinery';
 import Site from './Sites/Site';
-import Organization from './Contact_Person/Contact_Person';
+import ContactPerson from './ContactPerson/ContactPerson';
 import Agreement from './agreements/Agreement';
 import Project from './project/Project';
 import { connect } from "react-redux";
@@ -79,7 +79,7 @@ class Main extends Component {
 
     const CPPage = () => {
       if (this.state.username != null) {
-        return <Organization />;
+        return <ContactPerson />;
       } else {
         return <Login />;
       }

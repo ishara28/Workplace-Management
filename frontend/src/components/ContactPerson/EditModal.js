@@ -54,14 +54,14 @@ export class EditModal extends Component {
   }
 
   componentDidMount() {
-    console.log("Organization", this.props.organization);
+    console.log("Contact Person", this.props.cp);
     this.setState({
-      telephone: this.props.organization.telephone,
-      email: this.props.organization.email,
-      address: this.props.organization.address, 
-      description: this.props.organization.description,
-      reg_id: this.props.organization.reg_id,
-      c_id: this.props.organization.c_id,
+      telephone: this.props.cp.telephone,
+      email: this.props.cp.email,
+      address: this.props.cp.address, 
+      description: this.props.cp.description,
+      reg_id: this.props.cp.reg_id,
+      c_id: this.props.cp.c_id,
     });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
