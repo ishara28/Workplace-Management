@@ -134,6 +134,23 @@ export class RegisterModal extends Component {
           <ModalBody>
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
+                NIC / Passport
+              </Label>
+              <Col sm={9}>
+                <Input
+                  name="index_no"
+                  id="exampleEmail"
+                  placeholder="NIC / Passport here..."
+                  value={this.state.nic_passport}
+                  onChange={(e) =>
+                    this.setState({ nic_passport: e.target.value })
+                  }
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
                 Name
               </Label>
               <Col sm={9}>
@@ -149,16 +166,17 @@ export class RegisterModal extends Component {
 
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
-                NIC / Passport
+                Description
               </Label>
               <Col sm={9}>
                 <Input
+                  type="textarea"
                   name="index_no"
                   id="exampleEmail"
-                  placeholder="NIC / Passport here..."
-                  value={this.state.nic_passport}
+                  placeholder="Description here..."
+                  value={this.state.description}
                   onChange={(e) =>
-                    this.setState({ nic_passport: e.target.value })
+                    this.setState({ description: e.target.value })
                   }
                 />
               </Col>
@@ -207,24 +225,6 @@ export class RegisterModal extends Component {
                   placeholder="Email here..."
                   value={this.state.email}
                   onChange={(e) => this.setState({ email: e.target.value })}
-                />
-              </Col>
-            </FormGroup>
-
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Description
-              </Label>
-              <Col sm={9}>
-                <Input
-                  type="textarea"
-                  name="index_no"
-                  id="exampleEmail"
-                  placeholder="Description here..."
-                  value={this.state.description}
-                  onChange={(e) =>
-                    this.setState({ description: e.target.value })
-                  }
                 />
               </Col>
             </FormGroup>

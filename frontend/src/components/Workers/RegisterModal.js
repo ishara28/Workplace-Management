@@ -134,21 +134,6 @@ export class RegisterModal extends Component {
           <ModalBody>
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
-                Name
-              </Label>
-              <Col sm={9}>
-                <Input
-                  name="index_no"
-                  id="exampleEmail"
-                  placeholder="Name here..."
-                  value={this.state.name}
-                  onChange={(e) => this.setState({ name: e.target.value })}
-                />
-              </Col>
-            </FormGroup>
-
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
                 NIC / Passport
               </Label>
               <Col sm={9}>
@@ -160,6 +145,21 @@ export class RegisterModal extends Component {
                   onChange={(e) =>
                     this.setState({ nic_passport: e.target.value })
                   }
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Name
+              </Label>
+              <Col sm={9}>
+                <Input
+                  name="index_no"
+                  id="exampleEmail"
+                  placeholder="Name here..."
+                  value={this.state.name}
+                  onChange={(e) => this.setState({ name: e.target.value })}
                 />
               </Col>
             </FormGroup>

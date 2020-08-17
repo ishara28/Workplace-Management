@@ -74,7 +74,7 @@ class Workers extends Component {
             <thead style={{ backgroundColor: "#fb15c9", color: "white" }}>
               <tr>
                 <th>Index No.</th>
-                <th>NIC / Passport/ Reg. ID</th>
+                <th>NIC / Passport</th>
                 <th>Name</th>
                 <th>Register Date</th>
                 <th>Current Site</th>
