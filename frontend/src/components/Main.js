@@ -9,7 +9,7 @@ import Agent from "./Agents/Agent";
 import Machinery from './Machineries/Machinery';
 import Site from './Sites/Site';
 import ContactPerson from './ContactPerson/ContactPerson';
-import Agreement from './agreements/Agreement';
+import Agreement from './Agreements/Agreement';
 import Project from './project/Project';
 import { connect } from "react-redux";
 
