@@ -42,23 +42,23 @@ export class RegisterModal extends Component {
     super(props);
 
     this.state = {
-      customers: [],
+      clients: [],
       index_no: "",
       reg_date: currDate,
-      status: "ACTIVE",
+      description: "",
       address:"",
       telephone:"",
       email:"",
-      description: "",
       c_id:"",
+      status: "ACTIVE",
       isFieldsEmpty: false,
     };
   }
 
   componentDidMount() {
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
-      .then(() => console.log(this.state.customers))
+      .then((res) => this.setState({ clients: res.data }))
+      .then(() => console.log(this.state.clients))
       .catch((err) => console.log(err));
   }
 
@@ -71,7 +71,7 @@ export class RegisterModal extends Component {
   submitData = () => {
     var tempDate = new Date();
     const index_no =
-      "W-" +
+      "S-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +
@@ -87,20 +87,19 @@ export class RegisterModal extends Component {
       () => {
         const newSite = {
           index_no: this.state.index_no,
-          
-          reg_date: this.state.reg_date,
-          status: this.state.status,
+          reg_date: this.state.reg_date, 
+          description: this.state.description,
           address: this.state.address,
           telephone: this.state.telephone,
           email: this.state.email,
-          description: this.state.description,
           c_id: this.state.c_id,
+          status: this.state.status,
         };
         if (
+          this.state.description &&
           this.state.telephone &&
           this.state.email &&
           this.state.address &&
-          this.state.description &&
           this.state.c_id
         ) {
           Axios.post("workhouse/register", newSite)
@@ -123,6 +122,23 @@ export class RegisterModal extends Component {
           <ModalHeader close={this.closeBtn} className="text-white bg-success">Site Register</ModalHeader>
           <ModalBody>
             <Form>
+            <FormGroup row>
+                <Label for="description" sm={2}>
+                  Description
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="textarea"
+                    name="description"
+                    id="description"
+                    value={this.state.description}
+                    onChange={(e) =>
+                      this.setState({ description: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
               <FormGroup row>
                 <Label for="telephone" sm={2}>
                   Telephone number
@@ -170,26 +186,11 @@ export class RegisterModal extends Component {
                 </Col>
               </FormGroup>
 
-              <FormGroup row>
-                <Label for="description" sm={2}>
-                  Description
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="textarea"
-                    name="description"
-                    id="description"
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
-                  />
-                </Col>
-              </FormGroup>
+              
 
               <FormGroup row>
                 <Label for="c_id" sm={2}>
-                  Customer
+                  Client
                 </Label>
                 <Col sm={10}>
                   <Input
@@ -201,11 +202,11 @@ export class RegisterModal extends Component {
                       this.setState({ c_id: e.target.value })
                     }
                   >
-                    <option>Choose Customer</option>
-                    {this.state.customers.map((customer) => {
+                    <option>Choose Client</option>
+                    {this.state.clients.map((client) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={client.c_id}>
+                          {client.index_no + " - " + client.name}
                         </option>
                       );
                     })}

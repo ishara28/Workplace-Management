@@ -55,7 +55,7 @@ export class RegisterModal extends Component {
   registerAgent = () => {
     var tempDate = new Date();
     const index_no =
-      "C-" +
+      "Ag-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +

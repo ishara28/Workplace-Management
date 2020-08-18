@@ -72,7 +72,7 @@ export class RegisterModal extends Component {
   submitData = () => {
     var tempDate = new Date();
     const index_no =
-      "O-" +
+      "CP-" +
       tempDate.getFullYear().toString().slice(2) +
       (tempDate.getMonth() + 1).toString() +
       tempDate.getDate().toString() +
