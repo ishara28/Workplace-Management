@@ -42,12 +42,13 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
-      customers: [],
+      clients: [],
+      reg_date: '',
+      description: "",
+      address: "",
       telephone: "",
       email:"",
-      address: "",
       c_id: "",
-      description: "",
       isFieldsEmpty: false,
     };
   }
@@ -55,14 +56,15 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log("Workhouse", this.props.site);
     this.setState({
+      reg_date: this.props.site.reg_date,
+      description: this.props.site.description,
+      address: this.props.site.address,
       telephone: this.props.site.telephone,
       email: this.props.site.email,
-      address: this.props.site.address,
       c_id: this.props.site.c_id,
-      description: this.props.site.description,
     });
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
+      .then((res) => this.setState({ clients: res.data }))
       //   .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
   }
@@ -75,17 +77,19 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newSite = {
+      reg_date: this.state.reg_date,
+      description: this.state.description,
+      address: this.state.address,
       telephone: this.state.telephone,
       email: this.state.email,
-      address: this.state.address,
-      description: this.state.description,
       c_id: this.state.c_id,
     };
     if (
-      this.state.telephone &&
-      this.state.email &&
+      this.state.reg_date &&
       this.state.description &&
       this.state.address &&
+      this.state.telephone &&
+      this.state.email &&
       this.state.c_id
     ) {
       Axios.post("workhouse/update/" + this.props.site.index_no, newSite)
@@ -108,6 +112,55 @@ export class EditModal extends Component {
           <ModalHeader close={this.closeBtn} className="text-white bg-success">Edit Site</ModalHeader>
           <ModalBody>
             <Form>
+              <FormGroup row>
+                <Label for="reg_date" sm={2}>
+                  Register Date
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    name="reg_date"
+                    id="reg_date"
+                    type="date"
+                    value={this.state.reg_date}
+                    onChange={(e) => this.setState({ reg_date: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="description" sm={2}>
+                  Description
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="textarea"
+                    name="description"
+                    id="description"
+                    value={this.state.description}
+                    onChange={(e) =>
+                      this.setState({ description: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="address" sm={2}>
+                Address
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={this.state.address}
+                    onChange={(e) =>
+                      this.setState({ address: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
               <FormGroup row>
                 <Label for="telephone" sm={2}>
                   Telephone
@@ -139,25 +192,8 @@ export class EditModal extends Component {
               </FormGroup>
 
               <FormGroup row>
-                <Label for="address" sm={2}>
-                Address
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="text"
-                    name="address"
-                    id="address"
-                    value={this.state.address}
-                    onChange={(e) =>
-                      this.setState({ address: e.target.value })
-                    }
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
                 <Label for="c_id" sm={2}>
-                  Customer
+                  Client
                 </Label>
                 <Col sm={10}>
                   <Input
@@ -169,32 +205,15 @@ export class EditModal extends Component {
                       this.setState({ c_id: e.target.value })
                     }
                   >
-                    <option>Choose Owner</option>
-                    {this.state.customers.map((customer) => {
+                    <option>Choose client</option>
+                    {this.state.clients.map((client) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={client.c_id}>
+                          {client.index_no + " - " + client.name}
                         </option>
                       );
                     })}
                   </Input>
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="description" sm={2}>
-                  Description
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="textarea"
-                    name="description"
-                    id="description"
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
-                  />
                 </Col>
               </FormGroup>
             </Form>
