@@ -43,12 +43,13 @@ export class EditModal extends Component {
 
     this.state = {
       workers: [],
-      name: "",
       nic_passport: "",
+      name: "",
+      reg_date:'',
+      description: "",
       address: "",
       telephone: "",
       email: "",
-      description: "",
       isFieldsEmpty: false,
     };
   }
@@ -56,12 +57,13 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log(this.props.worker);
     this.setState({
-      name: this.props.worker.name,
       nic_passport: this.props.worker.nic_passport,
+      name: this.props.worker.name,
+      reg_date:this.props.worker.reg_date,
+      description: this.props.worker.description,
       address: this.props.worker.address,
       telephone: this.props.worker.telephone,
       email: this.props.worker.email,
-      description: this.props.worker.description,
     });
   }
 
@@ -73,20 +75,22 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newWorker = {
-      name: this.state.name,
       nic_passport: this.state.nic_passport,
+      name: this.state.name,
+      reg_date: this.state.reg_date,
+      description: this.state.description,
       address: this.state.address,
       telephone: this.state.telephone,
       email: this.state.email,
-      description: this.state.description,
     };
     if (
-      this.state.name &&
       this.state.nic_passport &&
+      this.state.name &&
+      this.state.reg_date &&
+      this.state.description &&
       this.state.address &&
       this.state.telephone &&
-      this.state.email &&
-      this.state.description
+      this.state.email
     ) {
       Axios.post("customer/update/" + this.props.worker.c_id, newWorker)
         .then((res) => console.log(res.data))
@@ -108,6 +112,21 @@ export class EditModal extends Component {
             <Form>
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
+                  NIC / Passport
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    placeholder="Name here..."
+                    value={this.state.nic_passport}
+                    onChange={(e) =>
+                      this.setState({ nic_passport: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
                   Name
                 </Label>
                 <Col sm={9}>
@@ -121,15 +140,13 @@ export class EditModal extends Component {
 
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
-                  NIC / Passport
+                  Register Date
                 </Label>
                 <Col sm={9}>
                   <Input
                     placeholder="Name here..."
-                    value={this.state.nic_passport}
-                    onChange={(e) =>
-                      this.setState({ nic_passport: e.target.value })
-                    }
+                    value={this.state.name}
+                    onChange={(e) => this.setState({ name: e.target.value })}
                   />
                 </Col>
               </FormGroup>

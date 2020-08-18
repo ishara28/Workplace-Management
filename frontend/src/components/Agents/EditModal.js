@@ -43,12 +43,13 @@ export class EditModal extends Component {
 
     this.state = {
       agents: [],
-      name: "",
       nic_passport: "",
+      name: "",
+      reg_date:'',
+      description: "",
       address: "",
       telephone: "",
       email: "",
-      description: "",
       isFieldsEmpty: false,
     };
   }
@@ -56,12 +57,13 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log(this.props.agent);
     this.setState({
-      name: this.props.agent.name,
       nic_passport: this.props.agent.nic_passport,
+      name: this.props.agent.name,
+      reg_date: this.props.agent.reg_date,
+      description: this.props.agent.description,
       address: this.props.agent.address,
       telephone: this.props.agent.telephone,
       email: this.props.agent.email,
-      description: this.props.agent.description,
     });
   }
 
@@ -73,20 +75,22 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newAgent = {
-      name: this.state.name,
       nic_passport: this.state.nic_passport,
+      name: this.state.name,
+      reg_date: this.state.reg_date,
+      description: this.state.description,
       address: this.state.address,
       telephone: this.state.telephone,
       email: this.state.email,
-      description: this.state.description,
     };
     if (
-      this.state.name &&
       this.state.nic_passport &&
+      this.state.name &&
+      this.state.reg_date &&
+      this.state.description &&
       this.state.address &&
       this.state.telephone &&
-      this.state.email &&
-      this.state.description
+      this.state.email      
     ) {
       Axios.post("customer/update/" + this.props.agent.c_id, newAgent)
         .then((res) => console.log(res.data))
@@ -108,6 +112,21 @@ export class EditModal extends Component {
             <Form>
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
+                  NIC / Passport
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    placeholder="Name here..."
+                    value={this.state.nic_passport}
+                    onChange={(e) =>
+                      this.setState({ nic_passport: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
                   Name
                 </Label>
                 <Col sm={9}>
@@ -121,14 +140,29 @@ export class EditModal extends Component {
 
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
-                  NIC / Passport
+                  Register Date
                 </Label>
                 <Col sm={9}>
                   <Input
-                    placeholder="Name here..."
-                    value={this.state.nic_passport}
+                    type='date'
+                    placeholder="Register Date here..."
+                    value={this.state.reg_date}
+                    onChange={(e) => this.setState({ reg_date: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Description
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="textarea"
+                    placeholder="Description  here..."
+                    value={this.state.description}
                     onChange={(e) =>
-                      this.setState({ nic_passport: e.target.value })
+                      this.setState({ description: e.target.value })
                     }
                   />
                 </Col>
@@ -172,22 +206,6 @@ export class EditModal extends Component {
                     placeholder="Email here..."
                     value={this.state.email}
                     onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Description
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="textarea"
-                    placeholder="Description  here..."
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
                   />
                 </Col>
               </FormGroup>
