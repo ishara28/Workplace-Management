@@ -42,17 +42,18 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
-      customers: [],
-      workhouses: [],
+      clients: [],
+      sites: [],
       agreements: [],
+      reg_date:'',
+      agreement_id: "", 
       owner_id: "",
+      agent_id: "",
+      site_id: "", 
       description: "",
       estimated_start: "",
       estimated_days: "",
       estimated_value: "",
-      workhouse_id: "",
-      agent_id: "",
-      agreement_id: "",    
       isFieldsEmpty: false,
     };
   }
@@ -60,14 +61,15 @@ export class EditModal extends Component {
   componentDidMount() {
     console.log("Project", this.props.project);
     this.setState({
+      reg_date: this.props.reg_date,
+      agreement_id: this.props.project.a_id,
       owner_id: this.props.project.c_id,
+      agent_id: this.props.project.c_id,
+      site_id: this.props.project.workhouse_id,
       description: this.props.project.description,
       estimated_start: this.props.project.estimated_start,
       estimated_days: this.props.project.estimated_days,
       estimated_value: this.props.project.estimated_value,
-      workhouse_id: this.props.project.workhouse_id,
-      agent_id: this.props.project.c_id,
-      agreement_id: this.props.project.a_id,
     });
     Axios.get("/customer/")
       .then((res) => this.setState({ customers: res.data }))
@@ -76,7 +78,7 @@ export class EditModal extends Component {
 
     Axios.get("/workhouse/")
     .then((res) => this.setState({ workhouses: res.data }))
-    .then(() => console.log(this.state.workhouses))
+    .then(() => console.log(this.state.sites))
     .catch((err) => console.log(err));
 
     Axios.get("/agreement/")
@@ -93,14 +95,15 @@ export class EditModal extends Component {
 
   updateData = () => {
     const newProject = {
+      reg_date: this.state.reg_date,
+      agreement_id: this.state.agreement_id,
       owner_id: this.state.owner_id,
+      agent_id: this.state.agent_id,
+      workhouse_id: this.state.site_id,
       description: this.state.description,
       estimated_start: this.state.estimated_start,
       estimated_days: this.state.estimated_days,
       estimated_value: this.state.estimated_value,
-      workhouse_id: this.state.workhouse_id,
-      agent_id: this.state.agent_id,
-      agreement_id: this.state.agreement_id
     };
     if (
       this.state.owner_id &&
@@ -108,7 +111,7 @@ export class EditModal extends Component {
       this.state.estimated_start &&
       this.state.estimated_days &&
       this.state.estimated_value &&
-      this.state.workhouse_id &&
+      this.state.site_id &&
       this.state.agent_id &&
       this.state.agreement_id
     ) {
@@ -131,9 +134,52 @@ export class EditModal extends Component {
           <ModalHeader close={this.closeBtn} className="bg-info text-white">Edit Project</ModalHeader>
           <ModalBody>
             <Form>
-            <FormGroup row>
+              <FormGroup row>
+                <Label for="description" sm={2}>
+                  Registered Date
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="date"
+                    name="description"
+                    id="description"
+                    value={this.state.reg_date}
+                    onChange={(e) =>
+                      this.setState({ reg_date: e.target.value })
+                    }
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="agreement_id" sm={2}>
+                  Agreement
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="select"
+                    name="agreement_id"
+                    id="agreement_id"
+                    value={this.state.agreement_id}
+                    onChange={(e) =>
+                      this.setState({ agreement_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Agreement</option>
+                    {this.state.agreements.map((agreement) => {
+                      return (
+                        <option value={agreement.a_id}>
+                          {agreement.index_no}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
                 <Label for="owner_id" sm={2}>
-                  Owner
+                  Client
                 </Label>
                 <Col sm={10}>
                   <Input
@@ -145,11 +191,63 @@ export class EditModal extends Component {
                       this.setState({ owner_id: e.target.value })
                     }
                   >
-                    <option>Choose Owner</option>
-                    {this.state.customers.map((customer) => {
+                    <option>Choose Client</option>
+                    {this.state.clients.map((client) => {
                       return (
-                        <option value={customer.c_id}>
-                          {customer.index_no + " - " + customer.name}
+                        <option value={client.c_id}>
+                          {client.index_no + " - " + client.name}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="owner_id" sm={2}>
+                  Agent
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="select"
+                    name="agent_id"
+                    id="agent_id"
+                    value={this.state.agent_id}
+                    onChange={(e) =>
+                      this.setState({ agent_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Agent</option>
+                    {this.state.clients.map((agent) => {
+                      return (
+                        <option value={agent.c_id}>
+                          {agent.index_no + " - " + agent.name}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="workhouse_id" sm={2}>
+                  Site
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    type="select"
+                    name="workhouse_id"
+                    id="workhouse_id"
+                    value={this.state.site_id}
+                    onChange={(e) =>
+                      this.setState({ site_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Site</option>
+                    {this.state.sites.map((site) => {
+                      return (
+                        <option value={site.w_id}>
+                          {site.index_no}
                         </option>
                       );
                     })}
@@ -216,84 +314,6 @@ export class EditModal extends Component {
                     value={this.state.estimated_value}
                     onChange={(e) => this.setState({ estimated_value: e.target.value })}
                   />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="workhouse_id" sm={2}>
-                  Workhouse
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="select"
-                    name="workhouse_id"
-                    id="workhouse_id"
-                    value={this.state.workhouse_id}
-                    onChange={(e) =>
-                      this.setState({ workhouse_id: e.target.value })
-                    }
-                  >
-                    <option>Choose Workhouse</option>
-                    {this.state.workhouses.map((workhouse) => {
-                      return (
-                        <option value={workhouse.w_id}>
-                          {workhouse.index_no}
-                        </option>
-                      );
-                    })}
-                  </Input>
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="owner_id" sm={2}>
-                  Agent
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="select"
-                    name="agent_id"
-                    id="agent_id"
-                    value={this.state.agent_id}
-                    onChange={(e) =>
-                      this.setState({ agent_id: e.target.value })
-                    }
-                  >
-                    <option>Choose Agent</option>
-                    {this.state.customers.map((agent) => {
-                      return (
-                        <option value={agent.c_id}>
-                          {agent.index_no + " - " + agent.name}
-                        </option>
-                      );
-                    })}
-                  </Input>
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="agreement_id" sm={2}>
-                  Agreement
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="select"
-                    name="agreement_id"
-                    id="agreement_id"
-                    value={this.state.agreement_id}
-                    onChange={(e) =>
-                      this.setState({ agreement_id: e.target.value })
-                    }
-                  >
-                    <option>Choose Agreement</option>
-                    {this.state.agreements.map((agreement) => {
-                      return (
-                        <option value={agreement.a_id}>
-                          {agreement.index_no}
-                        </option>
-                      );
-                    })}
-                  </Input>
                 </Col>
               </FormGroup>
               
