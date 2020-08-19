@@ -33,10 +33,11 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
-      customers: [],
+      clients: [],
       reg_id: "",
+      signed_date: "",
+      client: "",
       description: "",
-      customer_index_no: "",
       start_date: "",
       end_date: "",
       isFieldsEmpty: false,
@@ -47,15 +48,16 @@ export class EditModal extends Component {
     this.setState(
       {
         reg_id: this.props.agreement.reg_id,
+        signed_date: this.props.agreement.signed_date,
+        client: this.props.agreement.customer_index_no,
         description: this.props.agreement.description,
-        customer_index_no: this.props.agreement.customer_index_no,
         start_date: this.props.agreement.start_date.slice(0, 10),
         end_date: this.props.agreement.end_date.slice(0, 10),
       },
       () => console.log("Props", this.props)
     );
     Axios.get("/customer/")
-      .then((res) => this.setState({ customers: res.data }))
+      .then((res) => this.setState({ clients: res.data }))
       //   .then(() => console.log(this.state.customers))
       .catch((err) => console.log(err));
   }
@@ -69,11 +71,15 @@ export class EditModal extends Component {
   updateData = () => {
     const newAgreement = {
       reg_id: this.state.reg_id,
+      signed_date: this.state.signed_date,
+      customer_index_no: this.state.client,
       description: this.state.description,
-      customer_index_no: this.state.customer_index_no,
       start_date: this.state.start_date,
       end_date: this.state.end_date,
     };
+
+    console.log(newAgreement);
+
     if (this.state.reg_id && this.state.description) {
       Axios.post(
         "agreement/update/" + this.props.agreement.a_id,
@@ -114,16 +120,58 @@ export class EditModal extends Component {
             <Form>
               <FormGroup row>
                 <Label for="exampleEmail" sm={2}>
-                  Reg id
+                  Reg ID
                 </Label>
                 <Col sm={10}>
                   <Input
                     name="index_no"
                     id="exampleEmail"
-                    placeholder="Reg id here..."
+                    placeholder="Reg ID here..."
                     value={this.state.reg_id}
                     onChange={(e) => this.setState({ reg_id: e.target.value })}
                   />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={2}>
+                  Signed Date
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    name="index_no"
+                    id="exampleEmail"
+                    type='date'
+                    placeholder="Signed Date here..."
+                    value={this.state.signed_date}
+                    onChange={(e) => this.setState({ signed_date: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="browser" sm={2}>
+                  Client
+                </Label>
+                <Col sm={10}>
+                  <Input
+                    list="browsers"
+                    name="browser"
+                    id="browser"
+                    value={this.state.client}
+                    onChange={(e) =>
+                      this.setState({ client: e.target.value })
+                    }
+                  ></Input>
+                  <datalist id="browsers">
+                    {this.state.clients.map((client) => {
+                      return (
+                        <option value={client.index_no}>
+                          {client.name}
+                        </option>
+                      );
+                    })}
+                  </datalist>
                 </Col>
               </FormGroup>
 
@@ -141,32 +189,6 @@ export class EditModal extends Component {
                       this.setState({ description: e.target.value })
                     }
                   ></Input>
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="browser" sm={2}>
-                  Customer
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    list="browsers"
-                    name="browser"
-                    id="browser"
-                    value={this.state.customer_index_no}
-                    onChange={(e) =>
-                      this.setState({ customer_index_no: e.target.value })
-                    }
-                  ></Input>
-                  <datalist id="browsers">
-                    {this.state.customers.map((customer) => {
-                      return (
-                        <option value={customer.index_no}>
-                          {customer.name}
-                        </option>
-                      );
-                    })}
-                  </datalist>
                 </Col>
               </FormGroup>
 
@@ -196,7 +218,7 @@ export class EditModal extends Component {
                     type="date"
                     name="text"
                     id="exampleText"
-                    value={this.state.end_date}
+                    value={this.state.end_date}//methana update wenakota dawasak aduwen update wenne
                     onChange={(e) =>
                       this.setState({ end_date: e.target.value })
                     }
