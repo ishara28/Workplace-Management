@@ -81,6 +81,74 @@ export class OneClient extends Component {
     // }, 1000);
   };
 
+  activeClient = () => {
+    Axios.post("/customer/active/" + this.props.client.c_id)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  activeDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to active?</h2>
+            {/* <p>You want to delete this file?</p> */}
+            <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.activeClient();
+                  onClose();
+                }}
+              >
+                Yes, Active
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  inactiveClient = () => {
+    Axios.post("/customer/inactive/" + this.props.client.c_id)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  inactiveDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to inactive?</h2>
+              <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.inactiveClient();
+                  onClose();
+                }}
+              >
+                Yes, Inactive
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+
   removeMachine = () => {
     Axios.post("/customer/remove/" + this.props.client.c_id)
       .then(() => window.location.reload(false))
@@ -95,9 +163,6 @@ export class OneClient extends Component {
             <h2>Are you sure to remove?</h2>
             {/* <p>You want to delete this file?</p> */}
             <div style={{ textAlign: "center" }}>
-              <Button style={{ margin: 3 }} onClick={onClose}>
-                No
-              </Button>
               <Button
                 color="danger"
                 style={{ margin: 3 }}
@@ -107,6 +172,9 @@ export class OneClient extends Component {
                 }}
               >
                 Yes, Remove
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
               </Button>
             </div>
           </div>
@@ -146,21 +214,21 @@ export class OneClient extends Component {
     return (
       <tr style={{ fontSize: 15 }}>
         <th scope="row">{this.props.client.index_no}</th>
+        <td>{this.props.client.nic_passport}</td>
         <td>{this.props.client.name}</td>
         <td>{this.props.client.reg_date.slice(0, 10)}</td>
-        <td>{this.props.client.nic_passport}</td>
-        <td>
-          <textarea name="" id="" cols="25" disabled>
-            {this.props.client.address}
-          </textarea>
-        </td>
-        <td>{this.props.client.email}</td>
-        <td>{this.props.client.telephone}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
             {this.props.client.description}
           </textarea>
         </td>
+        <td>
+          <textarea name="" id="" cols="25" disabled>
+            {this.props.client.address}
+          </textarea>
+        </td>
+        <td>{this.props.client.telephone}</td>
+        <td>{this.props.client.email}</td>
         <th>{this.props.client.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -173,8 +241,18 @@ export class OneClient extends Component {
               <DropdownItem
                 onClick={this.showEditModal}
               >
-                Edit
+                Update
               </DropdownItem>
+              {this.props.client.status!=="ACTIVE" && <DropdownItem
+                onClick={this.activeDialog}
+              >
+                Active
+              </DropdownItem>}
+              {this.props.client.status!=="INACTIVE" && <DropdownItem
+                onClick={this.inactiveDialog}
+              >
+                Inactive
+              </DropdownItem>}
               {this.props.client.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >

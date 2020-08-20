@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mySqlConnection = require("../dbconnection");
 
-// Get all customer
+// Get all Clients
 router.get("/", (req, res) => {
   if (req.session.isLogged) {
     let sql = "SELECT * FROM customer";
@@ -39,6 +39,34 @@ router.get("/:c_id", (req, res) => {
       if (err) throw err;
       console.log(result);
       res.send(result);
+    });
+  } else {
+    res.send("Login First!");
+  }
+});
+
+//Active existing customer (Change status to INACTIVE)
+router.post("/inactive/:c_id", (req, res) => {
+  if (req.session.isLogged) {
+    let sql = "UPDATE customer SET status = 'INACTIVE' WHERE c_id = ?";
+    let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+      res.send("INACTIVE");
+    });
+  } else {
+    res.send("Login First!");
+  }
+});
+
+//Inactive existing customer (Change status to ACTIVE)
+router.post("/active/:c_id", (req, res) => {
+  if (req.session.isLogged) {
+    let sql = "UPDATE customer SET status = 'ACTIVE' WHERE c_id = ?";
+    let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+      res.send("ACTIVE");
     });
   } else {
     res.send("Login First!");
@@ -113,48 +141,29 @@ router.post("/update/:c_id", (req, res) => {
 
 //Block an existing customer
 router.post("/block/:c_id", (req, res) => {
-  let sql_1 = "SELECT * FROM blocked_customer WHERE c_id = ?";
+  if (req.session.isLogged) {
+    let blockedCustomer = {
+      c_id: req.params.c_id,
+      blocked_date: req.body.blocked_date,
+      reason: req.body.reason,
+    };
 
-  let query_1 = mySqlConnection.query(sql_1, req.params.c_id, (err, result) => {
-    if (err) throw err;
-    if (result.length > 0) {
-      let blockedCustomer = {
-        // c_id: req.params.c_id,
-        blocked_date: req.body.blocked_date,
-        reason: req.body.reason,
-      };
-      let sql =
-        "UPDATE customer SET status = 'BLOCKED' WHERE c_id = ? ; UPDATE blocked_customer SET ? WHERE c_id = ?";
+    let sql =
+      "UPDATE customer SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_customer SET ?";
 
-      let query = mySqlConnection.query(
-        sql,
-        [req.params.c_id, blockedCustomer, req.params.c_id],
-        (err, result) => {
-          if (err) throw err;
-          console.log("User Blocked");
-          res.send("User Blocked");
-        }
-      );
-    } else {
-      let blockedCustomer = {
-        c_id: req.params.c_id,
-        blocked_date: req.body.blocked_date,
-        reason: req.body.reason,
-      };
-      let sql =
-        "UPDATE customer SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO  blocked_customer SET ?";
-
-      let query = mySqlConnection.query(
-        sql,
-        [req.params.c_id, blockedCustomer],
-        (err, result) => {
-          if (err) throw err;
-          console.log("User Blocked");
-          res.send("User Blocked");
-        }
-      );
-    }
-  });
+    let query = mySqlConnection.query(
+      sql,
+      [req.params.c_id, blockedCustomer],
+      (err, result) => {
+        if (err) throw err;
+        console.log("User Blocked");
+        res.send("User Blocked");
+      }
+    );
+  } else {
+    res.send("Login First!");
+  }
 });
+
 
 module.exports = router;
