@@ -119,12 +119,13 @@ router.post("/register", (req, res) => {
 router.post("/update/:c_id", (req, res) => {
   if (req.session.isLogged) {
     let customer = {
-      name: req.body.name,
       nic_passport: req.body.nic_passport,
+      name: req.body.name,
+      reg_date: req.body.reg_date,
+      description: req.body.description,
       address: req.body.address,
       telephone: req.body.telephone,
       email: req.body.email,
-      description: req.body.description,
     };
     let sql = "UPDATE customer SET ? WHERE c_id = ?";
     let query = mySqlConnection.query(
