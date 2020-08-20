@@ -7,6 +7,7 @@ router.get("/", (req, res) => {
     let sql = "SELECT * FROM customer";
     let query = mySqlConnection.query(sql, (err, result) => {
       if (err) throw err;
+      console.log("AA");
       console.log(result);
       res.send(result);
       // res.json(result);
