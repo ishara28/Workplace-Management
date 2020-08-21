@@ -26,7 +26,7 @@ class Workers extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/customer/")
+    Axios.get("/worker/")
       .then((res) => this.setState({ workers: res.data }))
       .then(() => console.log(this.state.workers))
       .catch((err) => console.log(err));

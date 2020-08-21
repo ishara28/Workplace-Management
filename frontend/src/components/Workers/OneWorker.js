@@ -82,7 +82,7 @@ export class OneWorker extends Component {
   };
 
   removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.worker.c_id)
+    Axios.post("/worker/remove/" + this.props.worker.w_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -127,12 +127,12 @@ export class OneWorker extends Component {
     const currDate = date;
 
     var blockedWorker = {
-      c_id:this.props.worker.c_id,
+      w_id:this.props.worker.w_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.worker.c_id, blockedWorker)
+      Axios.post("worker/block/" + this.props.worker.w_id, blockedWorker)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();

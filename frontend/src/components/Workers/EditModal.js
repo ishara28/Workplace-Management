@@ -92,7 +92,7 @@ export class EditModal extends Component {
       this.state.telephone &&
       this.state.email
     ) {
-      Axios.post("customer/update/" + this.props.worker.c_id, newWorker)
+      Axios.post("worker/update/" + this.props.worker.w_id, newWorker)
         .then((res) => console.log(res.data))
         .then(() => {
           this.props.closeEditModal();

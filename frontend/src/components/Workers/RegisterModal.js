@@ -89,7 +89,7 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.description
         ) {
-          Axios.post("/customer/register", newWorker)
+          Axios.post("/worker/register", newWorker)
             .then((res) => console.log(res.data))
             .then(() => {
               confirmAlert({
