@@ -25,7 +25,7 @@ function Home(props) {
       <div className="d-flex flex-row justify-content-around">
         <Link to="/organization">
           <button className="btn btn-danger tile">
-            <h2>Organizations</h2>
+            <h2>Contact Person</h2>
           </button>
         </Link>
         <Link to="/agreement">
@@ -36,6 +36,13 @@ function Home(props) {
         <Link to="/project">
           <button className="btn btn-info tile">
             <h2>Projects</h2>
+          </button>
+        </Link>
+      </div>
+      <div className="d-flex flex-row justify-content-around mt-5 ">
+        <Link to="/contact_person">
+          <button className="btn btn-info tile">
+            <h2>Contact Person</h2>
           </button>
         </Link>
       </div>

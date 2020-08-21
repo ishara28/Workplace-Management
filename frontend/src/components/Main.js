@@ -10,6 +10,7 @@ import React, { Component } from "react";
 import Organization from "./organization/Organization";
 import Project from "./project/Project";
 import Workhouse from "./workhouse/Workhouse";
+import ContactPerson from "./contact_person/Organization";
 
 const mapStateToProps = (state) => {
   return {
@@ -94,6 +95,7 @@ class Main extends Component {
           <Route path="/organization" component={OrganizationPage} />
           <Route path="/agreement" component={AgreementPage} />
           <Route path="/project" component={ProjectPage} />
+          <Route path="/contact_person" component={ContactPerson} />
           <Redirect to="/" />
         </Switch>
       </>
