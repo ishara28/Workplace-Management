@@ -161,7 +161,7 @@ export class OneClient extends Component {
   };
 
 
-  removeMachine = () => {
+  removeClient = () => {
     Axios.post("/client/remove/" + this.props.client.c_id)
       .then(() => window.location.reload(false)
         ,(err)=>{if(err.response.status===401){
@@ -185,7 +185,7 @@ export class OneClient extends Component {
                 color="danger"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeMachine();
+                  this.removeClient();
                   onClose();
                 }}
               >
@@ -201,7 +201,7 @@ export class OneClient extends Component {
     });
   };
 
-  blockMachine = () => {
+  blockClient = () => {
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -341,7 +341,7 @@ export class OneClient extends Component {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={this.blockMachine}>
+              <Button color="danger" onClick={this.blockClient}>
                 Block
               </Button>
               <Button color="secondary" onClick={this.toggleBlock}>

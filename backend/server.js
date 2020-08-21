@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 //Getting routes
 const ClientRoute = require("./routes/client");
 const WorkerRoute = require('./routes/worker');
+const AgentRoute = require("./routes/agent");
 const MachineryRoute = require("./routes/machinery");
 const WorkhouseRoute = require("./routes/workhouse");
 const OrganizationRoute = require("./routes/organization");
@@ -30,6 +31,7 @@ const AuthRoute = require("./routes/auth");
 
 app.use("/client", ClientRoute);
 app.use('/worker',WorkerRoute);
+app.use('/agent',AgentRoute);
 app.use("/machinery", MachineryRoute);
 app.use("/workhouse", WorkhouseRoute);
 app.use("/organization", OrganizationRoute);

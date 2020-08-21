@@ -19,7 +19,7 @@ var tempDate = new Date();
 var date =
   tempDate.getFullYear() +
   "-" +
-  (tempDate.getMonth() + 1) +
+  ("0" + (tempDate.getMonth() + 1)).slice(-2) +
   "-" +
   tempDate.getDate();
 
@@ -89,7 +89,7 @@ export class RegisterModal extends Component {
           this.state.email &&
           this.state.description
         ) {
-          Axios.post("/customer/register", newAgent)
+          Axios.post("/agent/register", newAgent)
             .then((res) => console.log(res.data))
             .then(() => {
               confirmAlert({

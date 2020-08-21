@@ -27,7 +27,6 @@ class Client extends Component {
   componentDidMount() {
     Axios.get("/client/")
       .then((res) => {
-        console.log(res.status)
         this.setState({ clients: res.data })
       },(err)=>{if(err.response.status===401){
           localStorage.removeItem("username");

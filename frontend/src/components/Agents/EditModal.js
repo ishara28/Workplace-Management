@@ -92,12 +92,19 @@ export class EditModal extends Component {
       this.state.telephone &&
       this.state.email      
     ) {
-      Axios.post("customer/update/" + this.props.agent.c_id, newAgent)
-        .then((res) => console.log(res.data))
-        .then(() => {
-          this.props.closeEditModal();
-          this.props.registrySuccessAlert();
-        });
+      Axios.post("agent/update/" + this.props.agent.ag_id, newAgent)
+        .then(
+          (res) => {
+            console.log(res.data);
+            this.props.closeEditModal();
+            this.props.registrySuccessAlert();
+          }
+          ,(err)=>{if(err.response.status===401){
+            localStorage.removeItem("username");
+            window.location.reload(true);
+          }
+        }
+        )
     } else {
       this.setState({ isFieldsEmpty: true });
     }

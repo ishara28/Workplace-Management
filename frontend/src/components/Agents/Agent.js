@@ -26,8 +26,14 @@ class Agent extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/customer/")
-      .then((res) => this.setState({ agents: res.data }))
+    Axios.get("/agent/")
+      .then((res) => this.setState({ agents: res.data })
+          ,(err)=>{if(err.response.status===401){
+            localStorage.removeItem("username");
+            window.location.reload(true);
+          }
+        }
+      )
       .then(() => console.log(this.state.agents))
       .catch((err) => console.log(err));
   }

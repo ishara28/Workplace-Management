@@ -81,8 +81,87 @@ export class OneAgent extends Component {
     // }, 1000);
   };
 
-  removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.agent.c_id)
+  activeAgent = () => {
+    Axios.post("/agent/active/" + this.props.agent.ag_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
+      .catch((err) => console.log(err));
+  };
+
+  activeDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to active?</h2>
+            {/* <p>You want to delete this file?</p> */}
+            <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.activeAgent();
+                  onClose();
+                }}
+              >
+                Yes, Active
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  inactiveAgent = () => {
+    Axios.post("/agent/inactive/" + this.props.agent.ag_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
+      .catch((err) => console.log(err));
+  };
+
+  inactiveDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to inactive?</h2>
+              <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.inactiveAgent();
+                  onClose();
+                }}
+              >
+                Yes, Inactive
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  removeAgent = () => {
+    Axios.post("/agent/remove/" + this.props.agent.ag_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -95,18 +174,18 @@ export class OneAgent extends Component {
             <h2>Are you sure to remove?</h2>
             {/* <p>You want to delete this file?</p> */}
             <div style={{ textAlign: "center" }}>
-              <Button style={{ margin: 3 }} onClick={onClose}>
-                No
-              </Button>
               <Button
                 color="danger"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeMachine();
+                  this.removeAgent();
                   onClose();
                 }}
               >
                 Yes, Remove
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
               </Button>
             </div>
           </div>
@@ -115,7 +194,7 @@ export class OneAgent extends Component {
     });
   };
 
-  blockMachine = () => {
+  blockAgent = () => {
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -127,12 +206,12 @@ export class OneAgent extends Component {
     const currDate = date;
 
     var blockedAgent = {
-      c_id:this.props.agent.c_id,
+      ag_id:this.props.agent.ag_id,
       blocked_date: currDate,
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.agent.c_id, blockedAgent)
+      Axios.post("agent/block/" + this.props.agent.ag_id, blockedAgent)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -173,8 +252,18 @@ export class OneAgent extends Component {
               <DropdownItem
                 onClick={this.showEditModal}
               >
-                Edit
+                Update
               </DropdownItem>
+              {this.props.agent.status!=="ACTIVE" && <DropdownItem
+                onClick={this.activeDialog}
+              >
+                Active
+              </DropdownItem>}
+              {this.props.agent.status!=="INACTIVE" && <DropdownItem
+                onClick={this.inactiveDialog}
+              >
+                Inactive
+              </DropdownItem>}
               {this.props.agent.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
@@ -239,7 +328,7 @@ export class OneAgent extends Component {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={this.blockMachine}>
+              <Button color="danger" onClick={this.blockAgent}>
                 Block
               </Button>
               <Button color="secondary" onClick={this.toggleBlock}>
