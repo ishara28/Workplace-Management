@@ -90,7 +90,15 @@ export class RegisterModal extends Component {
           this.state.description
         ) {
           Axios.post("/agent/register", newAgent)
-            .then((res) => console.log(res.data))
+            .then(
+              (res) => console.log(res.data)
+              ,(err)=>{
+                if(err.response.status===401){
+                  localStorage.removeItem("username");
+                  window.location.reload(true);
+                }
+              }
+            )
             .then(() => {
               confirmAlert({
                 customUI: ({ onClose }) => {

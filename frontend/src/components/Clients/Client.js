@@ -8,7 +8,7 @@ import {
   InputGroupText,
   Input,
 } from "reactstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";

@@ -124,11 +124,12 @@ export class OneAgent extends Component {
   inactiveAgent = () => {
     Axios.post("/agent/inactive/" + this.props.agent.ag_id)
       .then(() => window.location.reload(false)
-        ,(err)=>{if(err.response.status===401){
-          localStorage.removeItem("username");
-          window.location.reload(true);
+        ,(err)=>{
+          if(err.response.status===401){
+            localStorage.removeItem("username");
+            window.location.reload(true);
+          }
         }
-      }
       )
       .catch((err) => console.log(err));
   };
@@ -162,7 +163,15 @@ export class OneAgent extends Component {
 
   removeAgent = () => {
     Axios.post("/agent/remove/" + this.props.agent.ag_id)
-      .then(() => window.location.reload(false))
+      .then(
+        () => window.location.reload(false)
+        ,(err)=>{
+          if(err.response.status===401){
+            localStorage.removeItem("username");
+            window.location.reload(true);
+          }
+        }
+      )
       .catch((err) => console.log(err));
   };
 
@@ -212,7 +221,15 @@ export class OneAgent extends Component {
     };
     if (this.state.blockReason) {
       Axios.post("agent/block/" + this.props.agent.ag_id, blockedAgent)
-        .then((res) => console.log(res.data))
+        .then(
+          (res) => console.log(res.data)
+          ,(err)=>{
+            if(err.response.status===401){
+              localStorage.removeItem("username");
+              window.location.reload(true);
+            }
+          }
+        )
         .then(() => {
           this.toggleBlock();
           window.location.reload(false);

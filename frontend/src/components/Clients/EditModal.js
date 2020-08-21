@@ -95,16 +95,14 @@ export class EditModal extends Component {
       Axios.post("client/update/" + this.props.client.c_id, newClient)
         .then((res) => {
           console.log(res.data);
+          this.props.closeEditModal();
+          this.props.registrySuccessAlert();
         },
           (err)=>{if(err.response.status===401){
             localStorage.removeItem("username");
             window.location.reload(true);
           }
         })
-        .then(() => {
-          this.props.closeEditModal();
-          this.props.registrySuccessAlert();
-        });
     } else {
       this.setState({ isFieldsEmpty: true });
     }

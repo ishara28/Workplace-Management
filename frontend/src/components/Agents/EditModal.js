@@ -103,8 +103,7 @@ export class EditModal extends Component {
             localStorage.removeItem("username");
             window.location.reload(true);
           }
-        }
-        )
+        })
     } else {
       this.setState({ isFieldsEmpty: true });
     }
