@@ -4,23 +4,23 @@ const mySqlConnection = require("../dbconnection");
 // Get all Clients
 router.get("/", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "SELECT * FROM customer";
+    let sql = "SELECT * FROM client";
     let query = mySqlConnection.query(sql, (err, result) => {
       if (err) throw err;
-      console.log("AA");
       console.log(result);
       res.send(result);
       // res.json(result);
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Get all the blocked customer
+//Get all the blocked client
 router.get("/blocked", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "SELECT * FROM blocked_customer";
+    let sql = "SELECT * FROM blocked_client";
     let query = mySqlConnection.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -28,70 +28,75 @@ router.get("/blocked", (req, res) => {
       // res.json(result);
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-// Get a single customer
+// Get a single client
 router.get("/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "SELECT * FROM `customer` WHERE c_id = ? ";
+    let sql = "SELECT * FROM `client` WHERE c_id = ? ";
     let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
       if (err) throw err;
       console.log(result);
       res.send(result);
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Active existing customer (Change status to INACTIVE)
+//Active existing client (Change status to INACTIVE)
 router.post("/inactive/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "UPDATE customer SET status = 'INACTIVE' WHERE c_id = ?";
+    let sql = "UPDATE client SET status = 'INACTIVE' WHERE c_id = ?";
     let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
       res.send("INACTIVE");
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Inactive existing customer (Change status to ACTIVE)
+//Inactive existing client (Change status to ACTIVE)
 router.post("/active/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "UPDATE customer SET status = 'ACTIVE' WHERE c_id = ?";
+    let sql = "UPDATE client SET status = 'ACTIVE' WHERE c_id = ?";
     let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
       res.send("ACTIVE");
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Remove existing customer (Change status to REMOVED)
+//Remove existing client (Change status to REMOVED)
 router.post("/remove/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "UPDATE customer SET status = 'REMOVED' WHERE c_id = ?";
+    let sql = "UPDATE client SET status = 'REMOVED' WHERE c_id = ?";
     let query = mySqlConnection.query(sql, req.params.c_id, (err, result) => {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
       res.send("REMOVED");
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Register a customer
+//Register a client
 router.post("/register", (req, res) => {
   if (req.session.isLogged) {
-    let customer = {
+    let client = {
       index_no: req.body.index_no,
       name: req.body.name,
       nic_passport: req.body.nic_passport,
@@ -103,22 +108,23 @@ router.post("/register", (req, res) => {
       status: req.body.status,
     };
 
-    let sql = "INSERT INTO customer SET ?";
+    let sql = "INSERT INTO client SET ?";
 
-    let query = mySqlConnection.query(sql, customer, (err, result) => {
+    let query = mySqlConnection.query(sql, client, (err, result) => {
       if (err) throw err;
       console.log(result);
-      res.send("Customer added!");
+      res.send("client added!");
     });
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Update a customer
+//Update a client
 router.post("/update/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let customer = {
+    let client = {
       nic_passport: req.body.nic_passport,
       name: req.body.name,
       reg_date: req.body.reg_date,
@@ -127,35 +133,36 @@ router.post("/update/:c_id", (req, res) => {
       telephone: req.body.telephone,
       email: req.body.email,
     };
-    let sql = "UPDATE customer SET ? WHERE c_id = ?";
+    let sql = "UPDATE client SET ? WHERE c_id = ?";
     let query = mySqlConnection.query(
       sql,
-      [customer, req.params.c_id],
+      [client, req.params.c_id],
       (err, result) => {
-        console.log("Customer Updated");
-        res.send("Customer Updated");
+        console.log("client Updated");
+        res.send("client Updated");
       }
     );
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 
-//Block an existing customer
+//Block an existing client
 router.post("/block/:c_id", (req, res) => {
   if (req.session.isLogged) {
-    let blockedCustomer = {
+    let blockedClient = {
       c_id: req.params.c_id,
       blocked_date: req.body.blocked_date,
       reason: req.body.reason,
     };
 
     let sql =
-      "UPDATE customer SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_customer SET ?";
+      "UPDATE client SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_client SET ?";
 
     let query = mySqlConnection.query(
       sql,
-      [req.params.c_id, blockedCustomer],
+      [req.params.c_id, blockedClient],
       (err, result) => {
         if (err) throw err;
         console.log("User Blocked");
@@ -163,7 +170,8 @@ router.post("/block/:c_id", (req, res) => {
       }
     );
   } else {
-    res.send("Login First!");
+    res.status(401);
+    res.end();
   }
 });
 

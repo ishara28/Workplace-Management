@@ -114,6 +114,7 @@ class Main extends Component {
           <Route path="/cp" component={CPPage} />
           <Route path="/agreement" component={AgreementPage} />
           <Route path="/project" component={ProjectPage} />
+          <Route path='/login' component={Login}/>
           <Redirect to="/" />
         </Switch>
       </>

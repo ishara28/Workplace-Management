@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const mySqlConnection = require("../dbconnection");
-const { route } = require("./customer");
+const { route } = require("./client");
 
 // Log user
 router.post("/", (req, res) => {

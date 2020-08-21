@@ -8,7 +8,7 @@ import {
   InputGroupText,
   Input,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
 import { FaSearch } from "react-icons/fa";
@@ -25,8 +25,15 @@ class Client extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/customer/")
-      .then((res) => this.setState({ clients: res.data }))
+    Axios.get("/client/")
+      .then((res) => {
+        console.log(res.status)
+        this.setState({ clients: res.data })
+      },(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      })
       .then(() => console.log(this.state.clients))
       .catch((err) => console.log(err));
   }

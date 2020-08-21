@@ -92,8 +92,15 @@ export class EditModal extends Component {
       this.state.telephone &&
       this.state.email
     ) {
-      Axios.post("customer/update/" + this.props.client.c_id, newClient)
-        .then((res) => console.log(res.data))
+      Axios.post("client/update/" + this.props.client.c_id, newClient)
+        .then((res) => {
+          console.log(res.data);
+        },
+          (err)=>{if(err.response.status===401){
+            localStorage.removeItem("username");
+            window.location.reload(true);
+          }
+        })
         .then(() => {
           this.props.closeEditModal();
           this.props.registrySuccessAlert();

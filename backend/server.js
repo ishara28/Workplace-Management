@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Getting routes
-const CustomerRoute = require("./routes/customer");
+const ClientRoute = require("./routes/client");
 const WorkerRoute = require('./routes/worker');
 const MachineryRoute = require("./routes/machinery");
 const WorkhouseRoute = require("./routes/workhouse");
@@ -28,7 +28,7 @@ const AgreementRoute = require("./routes/agreement");
 const ProjectRoute = require("./routes/project");
 const AuthRoute = require("./routes/auth");
 
-app.use("/customer", CustomerRoute);
+app.use("/client", ClientRoute);
 app.use('/worker',WorkerRoute);
 app.use("/machinery", MachineryRoute);
 app.use("/workhouse", WorkhouseRoute);

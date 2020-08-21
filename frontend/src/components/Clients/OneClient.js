@@ -82,8 +82,14 @@ export class OneClient extends Component {
   };
 
   activeClient = () => {
-    Axios.post("/customer/active/" + this.props.client.c_id)
-      .then(() => window.location.reload(false))
+    Axios.post("/client/active/" + this.props.client.c_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
       .catch((err) => console.log(err));
   };
 
@@ -116,8 +122,14 @@ export class OneClient extends Component {
   };
 
   inactiveClient = () => {
-    Axios.post("/customer/inactive/" + this.props.client.c_id)
-      .then(() => window.location.reload(false))
+    Axios.post("/client/inactive/" + this.props.client.c_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
       .catch((err) => console.log(err));
   };
 
@@ -150,8 +162,14 @@ export class OneClient extends Component {
 
 
   removeMachine = () => {
-    Axios.post("/customer/remove/" + this.props.client.c_id)
-      .then(() => window.location.reload(false))
+    Axios.post("/client/remove/" + this.props.client.c_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
       .catch((err) => console.log(err));
   };
 
@@ -200,8 +218,14 @@ export class OneClient extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      Axios.post("customer/block/" + this.props.client.c_id, blockedClient)
-        .then((res) => console.log(res.data))
+      Axios.post("client/block/" + this.props.client.c_id, blockedClient)
+        .then((res) => console.log(res.data)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+        )
         .then(() => {
           this.toggleBlock();
           window.location.reload(false);
