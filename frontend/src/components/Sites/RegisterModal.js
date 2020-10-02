@@ -56,7 +56,7 @@ export class RegisterModal extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/customer/")
+    Axios.get("/client/")
       .then((res) => this.setState({ clients: res.data }))
       .then(() => console.log(this.state.clients))
       .catch((err) => console.log(err));
@@ -122,72 +122,6 @@ export class RegisterModal extends Component {
           <ModalHeader close={this.closeBtn} className="text-white bg-success">Site Register</ModalHeader>
           <ModalBody>
             <Form>
-            <FormGroup row>
-                <Label for="description" sm={2}>
-                  Description
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="textarea"
-                    name="description"
-                    id="description"
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="telephone" sm={2}>
-                  Telephone number
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="text"
-                    name="telephone"
-                    id="telephone"
-                    value={this.state.telephone}
-                    onChange={(e) => this.setState({ telephone: e.target.value })}
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="email" sm={2}>
-                  email
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    name="email"
-                    id="email"
-                    type="email"
-                    value={this.state.email}
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup row>
-                <Label for="address" sm={2}>
-                  Address
-                </Label>
-                <Col sm={10}>
-                  <Input
-                    type="textarea"
-                    name="address"
-                    id="address"
-                    value={this.state.address}
-                    onChange={(e) =>
-                      this.setState({ address: e.target.value })
-                    }
-                  />
-                </Col>
-              </FormGroup>
-
-              
-
               <FormGroup row>
                 <Label for="c_id" sm={2}>
                   Client
@@ -213,6 +147,70 @@ export class RegisterModal extends Component {
                   </Input>
                 </Col>
               </FormGroup>
+
+              <FormGroup row>
+                  <Label for="description" sm={2}>
+                    Description
+                  </Label>
+                  <Col sm={10}>
+                    <Input
+                      type="textarea"
+                      name="description"
+                      id="description"
+                      value={this.state.description}
+                      onChange={(e) =>
+                        this.setState({ description: e.target.value })
+                      }
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="address" sm={2}>
+                    Address
+                  </Label>
+                  <Col sm={10}>
+                    <Input
+                      type="textarea"
+                      name="address"
+                      id="address"
+                      value={this.state.address}
+                      onChange={(e) =>
+                        this.setState({ address: e.target.value })
+                      }
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="telephone" sm={2}>
+                    Telephone number
+                  </Label>
+                  <Col sm={10}>
+                    <Input
+                      type="text"
+                      name="telephone"
+                      id="telephone"
+                      value={this.state.telephone}
+                      onChange={(e) => this.setState({ telephone: e.target.value })}
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="email" sm={2}>
+                    email
+                  </Label>
+                  <Col sm={10}>
+                    <Input
+                      name="email"
+                      id="email"
+                      type="email"
+                      value={this.state.email}
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                    />
+                  </Col>
+                </FormGroup>              
             </Form>
 
             {this.state.isFieldsEmpty && (
