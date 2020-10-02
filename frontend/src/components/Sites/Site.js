@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import RegisterModal from "./RegisterModal";
-import OneWorkhouse from "./OneSite";
+import OneSite from "./OneSite";
 import EditModal from "./EditModal";
 import { FaSearch } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -34,13 +34,13 @@ export class Site extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/workhouse/")
+    Axios.get("/site/")
       .then((res) =>
         this.setState({
           site: res.data,
         })
       )
-      // .then(() => console.log(this.state.workhouse))
+      // .then(() => console.log(this.state.site))
       .catch((err) => console.log(err));
   }
 
@@ -128,7 +128,7 @@ export class Site extends Component {
               <tr>
                 <th>Index No.</th>
                 <th>Registered date</th>
-                <th>Customer</th>
+                <th>Client</th>
                 <th>Description</th>
                 <th>Address</th>
                 <th>Telephone</th>
@@ -151,10 +151,10 @@ export class Site extends Component {
                   )
                 })
                 .map((site) => {
-                  return <OneWorkhouse site={site} />;
+                  return <OneSite site={site} />;
                 })}
-              {/* {this.state.workhouse.map((workhouse) => {
-                return <OneWorkhouse workhouse={workhouse} />;
+              {/* {this.state.site.map((site) => {
+                return <OneSite site={site} />;
               })} */}
             </tbody>
           </Table>
@@ -186,7 +186,7 @@ export class Site extends Component {
             isOpen={this.state.successAlertVisible}
             toggle={() => this.setState({ successAlertVisible: false })}
           >
-            Workhouse Successfully Registered!
+            Site Successfully Registered!
           </Alert>
         </div>*/}
       </div>

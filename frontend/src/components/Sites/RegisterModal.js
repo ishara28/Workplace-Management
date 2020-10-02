@@ -102,7 +102,7 @@ export class RegisterModal extends Component {
           this.state.address &&
           this.state.c_id
         ) {
-          Axios.post("workhouse/register", newSite)
+          Axios.post("site/register", newSite)
             .then((res) => console.log(res.data))
             .then(() => {
               this.props.closeModal();

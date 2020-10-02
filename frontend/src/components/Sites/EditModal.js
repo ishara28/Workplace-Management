@@ -54,7 +54,7 @@ export class EditModal extends Component {
   }
 
   componentDidMount() {
-    console.log("Workhouse", this.props.site);
+    console.log("Site", this.props.site);
     this.setState({
       reg_date: this.props.site.reg_date,
       description: this.props.site.description,
@@ -92,7 +92,7 @@ export class EditModal extends Component {
       this.state.email &&
       this.state.c_id
     ) {
-      Axios.post("workhouse/update/" + this.props.site.index_no, newSite)
+      Axios.post("site/update/" + this.props.site.index_no, newSite)
         .then((res) => {
           console.log(res.data);
         })

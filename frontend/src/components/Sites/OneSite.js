@@ -80,7 +80,7 @@ export class OneSite extends Component {
   };
 
   removeSite = () => {
-    Axios.post("/workhouse/remove/" + this.props.site.index_no)
+    Axios.post("/site/remove/" + this.props.site.index_no)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
   };
@@ -130,7 +130,7 @@ export class OneSite extends Component {
     };
     if (this.state.blockReason) {
       
-      Axios.post("/workhouse/block/" + this.props.site.index_no, blockedSite)
+      Axios.post("/site/block/" + this.props.site.index_no, blockedSite)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -147,16 +147,16 @@ export class OneSite extends Component {
       <tr>
         <th scope="row">{this.props.site.index_no}</th>
         <td>{this.props.site.reg_date.slice(0, 10)}</td>
-        <th>{this.props.site.status}</th>
-        <td>{this.props.site.address}</td>
-        <td>{this.props.site.telephone}</td>
-        <td>{this.props.site.email}</td>
+        <td>{this.props.site.name}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
             {this.props.site.description}
           </textarea>
         </td>
-        <td>{this.props.site.c_id}</td>
+        <td>{this.props.site.address}</td>
+        <td>{this.props.site.telephone}</td>
+        <td>{this.props.site.email}</td>
+        <td>{this.props.site.status}</td>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret size="sm" className="btn-success">
