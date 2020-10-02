@@ -242,21 +242,21 @@ export class OneAgent extends Component {
     return (
       <tr style={{ fontSize: 15 }}>
         <th scope="row">{this.props.agent.index_no}</th>
+        <td>{this.props.agent.nic_passport}</td>
         <td>{this.props.agent.name}</td>
         <td>{this.props.agent.reg_date.slice(0, 10)}</td>
-        <td>{this.props.agent.nic_passport}</td>
-        <td>
-          <textarea name="" id="" cols="25" disabled>
-            {this.props.agent.address}
-          </textarea>
-        </td>
-        <td>{this.props.agent.email}</td>
-        <td>{this.props.agent.telephone}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
             {this.props.agent.description}
           </textarea>
         </td>
+        <td>
+          <textarea name="" id="" cols="25" disabled>
+            {this.props.agent.address}
+          </textarea>
+        </td>
+        <td>{this.props.agent.telephone}</td>
+        <td>{this.props.agent.email}</td>
         <th>{this.props.agent.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
