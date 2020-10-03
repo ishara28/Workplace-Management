@@ -4,7 +4,7 @@ const mySqlConnection = require("../dbconnection");
 //Get all site
 router.get("/", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "SELECT site.index_no, site.reg_date, client.name, site.description, site.address, site.telephone, site.email, site.status FROM site JOIN client";
+    let sql = "SELECT site.s_id,site.index_no, site.reg_date, client.name, site.description, site.address, site.telephone, site.email, site.status FROM site JOIN client";
     let query = mySqlConnection.query(sql, (err, result) => {
       if (err) throw err;
       res.send(result);
@@ -145,21 +145,21 @@ router.post("/remove/:index_no", (req, res) => {
   }
 });
 
-//Block an existing client
-router.post("/block/:index_no", (req, res) => {
+//Block an existing site
+router.post("/block/:s_id", (req, res) => {
   if (req.session.isLogged) {
-    let blockedClient = {
-      c_id: req.params.c_id,
+    let blockedSite = {
+      s_id: req.params.s_id,
       blocked_date: req.body.blocked_date,
       reason: req.body.reason,
     };
 
     let sql =
-      "UPDATE client SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_client SET ?";
+      "UPDATE site SET status = 'BLOCKED' WHERE s_id = ? ; INSERT INTO blocked_site SET ?";
 
     let query = mySqlConnection.query(
       sql,
-      [req.params.c_id, blockedClient],
+      [req.params.s_id, blockedSite],
       (err, result) => {
         if (err) throw err;
         console.log("User Blocked");
@@ -173,7 +173,7 @@ router.post("/block/:index_no", (req, res) => {
 });
 
 //Block existing site
-router.post("/block/:index_no", (req, res) => {
+/*router.post("/block/:index_no", (req, res) => {
   let sql_1 = "SELECT * FROM blocked_site WHERE index_no = ?";
 
   let query_1 = mySqlConnection.query(
@@ -221,6 +221,6 @@ router.post("/block/:index_no", (req, res) => {
       }
     }
   );
-});
+});*/
 
 module.exports = router;

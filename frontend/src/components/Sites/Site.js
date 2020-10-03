@@ -25,7 +25,6 @@ export class Site extends Component {
 
     this.state = {
       site: [],
-      siteClone: [],
       modal: false,
       //successAlertVisible: false,
       editModal: false,
@@ -40,6 +39,7 @@ export class Site extends Component {
           site: res.data,
         })
       )
+      .then(() => console.log(this.state.site))
       // .then(() => console.log(this.state.site))
       .catch((err) => console.log(err));
   }

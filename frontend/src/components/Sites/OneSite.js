@@ -197,8 +197,7 @@ export class OneSite extends Component {
       reason: this.state.blockReason,
     };
     if (this.state.blockReason) {
-      
-      Axios.post("/site/block/" + this.props.site.index_no, blockedSite)
+      Axios.post("/site/block/" + this.props.site.s_id, blockedSite)
         .then((res) => console.log(res.data))
         .then(() => {
           this.toggleBlock();
@@ -206,8 +205,6 @@ export class OneSite extends Component {
         })
         .catch((err) => console.log(err));
     }
-
-
   };
 
   render() {
