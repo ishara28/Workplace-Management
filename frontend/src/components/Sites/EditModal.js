@@ -63,9 +63,9 @@ export class EditModal extends Component {
       email: this.props.site.email,
       c_id: this.props.site.c_id,
     });
-    Axios.get("/customer/")
+    Axios.get("/client/")
       .then((res) => this.setState({ clients: res.data }))
-      //   .then(() => console.log(this.state.customers))
+      //   .then(() => console.log(this.state.client))
       .catch((err) => console.log(err));
   }
 

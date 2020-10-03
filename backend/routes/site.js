@@ -73,6 +73,7 @@ router.get("/:index_no", (req, res) => {
 router.post("/update/:index_no", (req, res) => {
   if (req.session.isLogged) {
     let site = {
+      reg_date: req.body.reg_date,
       address: req.body.address,
       telephone: req.body.telephone,
       email: req.body.email,
