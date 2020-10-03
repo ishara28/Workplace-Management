@@ -4,7 +4,7 @@ const mySqlConnection = require("../dbconnection");
 // Get all workers
 router.get("/", (req, res) => {
   if (req.session.isLogged) {
-    let sql = "SELECT * FROM worker";
+    let sql = "SELECT worker.w_id, worker.index_no, worker.nic_passport, worker.name, worker.reg_date, site.index_no as site, worker.description, worker.address, worker.telephone, worker.email, worker.status FROM worker JOIN site ON worker.s_id=site.s_id";
     let query = mySqlConnection.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);

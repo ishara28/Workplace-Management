@@ -146,21 +146,22 @@ export class OneWorker extends Component {
     return (
       <tr style={{ fontSize: 15 }}>
         <th scope="row">{this.props.worker.index_no}</th>
+        <td>{this.props.worker.nic_passport}</td>
         <td>{this.props.worker.name}</td>
         <td>{this.props.worker.reg_date.slice(0, 10)}</td>
-        <td>{this.props.worker.nic_passport}</td>
-        <td>
-          <textarea name="" id="" cols="25" disabled>
-            {this.props.worker.address}
-          </textarea>
-        </td>
-        <td>{this.props.worker.email}</td>
-        <td>{this.props.worker.telephone}</td>
+        <td>{this.props.worker.site}</td>
         <td>
           <textarea name="" id="" cols="25" disabled>
             {this.props.worker.description}
           </textarea>
         </td>
+        <td>
+          <textarea name="" id="" cols="25" disabled>
+            {this.props.worker.address}
+          </textarea>
+        </td>
+        <td>{this.props.worker.telephone}</td>
+        <td>{this.props.worker.email}</td>
         <th>{this.props.worker.status}</th>
         <td>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
