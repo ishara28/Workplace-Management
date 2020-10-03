@@ -95,7 +95,7 @@ router.post("/register", (req, res) => {
       nic_passport: req.body.nic_passport,
       name: req.body.name,
       reg_date: req.body.reg_date,
-      site: req.body.site,
+      s_id: req.body.s_id,
       description: req.body.description,
       address: req.body.address,
       telephone: req.body.telephone,

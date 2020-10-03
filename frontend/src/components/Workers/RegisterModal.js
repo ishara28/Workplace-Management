@@ -35,7 +35,7 @@ export class RegisterModal extends Component {
       index_no: "",
       name: "",
       nic_passport: "",
-      site: "",
+      s_id: "",
       address: "",
       telephone: "",
       email: "",
@@ -83,7 +83,7 @@ export class RegisterModal extends Component {
           nic_passport: this.state.nic_passport,
           name: this.state.name,
           reg_date: this.state.reg_date,
-          site: this.state.site,
+          s_id: this.state.s_id,
           description: this.state.description,
           address: this.state.address,
           telephone: this.state.telephone,
@@ -96,7 +96,7 @@ export class RegisterModal extends Component {
         if (
           this.state.name &&
           this.state.nic_passport &&
-          this.state.site &&
+          this.state.s_id &&
           this.state.address &&
           this.state.telephone &&
           this.state.email &&
@@ -188,7 +188,7 @@ export class RegisterModal extends Component {
                     id="s_id"
                     value={this.state.s_id}
                     onChange={(e) =>
-                      this.setState({ site: e.target.value })
+                      this.setState({ s_id: e.target.value })
                     }
                   >
                     <option>Choose Site</option>
