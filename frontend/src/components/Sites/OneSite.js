@@ -79,10 +79,78 @@ export class OneSite extends Component {
     window.location.reload(false);
   };
 
+  activeSite = () => {
+    Axios.post("/site/active/" + this.props.site.index_no)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
+  inactiveSite = () => {
+    Axios.post("/site/inactive/" + this.props.site.index_no)
+      .then(() => window.location.reload(false))
+      .catch((err) => console.log(err));
+  };
+
   removeSite = () => {
     Axios.post("/site/remove/" + this.props.site.index_no)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
+  };
+
+  activeDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to active?</h2>
+            {/* <p>You want to delete this file?</p> */}
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.activeSite();
+                  onClose();
+                }}
+              >
+                Yes, Active
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  inactiveDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to inactive?</h2>
+            {/* <p>You want to delete this file?</p> */}
+            <div style={{ textAlign: "center" }}>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.inactiveSite();
+                  onClose();
+                }}
+              >
+                Yes, Inactive
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   removeDialog = () => {
@@ -168,6 +236,16 @@ export class OneSite extends Component {
               >
                 Edit
               </DropdownItem>
+              {this.props.site.status!=="ACTIVE" && <DropdownItem
+                onClick={this.activeDialog}
+              >
+                Active
+              </DropdownItem>}
+              {this.props.site.status!=="INACTIVE" && <DropdownItem
+                onClick={this.inactiveDialog}
+              >
+                Inactive
+              </DropdownItem>}
               {this.props.site.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >

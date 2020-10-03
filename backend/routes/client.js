@@ -48,7 +48,7 @@ router.get("/:c_id", (req, res) => {
   }
 });
 
-//Active existing client (Change status to INACTIVE)
+//Inactive existing client (Change status to INACTIVE)
 router.post("/inactive/:c_id", (req, res) => {
   if (req.session.isLogged) {
     let sql = "UPDATE client SET status = 'INACTIVE' WHERE c_id = ?";

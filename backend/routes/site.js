@@ -94,6 +94,40 @@ router.post("/update/:index_no", (req, res) => {
   }
 });
 
+//Active existing site
+router.post("/active/:index_no", (req, res) => {
+  if (req.session.isLogged) {
+    let sql = "UPDATE site SET status = 'ACTIVE' WHERE index_no = ?";
+    let query = mySqlConnection.query(
+      sql,
+      req.params.index_no,
+      (err, result) => {
+        if (err) throw err;
+        res.send("ACTIVE");
+      }
+    );
+  } else {
+    res.send("Login First!");
+  }
+});
+
+//Inactive existing site
+router.post("/inactive/:index_no", (req, res) => {
+  if (req.session.isLogged) {
+    let sql = "UPDATE site SET status = 'INACTIVE' WHERE index_no = ?";
+    let query = mySqlConnection.query(
+      sql,
+      req.params.index_no,
+      (err, result) => {
+        if (err) throw err;
+        res.send("INACTIVE");
+      }
+    );
+  } else {
+    res.send("Login First!");
+  }
+});
+
 //Remove existing site
 router.post("/remove/:index_no", (req, res) => {
   if (req.session.isLogged) {
@@ -108,6 +142,33 @@ router.post("/remove/:index_no", (req, res) => {
     );
   } else {
     res.send("Login First!");
+  }
+});
+
+//Block an existing client
+router.post("/block/:index_no", (req, res) => {
+  if (req.session.isLogged) {
+    let blockedClient = {
+      c_id: req.params.c_id,
+      blocked_date: req.body.blocked_date,
+      reason: req.body.reason,
+    };
+
+    let sql =
+      "UPDATE client SET status = 'BLOCKED' WHERE c_id = ? ; INSERT INTO blocked_client SET ?";
+
+    let query = mySqlConnection.query(
+      sql,
+      [req.params.c_id, blockedClient],
+      (err, result) => {
+        if (err) throw err;
+        console.log("User Blocked");
+        res.send("User Blocked");
+      }
+    );
+  } else {
+    res.status(401);
+    res.end();
   }
 });
 
