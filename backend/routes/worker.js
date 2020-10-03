@@ -92,13 +92,14 @@ router.post("/register", (req, res) => {
   if (req.session.isLogged) {
     let worker = {
       index_no: req.body.index_no,
-      name: req.body.name,
       nic_passport: req.body.nic_passport,
+      name: req.body.name,
+      reg_date: req.body.reg_date,
+      site: req.body.site,
+      description: req.body.description,
       address: req.body.address,
       telephone: req.body.telephone,
       email: req.body.email,
-      description: req.body.description,
-      reg_date: req.body.reg_date,
       status: req.body.status,
     };
 

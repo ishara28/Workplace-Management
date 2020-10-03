@@ -30,10 +30,12 @@ export class RegisterModal extends Component {
     super(props);
 
     this.state = {
+      sites:[],
       modal: false,
       index_no: "",
       name: "",
       nic_passport: "",
+      site: "",
       address: "",
       telephone: "",
       email: "",
@@ -41,6 +43,13 @@ export class RegisterModal extends Component {
       reg_date: currDate,
       isEmptyAlertVisible: false,
     };
+  }
+
+  componentDidMount() {
+    Axios.get("/site/")
+      .then((res) => this.setState({ sites: res.data }))
+      .then(() => console.log(this.state.sites))
+      .catch((err) => console.log(err));
   }
 
   toggle = () => {
@@ -71,19 +80,23 @@ export class RegisterModal extends Component {
       () => {
         const newWorker = {
           index_no: this.state.index_no,
-          name: this.state.name,
           nic_passport: this.state.nic_passport,
+          name: this.state.name,
+          reg_date: this.state.reg_date,
+          site: this.state.site,
+          description: this.state.description,
           address: this.state.address,
           telephone: this.state.telephone,
-          email: this.state.email,
-          description: this.state.description,
-          reg_date: this.state.reg_date,
+          email: this.state.email,   
           status: "ACTIVE",
         };
+
+        console.log(newWorker)
 
         if (
           this.state.name &&
           this.state.nic_passport &&
+          this.state.site &&
           this.state.address &&
           this.state.telephone &&
           this.state.email &&
@@ -163,6 +176,32 @@ export class RegisterModal extends Component {
                 />
               </Col>
             </FormGroup>
+
+            <FormGroup row>
+                <Label for="c_id" sm={3}>
+                  Site
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="select"
+                    name="s_id"
+                    id="s_id"
+                    value={this.state.s_id}
+                    onChange={(e) =>
+                      this.setState({ site: e.target.value })
+                    }
+                  >
+                    <option>Choose Site</option>
+                    {this.state.sites.map((site) => {
+                      return (
+                        <option value={site.s_id}>
+                          {site.index_no}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
 
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
