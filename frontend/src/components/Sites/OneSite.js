@@ -212,7 +212,7 @@ export class OneSite extends Component {
       <tr>
         <th scope="row">{this.props.site.index_no}</th>
         <td>{this.props.site.reg_date.slice(0, 10)}</td>
-        <td>{this.props.site.name}</td>
+        <td>{this.props.site.client}</td>
         <td>
           <textarea name="" id="" cols="35" disabled>
             {this.props.site.description}
