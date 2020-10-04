@@ -45,21 +45,7 @@ router.get("/:w_id", (req, res) => {
   }
 });
 
-//Active existing worker (Change status to INACTIVE)
-router.post("/inactive/:w_id", (req, res) => {
-  if (req.session.isLogged) {
-    let sql = "UPDATE worker SET status = 'INACTIVE' WHERE w_id = ?";
-    let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
-      if (err) throw err;
-      console.log(result.affectedRows + " record(s) updated");
-      res.send("INACTIVE");
-    });
-  } else {
-    res.send("Login First!");
-  }
-});
-
-//Inactive existing worker (Change status to ACTIVE)
+//Active existing worker (Change status to ACTIVE)
 router.post("/active/:w_id", (req, res) => {
   if (req.session.isLogged) {
     let sql = "UPDATE worker SET status = 'ACTIVE' WHERE w_id = ?";
@@ -67,6 +53,20 @@ router.post("/active/:w_id", (req, res) => {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
       res.send("ACTIVE");
+    });
+  } else {
+    res.send("Login First!");
+  }
+});
+
+//Inactive existing worker (Change status to INACTIVE)
+router.post("/inactive/:w_id", (req, res) => {
+  if (req.session.isLogged) {
+    let sql = "UPDATE worker SET status = 'INACTIVE' WHERE w_id = ?";
+    let query = mySqlConnection.query(sql, req.params.w_id, (err, result) => {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+      res.send("INACTIVE");
     });
   } else {
     res.send("Login First!");

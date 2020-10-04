@@ -81,7 +81,86 @@ export class OneWorker extends Component {
     // }, 1000);
   };
 
-  removeMachine = () => {
+  activeWorker = () => {
+    Axios.post("/worker/active/" + this.props.worker.w_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
+      .catch((err) => console.log(err));
+  };
+
+  activeDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to active?</h2>
+            {/* <p>You want to delete this file?</p> */}
+            <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.activeWorker();
+                  onClose();
+                }}
+              >
+                Yes, Active
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  inactiveWorker = () => {
+    Axios.post("/worker/inactive/" + this.props.worker.w_id)
+      .then(() => window.location.reload(false)
+        ,(err)=>{if(err.response.status===401){
+          localStorage.removeItem("username");
+          window.location.reload(true);
+        }
+      }
+      )
+      .catch((err) => console.log(err));
+  };
+
+  inactiveDialog = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h2>Are you sure to inactive?</h2>
+              <div style={{ textAlign: "center" }}>
+              <Button
+                color="danger"
+                style={{ margin: 3 }}
+                onClick={() => {
+                  this.inactiveWorker();
+                  onClose();
+                }}
+              >
+                Yes, Inactive
+              </Button>
+              <Button style={{ margin: 3 }} onClick={onClose}>
+                No
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  removeWorker = () => {
     Axios.post("/worker/remove/" + this.props.worker.w_id)
       .then(() => window.location.reload(false))
       .catch((err) => console.log(err));
@@ -102,7 +181,7 @@ export class OneWorker extends Component {
                 color="danger"
                 style={{ margin: 3 }}
                 onClick={() => {
-                  this.removeMachine();
+                  this.removeWorker();
                   onClose();
                 }}
               >
@@ -115,7 +194,7 @@ export class OneWorker extends Component {
     });
   };
 
-  blockMachine = () => {
+  blockWorker = () => {
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -176,6 +255,16 @@ export class OneWorker extends Component {
               >
                 Edit
               </DropdownItem>
+              {this.props.worker.status!=="ACTIVE" && <DropdownItem
+                onClick={this.activeDialog}
+              >
+                Active
+              </DropdownItem>}
+              {this.props.worker.status!=="INACTIVE" && <DropdownItem
+                onClick={this.inactiveDialog}
+              >
+                Inactive
+              </DropdownItem>}
               {this.props.worker.status!=="REMOVED" && <DropdownItem
                 onClick={this.removeDialog}
               >
@@ -240,7 +329,7 @@ export class OneWorker extends Component {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={this.blockMachine}>
+              <Button color="danger" onClick={this.blockWorker}>
                 Block
               </Button>
               <Button color="secondary" onClick={this.toggleBlock}>
