@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 21, 2020 at 06:55 AM
+-- Generation Time: Oct 04, 2020 at 05:05 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -39,6 +39,13 @@ CREATE TABLE `agent` (
   `email` varchar(25) NOT NULL,
   `status` enum('ACTIVE','INACTIVE','REMOVED','BLOCKED') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `agent`
+--
+
+INSERT INTO `agent` (`ag_id`, `index_no`, `nic_passport`, `name`, `reg_date`, `description`, `address`, `telephone`, `email`, `status`) VALUES
+(1, 'Ag-20102-201918', '2222222', 'kasun', '2020-10-2', 'kasun 123', 'Sri lanka', '09834567', 'kasun@gmail.com', 'INACTIVE');
 
 -- --------------------------------------------------------
 
@@ -96,6 +103,13 @@ CREATE TABLE `blocked_client` (
   `reason` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `blocked_client`
+--
+
+INSERT INTO `blocked_client` (`block_id`, `c_id`, `blocked_date`, `reason`) VALUES
+(3, 17, '2020-10-2', 'AA');
+
 -- --------------------------------------------------------
 
 --
@@ -123,6 +137,27 @@ CREATE TABLE `blocked_organization` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `blocked_site`
+--
+
+CREATE TABLE `blocked_site` (
+  `block_id` int(11) NOT NULL,
+  `s_id` int(11) NOT NULL,
+  `blocked_date` date NOT NULL,
+  `reason` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `blocked_site`
+--
+
+INSERT INTO `blocked_site` (`block_id`, `s_id`, `blocked_date`, `reason`) VALUES
+(1, 5, '2020-10-03', 'qwe'),
+(2, 5, '2020-10-03', 'AA');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `blocked_worker`
 --
 
@@ -133,17 +168,12 @@ CREATE TABLE `blocked_worker` (
   `reason` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `blocked_workhouse`
+-- Dumping data for table `blocked_worker`
 --
 
-CREATE TABLE `blocked_workhouse` (
-  `w_id` int(11) NOT NULL,
-  `blocked_date` date NOT NULL,
-  `reason` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `blocked_worker` (`block_id`, `w_id`, `blocked_date`, `reason`) VALUES
+(1, 4, '2020-10-4', 'cvb');
 
 -- --------------------------------------------------------
 
@@ -169,7 +199,8 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`c_id`, `index_no`, `nic_passport`, `name`, `reg_date`, `description`, `address`, `telephone`, `email`, `status`) VALUES
-(17, 'C-20820-74655', '1111111', 'saman', '2020-08-25', 'saman', 'matara', '1111111', 'saman@gmail.com', 'ACTIVE');
+(17, 'C-20820-74655', '1111111', 'saman kumara', '2020-08-25', 'saman', 'matara', '1111111', 'saman@gmail.com', 'ACTIVE'),
+(18, 'C-20102-19433', '222222', 'Kamal GD', '2020-10-2', 'GDK', '123, saman', '1111111', 'kamal@aa.com', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -258,7 +289,7 @@ INSERT INTO `project` (`p_id`, `owner_id`, `index_no`, `reg_date`, `description`
 CREATE TABLE `site` (
   `s_id` int(11) NOT NULL,
   `index_no` varchar(20) NOT NULL,
-  `reg_date` date NOT NULL,
+  `reg_date` varchar(10) NOT NULL,
   `description` varchar(500) NOT NULL,
   `address` varchar(100) NOT NULL,
   `telephone` varchar(15) NOT NULL,
@@ -272,7 +303,7 @@ CREATE TABLE `site` (
 --
 
 INSERT INTO `site` (`s_id`, `index_no`, `reg_date`, `description`, `address`, `telephone`, `email`, `c_id`, `status`) VALUES
-(5, 'W-2082-192343', '2020-08-02', 'SADAD', 'SDFAF', '11111', 'ASDFA@DSF', 12, 'ACTIVE');
+(6, 'S-20102-212629', '2020-10-02', 'matara site', 'galle road, matara', '0712345678', 'matara@gmail.com', 17, 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -305,13 +336,20 @@ CREATE TABLE `worker` (
   `nic_passport` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `reg_date` varchar(10) NOT NULL,
-  `site` int(11) NOT NULL,
+  `s_id` int(11) DEFAULT NULL,
   `description` varchar(500) NOT NULL,
   `address` varchar(100) NOT NULL,
   `telephone` varchar(15) NOT NULL,
   `email` varchar(25) NOT NULL,
   `status` enum('ACTIVE','INACTIVE','REMOVED','BLOCKED') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `worker`
+--
+
+INSERT INTO `worker` (`w_id`, `index_no`, `nic_passport`, `name`, `reg_date`, `s_id`, `description`, `address`, `telephone`, `email`, `status`) VALUES
+(4, 'W-20103-23228', 'nic123', 'gihan kumara', '2020-10-15', 6, 'gihan NYC', 'new york city', '08712345611', 'gihanK@gmail.com', 'INACTIVE');
 
 --
 -- Indexes for dumped tables
@@ -364,17 +402,17 @@ ALTER TABLE `blocked_organization`
   ADD PRIMARY KEY (`o_id`);
 
 --
+-- Indexes for table `blocked_site`
+--
+ALTER TABLE `blocked_site`
+  ADD PRIMARY KEY (`block_id`);
+
+--
 -- Indexes for table `blocked_worker`
 --
 ALTER TABLE `blocked_worker`
   ADD PRIMARY KEY (`block_id`),
   ADD KEY `w_id` (`w_id`);
-
---
--- Indexes for table `blocked_workhouse`
---
-ALTER TABLE `blocked_workhouse`
-  ADD PRIMARY KEY (`w_id`);
 
 --
 -- Indexes for table `client`
@@ -421,7 +459,7 @@ ALTER TABLE `user`
 ALTER TABLE `worker`
   ADD PRIMARY KEY (`w_id`),
   ADD KEY `index_no` (`index_no`),
-  ADD KEY `site` (`site`);
+  ADD KEY `site` (`s_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -431,7 +469,7 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `agent`
 --
 ALTER TABLE `agent`
-  MODIFY `ag_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `agreement`
@@ -449,7 +487,7 @@ ALTER TABLE `blcked_agent`
 -- AUTO_INCREMENT for table `blocked_client`
 --
 ALTER TABLE `blocked_client`
-  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `blocked_machinery`
@@ -464,22 +502,22 @@ ALTER TABLE `blocked_organization`
   MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `blocked_site`
+--
+ALTER TABLE `blocked_site`
+  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `blocked_worker`
 --
 ALTER TABLE `blocked_worker`
-  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `blocked_workhouse`
---
-ALTER TABLE `blocked_workhouse`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222223;
+  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `machinery`
@@ -503,7 +541,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `site`
 --
 ALTER TABLE `site`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -515,7 +553,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -573,7 +611,7 @@ ALTER TABLE `machinery`
 -- Constraints for table `worker`
 --
 ALTER TABLE `worker`
-  ADD CONSTRAINT `worker_ibfk_1` FOREIGN KEY (`site`) REFERENCES `site` (`s_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `worker_ibfk_1` FOREIGN KEY (`s_id`) REFERENCES `site` (`s_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
