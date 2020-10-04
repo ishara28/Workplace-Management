@@ -42,10 +42,12 @@ export class EditModal extends Component {
     super(props);
 
     this.state = {
+      sites:[],
       workers: [],
       nic_passport: "",
       name: "",
       reg_date:'',
+      s_id:'',
       description: "",
       address: "",
       telephone: "",
@@ -60,11 +62,17 @@ export class EditModal extends Component {
       nic_passport: this.props.worker.nic_passport,
       name: this.props.worker.name,
       reg_date:this.props.worker.reg_date,
+      s_id:this.props.worker.s_id,
       description: this.props.worker.description,
       address: this.props.worker.address,
       telephone: this.props.worker.telephone,
       email: this.props.worker.email,
     });
+
+    Axios.get("/site/")
+      .then((res) => this.setState({ sites: res.data }))
+      .then(() => console.log(this.state.sites))
+      .catch((err) => console.log(err));
   }
 
   closeBtn = (
@@ -78,15 +86,19 @@ export class EditModal extends Component {
       nic_passport: this.state.nic_passport,
       name: this.state.name,
       reg_date: this.state.reg_date,
+      s_id: this.state.s_id,
       description: this.state.description,
       address: this.state.address,
       telephone: this.state.telephone,
       email: this.state.email,
     };
+    console.log(newWorker)
+
     if (
       this.state.nic_passport &&
       this.state.name &&
       this.state.reg_date &&
+      this.state.sites &&
       this.state.description &&
       this.state.address &&
       this.state.telephone &&
@@ -144,9 +156,52 @@ export class EditModal extends Component {
                 </Label>
                 <Col sm={9}>
                   <Input
-                    placeholder="Name here..."
-                    value={this.state.name}
-                    onChange={(e) => this.setState({ name: e.target.value })}
+                    type='date'
+                    placeholder="Register Date here..."
+                    value={this.state.reg_date}
+                    onChange={(e) => this.setState({ reg_date: e.target.value })}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="c_id" sm={3}>
+                  Site
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="select"
+                    name="s_id"
+                    id="s_id"
+                    value={this.state.s_id}
+                    onChange={(e) =>
+                      this.setState({ s_id: e.target.value })
+                    }
+                  >
+                    <option>Choose Site</option>
+                    {this.state.sites.map((site) => {
+                      return (
+                        <option value={site.s_id}>
+                          {site.index_no}
+                        </option>
+                      );
+                    })}
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Description
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="textarea"
+                    placeholder="Description  here..."
+                    value={this.state.description}
+                    onChange={(e) =>
+                      this.setState({ description: e.target.value })
+                    }
                   />
                 </Col>
               </FormGroup>
@@ -193,21 +248,7 @@ export class EditModal extends Component {
                 </Col>
               </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Description
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="textarea"
-                    placeholder="Description  here..."
-                    value={this.state.description}
-                    onChange={(e) =>
-                      this.setState({ description: e.target.value })
-                    }
-                  />
-                </Col>
-              </FormGroup>
+              
             </Form>
 
             {this.state.isFieldsEmpty && (
